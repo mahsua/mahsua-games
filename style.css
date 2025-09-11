@@ -1,0 +1,322 @@
+/* A light color palette with a vibrant accent */
+:root {
+    --bg-color: #f0f2f5;
+    --primary-bg: #ffffff;
+    --secondary-bg: #e2e4e8;
+    --text-color: #1c1f30;
+    --accent-color: #6a1b9a;
+    --gradient-1: #9b51e0;
+    --gradient-2: #4a2c7a;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* --- Header Styling --- */
+header {
+    background-image: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
+    padding: 15px 30px; /* Reduced padding */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.logo {
+    font-size: 1.5em; /* Reduced font size */
+    font-weight: 700;
+    color: var(--text-color);
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    margin: 0;
+}
+
+.domain {
+    display: none; /* Removed for a more compact design */
+}
+
+.nav-links a {
+    color: var(--text-color);
+    text-decoration: none;
+    font-weight: 600;
+    margin-left: 20px; /* Reduced margin */
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: #ccc;
+}
+
+/* --- Hero Section Styling --- */
+.hero-section {
+    text-align: center;
+    padding: 100px 20px;
+    background-image: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
+}
+
+.hero-section h1 {
+    font-size: 3.5em;
+    font-weight: 700;
+    margin: 0;
+}
+
+.hero-section p {
+    font-size: 1.2em;
+    color: #d0d0d0;
+    max-width: 600px;
+    margin: 10px auto 30px;
+}
+
+.play-button {
+    display: inline-flex;
+    align-items: center;
+    background-image: linear-gradient(45deg, #a855f7, #ec4899);
+    color: var(--text-color);
+    padding: 15px 30px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1em;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.play-button:hover {
+    transform: scale(1.05);
+}
+
+.play-button svg {
+    margin-right: 10px;
+    fill: currentColor;
+}
+
+/* --- Featured Games Section --- */
+.featured-games {
+    text-align: center;
+    padding: 50px 20px;
+}
+
+.featured-games h2 {
+    font-size: 2.5em;
+    font-weight: 700;
+    margin-bottom: 40px;
+}
+
+.game-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.game-card {
+    background-color: var(--primary-bg);
+    border-radius: 15px;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    /* This rule removes the underline */
+    text-decoration: none;
+    color: inherit;
+}
+
+.game-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.game-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: var(--secondary-bg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    font-size: 2.5em;
+    border: 2px solid var(--accent-color);
+    box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.05);
+}
+
+.game-card h3 {
+    font-size: 1.5em;
+    font-weight: 600;
+    margin: 0 0 5px;
+}
+
+.game-card p {
+    font-size: 0.9em;
+    color: #555;
+    margin: 0;
+    flex-grow: 1;
+}
+
+.game-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.difficulty {
+    background-color: #d1e5f4;
+    color: #1a56b7;
+    font-size: 0.8em;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 5px;
+}
+
+.rating {
+    color: #FFD700;
+    font-size: 1.2em;
+}
+
+.rating span {
+    color: #FFD700;
+}
+
+/* --- New Section Styling --- */
+.why-choose-section {
+    background-color: var(--primary-bg);
+    text-align: center;
+    padding: 80px 20px;
+    margin-top: 50px;
+}
+
+.why-choose-section h2 {
+    font-size: 2.5em;
+    font-weight: 700;
+    margin-bottom: 40px;
+    color: var(--accent-color);
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 40px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.feature-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.feature-icon {
+    font-size: 3em;
+    margin-bottom: 20px;
+    color: var(--text-color);
+}
+
+.feature-icon.bolt {
+    color: #d4ac0d;
+}
+
+.feature-icon.globe {
+    color: #1a56b7;
+}
+
+.feature-icon.free {
+    color: #0b8457;
+}
+
+.feature-item h3 {
+    font-size: 1.5em;
+    font-weight: 600;
+    margin: 0 0 10px;
+}
+
+.feature-item p {
+    color: #555;
+}
+
+/* --- Footer Styling --- */
+footer {
+    background-color: var(--bg-color);
+    padding: 20px 20px; /* Reduced padding */
+    text-align: center;
+    margin-top: auto; /* Pushes the footer to the bottom */
+}
+
+.footer-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 5px; /* Reduced margin */
+}
+
+.footer-logo-icon {
+    font-size: 1.8em; /* Reduced font size */
+    color: var(--accent-color);
+    margin-right: 8px; /* Reduced margin */
+}
+
+.footer-logo-text {
+    font-size: 1.2em; /* Reduced font size */
+    font-weight: 600;
+}
+
+.footer-links {
+    color: #555;
+    font-size: 0.8em; /* Reduced font size */
+}
+
+.footer-copyright {
+    color: #777;
+    font-size: 0.7em; /* Reduced font size */
+    margin-top: 5px; /* Reduced margin */
+}
+
+/* Responsive design adjustments */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        padding: 10px 15px; /* Reduced padding for smaller screens */
+    }
+
+    .nav-links {
+        margin-top: 5px;
+    }
+
+    .nav-links a {
+        margin: 0 8px;
+    }
+
+    .hero-section h1 {
+        font-size: 2.5em;
+    }
+
+    .hero-section p {
+        font-size: 1em;
+    }
+
+    .featured-games h2,
+    .why-choose-section h2 {
+        font-size: 2em;
+    }
+}

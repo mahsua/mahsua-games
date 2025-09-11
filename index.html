@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mahsua Games</title>
+    <!-- Links to external CSS and fonts -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Main HTML Structure -->
+    <header>
+        <div class="logo-container">
+            <h1 class="logo">Mahsua Games</h1>
+            <span class="domain">games.mahsua.com</span>
+        </div>
+        <nav class="nav-links">
+            <a href="#">Games</a>
+            <a href="#">About</a>
+            <a href="#">Contact</a>
+        </nav>
+    </header>
+
+    <div class="hero-section">
+        <h1>Play Instantly</h1>
+        <p>No downloads, no installations. Just click and play amazing browser games right now!</p>
+        <!-- The "Start Playing Now" button now links to the first game -->
+        <a href="games/snake-game/index.html" class="play-button" id="startPlayingBtn">
+            <svg width="24" height="24" viewBox="0 0 24 24">
+                <path d="M8 5v14l11-7z" />
+            </svg>
+            Start Playing Now
+        </a>
+    </div>
+
+    <main class="featured-games">
+        <h2>Featured Games</h2>
+        <div class="game-grid">
+            <!-- Each game card is now a direct link -->
+            <a class="game-card" href="games/snake-game/index.html">
+                <div class="game-icon">🐍</div>
+                <h3>Snake Classic</h3>
+                <p>The timeless classic! Eat food, grow longer, avoid walls and yourself.</p>
+                <div class="game-meta">
+                    <span class="difficulty">Easy</span>
+                    <div class="rating">
+                        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                    </div>
+                </div>
+            </a>
+            
+            <a class="game-card" href="games/tetris-game/index.html">
+                <div class="game-icon">🧩</div>
+                <h3>Tetris Blocks</h3>
+                <p>Arrange falling blocks to clear lines. A puzzle game that never gets old!</p>
+                <div class="game-meta">
+                    <span class="difficulty">Medium</span>
+                    <div class="rating">
+                        <span>★</span><span>★</span><span>★</span><span>★</span><span>☆</span>
+                    </div>
+                </div>
+            </a>
+            
+            <a class="game-card" href="games/memory-match/index.html">
+                <div class="game-icon">🧠</div>
+                <h3>Memory Match</h3>
+                <p>Test your memory by matching pairs of cards. Great for brain training!</p>
+                <div class="game-meta">
+                    <span class="difficulty">Easy</span>
+                    <div class="rating">
+                        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                    </div>
+                </div>
+            </a>
+            
+            <a class="game-card" href="games/pong/index.html">
+                <div class="game-icon">🏓</div>
+                <h3>Pong Classic</h3>
+                <p>The original arcade game! Control your paddle and beat the AI opponent.</p>
+                <div class="game-meta">
+                    <span class="difficulty">Easy</span>
+                    <div class="rating">
+                        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                    </div>
+                </div>
+            </a>
+            
+            <a class="game-card" href="games/2048-game/index.html">
+                <div class="game-icon">🔢</div>
+                <h3>2048 Puzzle</h3>
+                <p>Slide tiles to combine numbers and reach 2048. Addictive math puzzle!</p>
+                <div class="game-meta">
+                    <span class="difficulty">Hard</span>
+                    <div class="rating">
+                        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                    </div>
+                </div>
+            </a>
+            
+            <a class="game-card" href="games/breakout/index.html">
+                <div class="game-icon">🎯</div>
+                <h3>Breakout Bricks</h3>
+                <p>Bounce the ball to break all bricks. Classic arcade action!</p>
+                <div class="game-meta">
+                    <span class="difficulty">Medium</span>
+                    <div class="rating">
+                        <span>★</span><span>★</span><span>★</span><span>★</span><span>☆</span>
+                    </div>
+                </div>
+            </a>
+
+            <a class="game-card" href="games/math-quiz/index.html">
+                <div class="game-icon">➗</div>
+                <h3>Math Quiz</h3>
+                <p>Test your math skills with addition, subtraction, multiplication, and division problems.</p>
+                <div class="game-meta">
+                    <span class="difficulty">Easy/Hard</span>
+                    <div class="rating">
+                        <span>★</span><span>★</span><span>★</span><span>★</span><span>☆</span>
+                    </div>
+                </div>
+            </a>
+
+            <a class="game-card" href="games/coin-flip/index.html">
+                <div class="game-icon">🪙</div>
+                <h3>Virtual Coin Flip</h3>
+                <p>Flip a virtual coin to get a random result: Heads or Tails.</p>
+                <div class="game-meta">
+                    <span class="difficulty">Easy</span>
+                    <div class="rating">
+                        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                    </div>
+                </div>
+            </a>
+
+            <a class="game-card" href="games/car-racing/index.html">
+                <div class="game-icon">🚗</div>
+                <h3>Car Racing Game</h3>
+                <p>Race your car to victory in this fast-paced racing game.</p>
+                <div class="game-meta">
+                    <span class="difficulty">Medium</span>
+                    <div class="rating">
+                        <span>★</span><span>★</span><span>★</span><span>☆</span><span>☆</span>
+                    </div>
+                </div>
+            </a>
+
+            <a class="game-card" href="games/dice-flipper/index.html">
+                <div class="game-icon">🎲</div>
+                <h3>Virtual 3D Dice Flipper</h3>
+                <p>Roll up to four virtual 3D dice to get a random number.</p>
+                <div class="game-meta">
+                    <span class="difficulty">Easy</span>
+                    <div class="rating">
+                        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                    </div>
+                </div>
+            </a>
+
+            <a class="game-card" href="games/rock-paper-scissors/index.html">
+                <div class="game-icon">✂️</div>
+                <h3>Rock Paper Scissors</h3>
+                <p>Challenge the computer in a classic game of rock, paper, scissors.</p>
+                <div class="game-meta">
+                    <span class="difficulty">Easy</span>
+                    <div class="rating">
+                        <span>★</span><span>★</span><span>★</span><span>★</span><span>☆</span>
+                    </div>
+                </div>
+            </a>
+
+            <a class="game-card" href="games/tic-tac-toe/index.html">
+                <div class="game-icon">❌</div>
+                <h3>Tic-Tac-Toe</h3>
+                <p>Play against a friend or an intelligent computer in this classic game.</p>
+                <div class="game-meta">
+                    <span class="difficulty">Easy/Hard</span>
+                    <div class="rating">
+                        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                    </div>
+                </div>
+            </a>
+
+            <a class="game-card" href="games/wall-dodge/index.html">
+                <div class="game-icon">🚧</div>
+                <h3>Wall Dodge Challenge</h3>
+                <p>Dodge moving walls and survive as long as you can in this endless runner.</p>
+                <div class="game-meta">
+                    <span class="difficulty">Hard</span>
+                    <div class="rating">
+                        <span>★</span><span>★</span><span>★</span><span>☆</span><span>☆</span>
+                    </div>
+                </div>
+            </a>
+
+            <a class="game-card" href="games/pac-man/index.html">
+                <div class="game-icon">🕹️</div>
+                <h3>PAC-MAN</h3>
+                <p>Eat all the dots and avoid ghosts in this classic arcade game.</p>
+                <div class="game-meta">
+                    <span class="difficulty">Medium</span>
+                    <div class="rating">
+                        <span>★</span><span>★</span><span>★</span><span>★</span><span>☆</span>
+                    </div>
+                </div>
+            </a>
+
+            <a class="game-card" href="games/cricket/index.html">
+                <div class="game-icon">🏏</div>
+                <h3>Cricket</h3>
+                <p>Hit the ball and score big in this exciting cricket game.</p>
+                <div class="game-meta">
+                    <span class="difficulty">Medium</span>
+                    <div class="rating">
+                        <span>★</span><span>★</span><span>★</span><span>☆</span><span>☆</span>
+                    </div>
+                </div>
+            </a>
+
+            <a class="game-card" href="games/solitaire/index.html">
+                <div class="game-icon">🃏</div>
+                <h3>Solitaire</h3>
+                <p>Relax and play a classic game of Solitaire.</p>
+                <div class="game-meta">
+                    <span class="difficulty">Easy</span>
+                    <div class="rating">
+                        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                    </div>
+                </div>
+            </a>
+
+            <a class="game-card" href="games/fruit-ninja/index.html">
+                <div class="game-icon">🍉</div>
+                <h3>Fruit Ninja</h3>
+                <p>Slice as many fruits as you can while avoiding bombs.</p>
+                <div class="game-meta">
+                    <span class="difficulty">Medium</span>
+                    <div class="rating">
+                        <span>★</span><span>★</span><span>★</span><span>★</span><span>☆</span>
+                    </div>
+                </div>
+            </a>
+
+            <a class="game-card" href="games/bubble-shooter/index.html">
+                <div class="game-icon">🫧</div>
+                <h3>Bubble Shooter</h3>
+                <p>Match and pop colorful bubbles to clear the board.</p>
+                <div class="game-meta">
+                    <span class="difficulty">Easy</span>
+                    <div class="rating">
+                        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                    </div>
+                </div>
+            </a>
+
+            <a class="game-card" href="games/karate-fight/index.html">
+                <div class="game-icon">🥋</div>
+                <h3>Karate Fight</h3>
+                <p>Engage in an intense one-on-one karate fight.</p>
+                <div class="game-meta">
+                    <span class="difficulty">Hard</span>
+                    <div class="rating">
+                        <span>★</span><span>★</span><span>★</span><span>☆</span><span>☆</span>
+                    </div>
+                </div>
+            </a>
+
+            <a class="game-card" href="games/tennis-game/index.html">
+                <div class="game-icon">🎾</div>
+                <h3>Tennis Game</h3>
+                <p>Serve and volley to win the match against your opponent.</p>
+                <div class="game-meta">
+                    <span class="difficulty">Medium</span>
+                    <div class="rating">
+                        <span>★</span><span>★</span><span>★</span><span>★</span><span>☆</span>
+                    </div>
+                </div>
+            </a>
+
+            <a class="game-card" href="games/sniper-gun/index.html">
+                <div class="game-icon">🔫</div>
+                <h3>Sniper Gun Game</h3>
+                <p>Aim carefully and take out targets from a distance in this shooting game.</p>
+                <div class="game-meta">
+                    <span class="difficulty">Medium</span>
+                    <div class="rating">
+                        <span>★</span><span>★</span><span>★</span><span>☆</span><span>☆</span>
+                    </div>
+                </div>
+            </a>
+
+            <a class="game-card" href="games/ludo/index.html">
+                <div class="game-icon">♟️</div>
+                <h3>Ludo</h3>
+                <p>Roll the dice and race your pawns to the finish line.</p>
+                <div class="game-meta">
+                    <span class="difficulty">Easy</span>
+                    <div class="rating">
+                        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                    </div>
+                </div>
+            </a>
+
+            <a class="game-card" href="games/free-the-key/index.html">
+                <div class="game-icon">🔑</div>
+                <h3>Free the Key</h3>
+                <p>Solve puzzles and escape rooms to free the key in this challenge.</p>
+                <div class="game-meta">
+                    <span class="difficulty">Hard</span>
+                    <div class="rating">
+                        <span>★</span><span>★</span><span>★</span><span>★</span><span>☆</span>
+                    </div>
+                </div>
+            </a>
+
+            <a class="game-card" href="games/bicycle-racing/index.html">
+                <div class="game-icon">🚴</div>
+                <h3>Bicycle Racing</h3>
+                <p>Pedal to the finish line in this bicycle racing challenge.</p>
+                <div class="game-meta">
+                    <span class="difficulty">Medium</span>
+                    <div class="rating">
+                        <span>★</span><span>★</span><span>★</span><span>☆</span><span>☆</span>
+                    </div>
+                </div>
+            </a>
+
+            <a class="game-card" href="games/picture-puzzle/index.html">
+                <div class="game-icon">🖼️</div>
+                <h3>Picture Puzzle</h3>
+                <p>Rearrange the pieces to complete the picture puzzle.</p>
+                <div class="game-meta">
+                    <span class="difficulty">Easy</span>
+                    <div class="rating">
+                        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </main>
+
+    <!-- Why Choose Section -->
+    <div class="why-choose-section">
+        <h2>Why Choose Mahsua Games?</h2>
+        <div class="features-grid">
+            <div class="feature-item">
+                <div class="feature-icon bolt">⚡</div>
+                <h3>Instant Play</h3>
+                <p>No downloads or installations required. Click and play immediately!</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon globe">🌐</div>
+                <h3>Browser Based</h3>
+                <p>Works on any device with a web browser. Play anywhere, anytime!</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon free">🆓</div>
+                <h3>Completely Free</h3>
+                <p>All games are free to play. No hidden costs or subscriptions!</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-links">
+            <p>games.mahsua.com</p>
+        </div>
+        <div class="footer-copyright">
+            <p>© 2024 Mahsua Games. Play instantly, no downloads required!</p>
+        </div>
+    </footer>
+    
+</body>
+</html>
