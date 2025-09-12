@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tetris Blocks</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="game-container">
+        <div class="main-game-area">
+            <div class="board-container">
+                <canvas id="gameCanvas" width="300" height="600"></canvas>
+                <div class="sidebar">
+                    <div class="info-box">
+                        <h3>Score</h3>
+                        <p id="score">0</p>
+                    </div>
+                    <div class="info-box">
+                        <h3>Next</h3>
+                        <canvas id="nextCanvas" width="100" height="100"></canvas>
+                    </div>
+                </div>
+            </div>
+            <footer>
+                © 2024 <a href="https://games.mahsua.com/" target="_blank">Mahsua Games</a>. All rights reserved.
+            </footer>
+            <div class="controls">
+                <button id="startButton">Start Game</button>
+                <button id="pauseButton">Pause</button>
+            </div>
+        </div>
+
+        <div id="messageBox">
+            <h2 id="messageTitle">Game Over</h2>
+            <p id="messageText">Score: <span id="finalScore">0</span></p>
+            <button id="restartBtn">Restart Game</button>
+        </div>
+    </div>
+    <script src="./scrept.js"></script>
+</body>
+</html>

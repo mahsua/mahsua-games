@@ -1,0 +1,145 @@
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f0f4f8; /* Light background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    flex-direction: column;
+    padding: 1rem;
+}
+
+.game-wrapper {
+    background-color: #ffffff; /* White card background */
+    padding: 2rem;
+    border-radius: 1.5rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.game-container {
+    position: relative;
+    background-color: #d1d9e6; /* Light gray inner board color */
+    border: 8px solid #a8b0c4; /* Soft blue-gray border */
+    border-radius: 0.5rem;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.block {
+    position: absolute;
+    cursor: grab;
+    transition: transform 0.1s ease-out;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    touch-action: none;
+    border-radius: 4px;
+}
+.block.is-dragging {
+    cursor: grabbing;
+}
+.key-block {
+    background-color: #ffb703; /* Bright golden key */
+    z-index: 10;
+}
+.key-block .key-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70%;
+    height: 70%;
+    fill: #023047; /* Dark blue fill for key icon */
+}
+.obstacle-block {
+    background-color: #6c757d; /* Soft gray-blue */
+}
+
+.exit-marker {
+    position: absolute;
+    right: -8px; 
+    top: 50%;
+    transform: translateY(-50%);
+    width: 8px;
+    height: 60px; 
+    background-color: #ffb703;
+    z-index: 5;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+    border-right: 2px solid #e29578;
+}
+
+/* Modal Popup */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 20;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    justify-content: center;
+    align-items: center;
+}
+.modal-content {
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 1rem;
+    text-align: center;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.3s ease-in-out;
+    transform: scale(0.9);
+}
+.modal-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #023047;
+    margin-bottom: 1rem;
+}
+.modal-text {
+    font-size: 1.25rem;
+    color: #4a5568;
+    margin-bottom: 1.5rem;
+}
+
+footer {
+    background-color: white;
+    text-align: center;
+    margin-top: auto;
+    width: 100%;
+    box-sizing: border-box;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 0;
+}
+
+.footer-links {
+    color: #555;
+    font-size: 0.8em;
+    margin-bottom: 10px;
+    display: flex;
+    gap: 20px;
+}
+
+.footer-links a {
+    color: #555;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: var(--accent-color);
+}
+
+.footer-copyright {
+    color: #777;
+    font-size: 0.7em;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.8); }
+    to { opacity: 1; transform: scale(1); }
+}

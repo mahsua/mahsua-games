@@ -63,7 +63,7 @@ header {
 /* --- Hero Section Styling --- */
 .hero-section {
     text-align: center;
-    padding: 100px 20px;
+    padding: 150px 20px;
     background-image: linear-gradient(135deg, var(--gradient-1), var(--gradient-2));
 }
 

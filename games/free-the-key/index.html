@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+     <meta name="description" content="Unblock the Key - a challenging puzzle game where you slide blocks to free the main key and win the level. Play now for free!">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free the Key</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="p-4">
+    <div class="game-wrapper">
+        <div class="text-center mb-8">
+            <h1 class="text-1xl sm:text-2xl font-extrabold text-gray-800 mb-2">Free the Key</h1>
+            <p class="text-gray-600 font-medium max-w-lg mx-auto">Slide the blocks to free the key and let it exit the board.</p>
+        </div>
+        <div class="game-container relative" id="game-container">
+            <div class="exit-marker"></div>
+        </div>
+    </div>
+    
+    <!-- Win Modal -->
+    <div id="win-modal" class="modal">
+        <div class="modal-content">
+            <div id="modal-title" class="modal-title"></div>
+            <p id="modal-text" class="modal-text"></p>
+            <button id="modal-action-button" class="bg-blue-600 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:bg-blue-700 transition duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-500">
+            </button>
+        </div>
+    </div>
+
+    <div class="mt-8 flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+        <button id="reset-button" class="bg-gray-200 text-gray-800 font-bold py-3 px-8 rounded-full shadow-lg hover:bg-gray-300 transition duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-gray-400">
+            Reset
+        </button>
+    </div>
+    <footer>
+        <div class="footer-links">
+            <a href="../../index.html">Games</a>
+            <a href="#">About</a>
+            <a href="#">Contact</a>
+        </div>
+        <div class="footer-copyright">
+            <p>© 2024 Mahsua Games. Play instantly, no downloads required!</p>
+        </div>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>

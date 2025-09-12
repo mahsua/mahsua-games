@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock, Paper, Scissors</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Rock, Paper, Scissors</h1>
+        <p>Choose your move below to play against the computer!</p>
+
+        <div class="choices">
+            <button class="choice-btn" id="rock">
+                <span class="emoji">✊</span>
+                <span>Rock</span>
+            </button>
+            <button class="choice-btn" id="paper">
+                <span class="emoji">✋</span>
+                <span>Paper</span>
+            </button>
+            <button class="choice-btn" id="scissors">
+                <span class="emoji">✌️</span>
+                <span>Scissors</span>
+            </button>
+        </div>
+
+        <div class="game-info">
+            <p id="player-choice-display">You chose: </p>
+            <p id="computer-choice-display">Computer chose: </p>
+            <h2 id="result-display"></h2>
+        </div>
+
+        <div class="score">
+            <p>Score: <span id="player-score">0</span> - <span id="computer-score">0</span></p>
+        </div>
+    </div>
+
+    <div class="popup-overlay" id="popup-overlay">
+        <div class="popup-container">
+            <h2 id="popup-result-message"></h2>
+            <div class="popup-score">
+                <p>Your Score: <span id="popup-player-score"></span></p>
+                <p>Computer Score: <span id="popup-computer-score"></span></p>
+            </div>
+            <button class="restart-btn" id="popup-restart-btn">Restart Game</button>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-links">
+            <a href="../../index.html">Games</a>
+            <a href="#">About</a>
+            <a href="#">Contact</a>
+        </div>
+        <div class="footer-copyright">
+            <p>© 2024 Mahsua Games. Play instantly, no downloads required!</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

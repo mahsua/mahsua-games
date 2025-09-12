@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maths Quiz</title>
+    <!-- Tailwind CSS CDN for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Inter font from Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        /* Light mode default styles */
+        body.light-mode {
+            background-color: #f3f4f6; /* Light gray background */
+            color: #1f2937; /* Dark text */
+        }
+        body.light-mode .bg-card {
+            background-color: #ffffff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        body.light-mode .text-primary {
+            color: #2563eb; /* Blue for primary elements */
+        }
+        body.light-mode input,
+        body.light-mode select {
+            background-color: #f9fafb;
+            border-color: #d1d5db;
+            color: #1f2937;
+        }
+        body.light-mode button {
+            background-color: #3b82f6;
+            color: #ffffff;
+        }
+        body.light-mode button:hover {
+            background-color: #2563eb;
+        }
+        body.light-mode .option-button {
+            background-color: #e0e7ff; /* Light blue background for options */
+            color: #1f2937;
+            border: 1px solid #93c5fd;
+        }
+        body.light-mode .option-button:hover {
+            background-color: #bfdbfe;
+        }
+        body.light-mode #theme-toggle-icon {
+            color: #f59e0b; /* Sun icon color */
+        }
+        body.light-mode #back-button {
+            color: #4b5563; /* Darker gray for back button in light mode */
+        }
+        body.light-mode #timer {
+            color: #ef4444; /* Red for timer in light mode */
+        }
+
+
+        /* Dark mode styles */
+        body.dark-mode {
+            background-color: #1f2937; /* Dark background */
+            color: #f3f4f6; /* Light text */
+        }
+        body.dark-mode .bg-card {
+            background-color: #374151;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+        body.dark-mode .text-primary {
+            color: #60a5fa; /* Lighter blue for primary elements */
+        }
+        body.dark-mode input,
+        body.dark-mode select {
+            background-color: #4b5563;
+            border-color: #6b7280;
+            color: #f3f4f6;
+        }
+        body.dark-mode button {
+            background-color: #60a5fa;
+            color: #1f2937;
+        }
+        body.dark-mode button:hover {
+            background-color: #3b82f6;
+        }
+        body.dark-mode .option-button {
+            background-color: #4f46e5; /* Darker blue background for options */
+            color: #ffffff;
+            border: 1px solid #818cf8;
+        }
+        body.dark-mode .option-button:hover {
+            background-color: #4338ca;
+        }
+        body.dark-mode #theme-toggle-icon {
+            color: #bfdbfe; /* Moon icon color */
+        }
+        body.dark-mode #back-button {
+            color: #d1d5db; /* Lighter gray for back button in dark mode */
+        }
+        body.dark-mode #timer {
+            color: #f87171; /* Lighter red for timer in dark mode */
+        }
+
+        /* General button styling for bubble effect */
+        button {
+            transition: all 0.2s ease-in-out;
+            border-radius: 0.5rem; /* Rounded corners */
+        }
+        button:active {
+            transform: scale(0.98); /* Slightly shrink on click for feedback */
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2); /* Inner shadow */
+        }
+        button:hover {
+            opacity: 0.9;
+        }
+
+        /* Styling for the icon-based theme toggle and back button */
+        #theme-toggle-container, #back-button {
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 50%;
+            transition: background-color 0.3s ease;
+        }
+        #theme-toggle-container:hover, #back-button:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+        .dark-mode #theme-toggle-container:hover, .dark-mode #back-button:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        footer {
+            background-color: var(--bg-color);
+            text-align: center;
+            margin-top: auto;
+            width: 100%;
+            box-sizing: border-box;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px 0;
+        }
+
+        .footer-links {
+            color: #555;
+            font-size: 0.8em;
+            margin-bottom: 10px;
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-links a {
+            color: #555;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .footer-copyright {
+            color: #777;
+            font-size: 0.7em;
+        }
+    </style>
+</head>
+<body class="light-mode flex flex-col items-center justify-center min-h-screen p-4">
+    <div class="bg-card p-6 rounded-xl shadow-lg w-full max-w-md">
+        <h1 class="text-3xl font-bold text-center mb-6 text-primary">Math Quiz by <a class="text-2xl font-extrabold text-green-600 mb-8" href="https://www.mahsua.com/mahsua-games">MAHSUA</a></h1>
+
+        <!-- Theme Toggle and Back Button -->
+        <div class="flex justify-between items-center mb-4">
+            <div id="back-button" class="text-2xl hidden">
+                <i class="fas fa-arrow-left"></i> <!-- Back arrow icon -->
+            </div>
+            <div id="theme-toggle-container" class="text-2xl ml-auto">
+                <i id="theme-toggle-icon" class="fas fa-sun"></i> <!-- Default to sun for light mode -->
+            </div>
+        </div>
+
+        <!-- Game Settings -->
+        <div id="game-settings" class="space-y-4">
+            <div>
+                <label for="difficulty" class="block text-sm font-medium mb-1">Select Difficulty:</label>
+                <select id="difficulty" class="w-full p-2 border rounded-md focus:ring focus:ring-blue-300">
+                    <option value="easy">Easy</option>
+                    <option value="medium">Medium</option>
+                    <option value="hard">Hard</option>
+                </select>
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium mb-1">Select Operation Type:</label>
+                <div class="flex flex-wrap gap-3">
+                    <label class="inline-flex items-center">
+                        <input type="radio" name="operation" value="add" class="form-radio text-primary" checked>
+                        <span class="ml-2">+ Addition</span>
+                    </label>
+                    <label class="inline-flex items-center">
+                        <input type="radio" name="operation" value="subtract" class="form-radio text-primary">
+                        <span class="ml-2">- Subtraction</span>
+                    </label>
+                    <label class="inline-flex items-center">
+                        <input type="radio" name="operation" value="multiply" class="form-radio text-primary">
+                        <span class="ml-2">* Multiplication</span>
+                    </label>
+                    <label class="inline-flex items-center">
+                        <input type="radio" name="operation" value="divide" class="form-radio text-primary">
+                        <span class="ml-2">/ Division</span>
+                    </label>
+                </div>
+            </div>
+
+            <button id="start-game" class="w-full py-2 px-4 rounded-md font-semibold hover:scale-105">Start Game</button>
+        </div>
+
+        <!-- Game Area -->
+        <div id="game-area" class="hidden text-center space-y-6">
+            <div class="flex justify-between items-center text-lg font-medium">
+                <span id="score">Score: 0</span>
+                <span id="timer" class="font-bold text-red-500 text-xl">30s</span>
+                <span id="question-count">Question: 1/50</span>
+            </div>
+
+            <p id="question" class="text-5xl font-bold my-8"></p>
+
+            <!-- Options container for multiple choice -->
+            <div id="options-container" class="grid grid-cols-2 gap-4">
+                <!-- Option buttons will be dynamically inserted here -->
+            </div>
+
+            <p id="feedback" class="text-lg font-semibold mt-4"></p>
+        </div>
+
+        <!-- Game Over Screen -->
+        <div id="game-over-screen" class="hidden text-center space-y-4">
+            <h2 class="text-3xl font-bold text-primary">Game Over!</h2>
+            <p class="text-xl">Your final score is: <span id="final-score" class="font-bold"></span></p>
+            <button id="play-again" class="w-full py-2 px-4 rounded-md font-semibold hover:scale-105">Play Again</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-links">
+            <a href="../../index.html">Games</a>
+            <a href="#">About</a>
+            <a href="#">Contact</a>
+        </div>
+        <div class="footer-copyright">
+            <p>© 2024 Mahsua Games. Play instantly, no downloads required!</p>
+        </div>
+    </footer>
+
+    <script>
+        // Get references to DOM elements
+        const themeToggleContainer = document.getElementById('theme-toggle-container');
+        const themeToggleIcon = document.getElementById('theme-toggle-icon');
+        const backButton = document.getElementById('back-button'); // New: Back button
+        const difficultySelect = document.getElementById('difficulty');
+        const operationRadios = document.querySelectorAll('input[name="operation"]');
+        const startGameButton = document.getElementById('start-game');
+        const gameSettings = document.getElementById('game-settings');
+        const gameArea = document.getElementById('game-area');
+        const scoreDisplay = document.getElementById('score');
+        const questionCountDisplay = document.getElementById('question-count');
+        const questionDisplay = document.getElementById('question');
+        const optionsContainer = document.getElementById('options-container');
+        const feedbackDisplay = document.getElementById('feedback');
+        const gameOverScreen = document.getElementById('game-over-screen');
+        const finalScoreDisplay = document.getElementById('final-score');
+        const playAgainButton = document.getElementById('play-again');
+        const timerDisplay = document.getElementById('timer'); // New: Timer display
+
+        // Game state variables
+        let score = 0;
+        let currentQuestion = 0;
+        let totalQuestions = 50; // Updated: Number of questions per game
+        let correctAnswer = 0;
+        let selectedDifficulty = 'easy';
+        let selectedOperation = 'add';
+        let timeLeft = 30; // New: Initial time for each question
+        let timerInterval; // New: Variable to hold the timer interval ID
+
+        // Difficulty ranges for number generation
+        const difficultyRanges = {
+            easy: { min: 1, max: 10, optionRange: 5 }, // Smaller range for incorrect options
+            medium: { min: 10, max: 50, optionRange: 15 },
+            hard: { min: 50, max: 100, optionRange: 30 }
+        };
+
+        /**
+         * Toggles between light and dark mode.
+         * Stores the preference in local storage.
+         * Updates the theme icon.
+         */
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            document.body.classList.toggle('light-mode');
+            const isDarkMode = document.body.classList.contains('dark-mode');
+            localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+
+            // Update icon based on theme
+            if (isDarkMode) {
+                themeToggleIcon.classList.remove('fa-sun');
+                themeToggleIcon.classList.add('fa-moon');
+            } else {
+                themeToggleIcon.classList.remove('fa-moon');
+                themeToggleIcon.classList.add('fa-sun');
+            }
+        }
+
+        /**
+         * Loads the theme preference from local storage on page load.
+         */
+        function loadTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.body.classList.remove('light-mode');
+                document.body.classList.add('dark-mode');
+                themeToggleIcon.classList.remove('fa-sun');
+                themeToggleIcon.classList.add('fa-moon');
+            } else {
+                document.body.classList.remove('dark-mode');
+                document.body.classList.add('light-mode');
+                themeToggleIcon.classList.remove('fa-moon');
+                themeToggleIcon.classList.add('fa-sun');
+            }
+        }
+
+        /**
+         * Generates a random integer within a specified range (inclusive).
+         * @param {number} min - The minimum value.
+         * @param {number} max - The maximum value.
+         * @returns {number} A random integer.
+         */
+        function getRandomNumber(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        /**
+         * Shuffles an array randomly using Fisher-Yates algorithm.
+         * @param {Array} array - The array to shuffle.
+         * @returns {Array} The shuffled array.
+         */
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        /**
+         * Starts the countdown timer for the current question.
+         * If the timer runs out, it calls handleTimeout.
+         */
+        function startTimer() {
+            clearInterval(timerInterval); // Clear any existing timer
+            timeLeft = 30; // Reset time for the new question
+            timerDisplay.textContent = `${timeLeft}s`;
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                timerDisplay.textContent = `${timeLeft}s`;
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    handleTimeout();
+                }
+            }, 1000); // Update every second
+        }
+
+        /**
+         * Stops the current timer.
+         */
+        function stopTimer() {
+            clearInterval(timerInterval);
+        }
+
+        /**
+         * Handles the scenario when the timer runs out.
+         * Decrements score and moves to the next question.
+         */
+        function handleTimeout() {
+            score--; // Decrement score for not answering in time
+            updateScoreDisplay();
+            feedbackDisplay.textContent = `Time out! The answer was ${correctAnswer}.`;
+            feedbackDisplay.classList.remove('text-green-500', 'text-yellow-500');
+            feedbackDisplay.classList.add('text-red-500');
+            disableOptionsTemporarily(); // Disable options
+            setTimeout(moveToNextQuestionWithDelay, 1500); // 1.5 second delay before next question
+        }
+
+        /**
+         * Temporarily disables all option buttons to prevent multiple clicks
+         * or interaction while feedback is displayed.
+         */
+        function disableOptionsTemporarily() {
+            Array.from(optionsContainer.children).forEach(button => {
+                button.disabled = true;
+                button.classList.add('opacity-50', 'cursor-not-allowed');
+            });
+        }
+
+        /**
+         * Re-enables all option buttons and prepares for the next question.
+         */
+        function enableOptions() {
+            Array.from(optionsContainer.children).forEach(button => {
+                button.disabled = false;
+                button.classList.remove('opacity-50', 'cursor-not-allowed');
+            });
+        }
+
+        /**
+         * Helper function to move to the next question after a delay.
+         * Ensures options are re-enabled.
+         */
+        function moveToNextQuestionWithDelay() {
+            enableOptions();
+            nextQuestion();
+        }
+
+        /**
+         * Generates a new math question and its multiple-choice options.
+         */
+        function generateQuestion() {
+            const range = difficultyRanges[selectedDifficulty];
+            let num1, num2;
+
+            // Generate numbers based on difficulty
+            num1 = getRandomNumber(range.min, range.max);
+            num2 = getRandomNumber(range.min, range.max);
+
+            let questionText = '';
+            let tempCorrectAnswer;
+
+            switch (selectedOperation) {
+                case 'add':
+                    questionText = `${num1} + ${num2} = ?`;
+                    tempCorrectAnswer = num1 + num2;
+                    break;
+                case 'subtract':
+                    // Ensure result is not negative for basic subtraction
+                    if (num1 < num2) {
+                        [num1, num2] = [num2, num1]; // Swap if num1 is smaller
+                    }
+                    questionText = `${num1} - ${num2} = ?`;
+                    tempCorrectAnswer = num1 - num2;
+                    break;
+                case 'multiply':
+                    questionText = `${num1} * ${num2} = ?`;
+                    tempCorrectAnswer = num1 * num2;
+                    break;
+                case 'divide':
+                    // Ensure num1 is perfectly divisible by num2 and num2 is not zero
+                    // Also ensure num2 is not 1 to avoid trivial divisions too often
+                    do {
+                        num1 = getRandomNumber(range.min, range.max);
+                        num2 = getRandomNumber(range.min > 0 ? range.min : 1, range.max);
+                        if (num2 === 0) num2 = 1; // Prevent division by zero
+                    } while (num1 % num2 !== 0);
+                    questionText = `${num1} / ${num2} = ?`;
+                    tempCorrectAnswer = num1 / num2;
+                    break;
+                default:
+                    questionText = 'Error: No operation selected.';
+                    tempCorrectAnswer = 0;
+            }
+
+            questionDisplay.textContent = questionText;
+            correctAnswer = tempCorrectAnswer;
+
+            // Generate options
+            const options = [correctAnswer];
+            const incorrectOptionsSet = new Set(); // Use a Set to ensure uniqueness
+
+            // Generate 3 incorrect options
+            while (incorrectOptionsSet.size < 3) {
+                let incorrectAnswer;
+                // Generate a plausible incorrect answer using a range around the correct answer
+                const offset = getRandomNumber(-range.optionRange, range.optionRange);
+                incorrectAnswer = correctAnswer + offset;
+
+                // Ensure incorrect answer is not identical to correct answer
+                if (incorrectAnswer === correctAnswer) {
+                    continue;
+                }
+                // Ensure non-negative for operations where negative answers are typically not expected
+                if (selectedOperation !== 'subtract' && incorrectAnswer < 0) {
+                    continue;
+                }
+                // Ensure it's not a duplicate
+                if (!options.includes(incorrectAnswer) && !incorrectOptionsSet.has(incorrectAnswer)) {
+                    incorrectOptionsSet.add(incorrectAnswer);
+                }
+            }
+
+            // Add unique incorrect options to the main options array
+            options.push(...Array.from(incorrectOptionsSet));
+
+            // Shuffle the options
+            shuffleArray(options);
+
+            // Display options as buttons
+            optionsContainer.innerHTML = ''; // Clear previous options
+            options.forEach(option => {
+                const button = document.createElement('button');
+                button.textContent = option;
+                button.dataset.value = option; // Store the value in a data attribute
+                button.classList.add('option-button', 'py-3', 'px-4', 'rounded-md', 'font-semibold', 'hover:scale-105', 'text-xl');
+                button.addEventListener('click', checkAnswer);
+                optionsContainer.appendChild(button);
+            });
+
+            feedbackDisplay.textContent = ''; // Clear feedback
+            startTimer(); // Start the timer for the new question
+        }
+
+        /**
+         * Starts a new game.
+         * Resets score, question count, and generates the first question.
+         * Hides settings and shows game area.
+         */
+        function startGame() {
+            score = 0;
+            currentQuestion = 0;
+            selectedDifficulty = difficultySelect.value;
+            selectedOperation = document.querySelector('input[name="operation"]:checked').value;
+
+            gameSettings.classList.add('hidden');
+            gameOverScreen.classList.add('hidden');
+            gameArea.classList.remove('hidden');
+            backButton.classList.remove('hidden'); // Show back button when game starts
+
+            updateScoreDisplay();
+            nextQuestion();
+        }
+
+        /**
+         * Moves to the next question or ends the game if all questions are answered.
+         */
+        function nextQuestion() {
+            if (currentQuestion < totalQuestions) {
+                currentQuestion++;
+                questionCountDisplay.textContent = `Question: ${currentQuestion}/${totalQuestions}`;
+                generateQuestion();
+            } else {
+                endGame();
+            }
+        }
+
+        /**
+         * Checks the user's selected answer against the correct answer.
+         * Updates score (increments for correct, decrements for incorrect) and provides feedback.
+         * @param {Event} event - The click event from the option button.
+         */
+        function checkAnswer(event) {
+            stopTimer(); // Stop the timer as soon as an answer is selected
+            const userAnswer = parseFloat(event.target.dataset.value); // Get value from data attribute
+
+            disableOptionsTemporarily(); // Disable options temporarily
+
+            if (userAnswer === correctAnswer) {
+                score++;
+                feedbackDisplay.textContent = 'Correct!';
+                feedbackDisplay.classList.remove('text-red-500', 'text-yellow-500');
+                feedbackDisplay.classList.add('text-green-500');
+            } else {
+                score--; // Decrement score for incorrect answer
+                feedbackDisplay.textContent = `Incorrect! The answer was ${correctAnswer}.`;
+                feedbackDisplay.classList.remove('text-green-500', 'text-yellow-500');
+                feedbackDisplay.classList.add('text-red-500');
+            }
+            updateScoreDisplay();
+
+            setTimeout(moveToNextQuestionWithDelay, 1500); // 1.5 second delay before next question
+        }
+
+        /**
+         * Updates the score display.
+         */
+        function updateScoreDisplay() {
+            scoreDisplay.textContent = `Score: ${score}`;
+        }
+
+        /**
+         * Ends the game, displays final score, and shows play again button.
+         */
+        function endGame() {
+            stopTimer(); // Ensure timer is stopped
+            gameArea.classList.add('hidden');
+            gameOverScreen.classList.remove('hidden');
+            backButton.classList.add('hidden'); // Hide back button on game over screen
+            finalScoreDisplay.textContent = `${score}/${totalQuestions}`;
+        }
+
+        // Event Listeners
+        themeToggleContainer.addEventListener('click', toggleTheme); // Listen for clicks on the icon container
+        startGameButton.addEventListener('click', startGame);
+        playAgainButton.addEventListener('click', () => {
+            gameSettings.classList.remove('hidden');
+            gameOverScreen.classList.add('hidden');
+            feedbackDisplay.textContent = ''; // Clear any lingering feedback
+        });
+
+        // New: Back button event listener
+        backButton.addEventListener('click', () => {
+            stopTimer(); // Stop timer if active
+            gameArea.classList.add('hidden');
+            gameOverScreen.classList.add('hidden');
+            gameSettings.classList.remove('hidden'); // Show game settings
+            backButton.classList.add('hidden'); // Hide back button in settings
+            feedbackDisplay.textContent = ''; // Clear any lingering feedback
+        });
+
+        // Initialize the game
+        loadTheme(); // Load theme preference on initial load
+    </script>
+</body>
+</html>

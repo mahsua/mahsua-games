@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Meta tags for SEO and social sharing -->
+    <meta name="description" content="Play the classic Guess the Number game! Test your luck and logic to guess the secret number in as few tries as possible.">
+    <meta name="keywords" content="guess the number, number game, guessing game, javascript game, html, css">
+    <meta property="og:title" content="Guess the Number Game">
+    <meta property="og:description" content="Can you guess the secret number? Play now!">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.example.com/games/number_guesser">
+    <title>Guess the Number</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Guess the Number!</h1>
+        <p>I have picked a number between 1 and 100. Can you guess it?</p>
+
+        <div class="game-area">
+            <input type="number" id="guess-input" placeholder="Enter your guess...">
+            <button class="button" id="guess-button">Guess</button>
+        </div>
+
+        <div class="results">
+            <p id="message" class="message"></p>
+            <p id="guess-count" class="guess-count"></p>
+        </div>
+
+        <button class="button" id="restart-button" style="display: none;">Play Again</button>
+    </div>
+
+    <footer>
+        <div class="footer-links">
+            <a href="../../index.html">Games</a>
+            <a href="#">About</a>
+            <a href="#">Contact</a>
+        </div>
+        <div class="footer-copyright">
+            <p>© 2024 Mahsua Games. Play instantly, no downloads required!</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

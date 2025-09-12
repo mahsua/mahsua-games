@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Solve the Picture Puzzle! Drag and drop tiles to complete stunning images in this classic slider game. Challenge yourself with multiple difficulty levels, from easy 3x3 grids to expert 5x5 puzzles. Play now and sharpen your mind!">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Picture Puzzle Game</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .game-container {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+
+        .puzzle-board {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            gap: 3px;
+            width: 300px;
+            height: 300px;
+            margin: 0 auto 30px;
+            border: 3px solid #333;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #333;
+        }
+
+        .puzzle-tile {
+            background-size: 300px 300px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: bold;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            user-select: none;
+            touch-action: none;
+        }
+
+        .puzzle-tile.dragging {
+            z-index: 100;
+            transform: scale(1.1);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+            transition: none;
+        }
+
+        .puzzle-tile:hover {
+            transform: scale(1.05);
+            z-index: 10;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .empty-tile {
+            background: #f0f0f0 !important;
+            cursor: default;
+        }
+
+        .empty-tile:hover {
+            transform: none;
+            box-shadow: none;
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .status {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #333;
+            margin-top: 20px;
+        }
+
+        .win-message {
+            color: #4CAF50;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-top: 20px;
+            animation: celebration 0.6s ease-in-out;
+        }
+
+        @keyframes celebration {
+            0% { transform: scale(0.8); opacity: 0; }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .moves-counter {
+            background: #f8f9fa;
+            padding: 10px 20px;
+            border-radius: 15px;
+            margin-top: 15px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        @media (max-width: 480px) {
+            .puzzle-board {
+                width: 250px;
+                height: 250px;
+            }
+            
+            .puzzle-tile {
+                background-size: 250px 250px;
+                font-size: 1.5rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            button {
+                width: 200px;
+            }
+        }
+        footer {
+            background-color: white;
+            text-align: center;
+            margin-top: auto;
+            width: 100%;
+            box-sizing: border-box;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px 0;
+        }
+
+        .footer-links {
+            color: #555;
+            font-size: 0.8em;
+            margin-bottom: 10px;
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-links a {
+            color: #555;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .footer-copyright {
+            color: #777;
+            font-size: 0.7em;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <h1>🧩 Picture Puzzle</h1>
+        <p class="subtitle">Click, drag, or swipe tiles to complete the beautiful landscape!</p>
+        
+        <div class="puzzle-board" id="puzzleBoard"></div>
+        
+        <div class="moves-counter">
+            Moves: <span id="moveCount">0</span> | Picture: <span id="pictureCount">1</span>/11
+        </div>
+        
+        <div id="status" class="status"></div>
+    </div>
+    <footer>
+        <div class="footer-links">
+            <a href="../../index.html">Games</a>
+            <a href="#">About</a>
+            <a href="#">Contact</a>
+        </div>
+        <div class="footer-copyright">
+            <p>© 2024 Mahsua Games. Play instantly, no downloads required!</p>
+        </div>
+    </footer>
+
+    <script>
+        let tiles = [];
+        let emptyIndex = 8;
+        let moves = 0;
+        let isShowingSolution = false;
+        let isDragging = false;
+        let draggedTile = null;
+        let startX = 0;
+        let startY = 0;
+        let currentPictureIndex = 0;
+
+        // Array of 11 different beautiful pictures - mix of CSS gradients and your local image
+        const pictureCollection = [
+            // Picture 1: Taj Mahal (your local image)
+            [
+                'url("tajmahal.jpg")',
+                'url("tajmahal.jpg")',
+                'url("tajmahal.jpg")',
+                'url("tajmahal.jpg")',
+                'url("tajmahal.jpg")',
+                'url("tajmahal.jpg")',
+                'url("tajmahal.jpg")',
+                'url("tajmahal.jpg")',
+                ''
+            ],
+            // Picture 2: Sunset landscape
+            [
+                'linear-gradient(135deg, #FF6B6B 0%, #FFE66D 50%, #4ECDC4 100%)',
+                'linear-gradient(135deg, #FF6B6B 0%, #FFE66D 50%, #4ECDC4 100%)',
+                'linear-gradient(135deg, #FF6B6B 0%, #FFE66D 50%, #4ECDC4 100%)',
+                'linear-gradient(135deg, #FFE66D 0%, #4ECDC4 50%, #45B7D1 100%)',
+                'linear-gradient(135deg, #FFE66D 0%, #4ECDC4 50%, #45B7D1 100%)',
+                'linear-gradient(135deg, #FFE66D 0%, #4ECDC4 50%, #45B7D1 100%)',
+                'linear-gradient(135deg, #4ECDC4 0%, #45B7D1 50%, #96CEB4 100%)',
+                'linear-gradient(135deg, #4ECDC4 0%, #45B7D1 50%, #96CEB4 100%)',
+                ''
+            ],
+            // Picture 2: Ocean waves
+            [
+                'linear-gradient(135deg, #74b9ff 0%, #0984e3 50%, #00b894 100%)',
+                'linear-gradient(135deg, #74b9ff 0%, #0984e3 50%, #00b894 100%)',
+                'linear-gradient(135deg, #74b9ff 0%, #0984e3 50%, #00b894 100%)',
+                'linear-gradient(135deg, #0984e3 0%, #00b894 50%, #00cec9 100%)',
+                'linear-gradient(135deg, #0984e3 0%, #00b894 50%, #00cec9 100%)',
+                'linear-gradient(135deg, #0984e3 0%, #00b894 50%, #00cec9 100%)',
+                'linear-gradient(135deg, #00b894 0%, #00cec9 50%, #55a3ff 100%)',
+                'linear-gradient(135deg, #00b894 0%, #00cec9 50%, #55a3ff 100%)',
+                ''
+            ],
+            // Picture 3: Forest canopy
+            [
+                'linear-gradient(135deg, #6c5ce7 0%, #a29bfe 50%, #fd79a8 100%)',
+                'linear-gradient(135deg, #6c5ce7 0%, #a29bfe 50%, #fd79a8 100%)',
+                'linear-gradient(135deg, #6c5ce7 0%, #a29bfe 50%, #fd79a8 100%)',
+                'linear-gradient(135deg, #a29bfe 0%, #fd79a8 50%, #fdcb6e 100%)',
+                'linear-gradient(135deg, #a29bfe 0%, #fd79a8 50%, #fdcb6e 100%)',
+                'linear-gradient(135deg, #a29bfe 0%, #fd79a8 50%, #fdcb6e 100%)',
+                'linear-gradient(135deg, #fd79a8 0%, #fdcb6e 50%, #e17055 100%)',
+                'linear-gradient(135deg, #fd79a8 0%, #fdcb6e 50%, #e17055 100%)',
+                ''
+            ],
+            // Picture 4: Mountain peaks
+            [
+                'linear-gradient(135deg, #636e72 0%, #2d3436 50%, #00b894 100%)',
+                'linear-gradient(135deg, #636e72 0%, #2d3436 50%, #00b894 100%)',
+                'linear-gradient(135deg, #636e72 0%, #2d3436 50%, #00b894 100%)',
+                'linear-gradient(135deg, #2d3436 0%, #00b894 50%, #00cec9 100%)',
+                'linear-gradient(135deg, #2d3436 0%, #00b894 50%, #00cec9 100%)',
+                'linear-gradient(135deg, #2d3436 0%, #00b894 50%, #00cec9 100%)',
+                'linear-gradient(135deg, #00b894 0%, #00cec9 50%, #81ecec 100%)',
+                'linear-gradient(135deg, #00b894 0%, #00cec9 50%, #81ecec 100%)',
+                ''
+            ],
+            // Picture 5: Desert dunes
+            [
+                'linear-gradient(135deg, #fab1a0 0%, #e17055 50%, #d63031 100%)',
+                'linear-gradient(135deg, #fab1a0 0%, #e17055 50%, #d63031 100%)',
+                'linear-gradient(135deg, #fab1a0 0%, #e17055 50%, #d63031 100%)',
+                'linear-gradient(135deg, #e17055 0%, #d63031 50%, #fdcb6e 100%)',
+                'linear-gradient(135deg, #e17055 0%, #d63031 50%, #fdcb6e 100%)',
+                'linear-gradient(135deg, #e17055 0%, #d63031 50%, #fdcb6e 100%)',
+                'linear-gradient(135deg, #d63031 0%, #fdcb6e 50%, #e84393 100%)',
+                'linear-gradient(135deg, #d63031 0%, #fdcb6e 50%, #e84393 100%)',
+                ''
+            ],
+            // Picture 6: Aurora borealis
+            [
+                'linear-gradient(135deg, #00b894 0%, #00cec9 50%, #6c5ce7 100%)',
+                'linear-gradient(135deg, #00b894 0%, #00cec9 50%, #6c5ce7 100%)',
+                'linear-gradient(135deg, #00b894 0%, #00cec9 50%, #6c5ce7 100%)',
+                'linear-gradient(135deg, #00cec9 0%, #6c5ce7 50%, #a29bfe 100%)',
+                'linear-gradient(135deg, #00cec9 0%, #6c5ce7 50%, #a29bfe 100%)',
+                'linear-gradient(135deg, #00cec9 0%, #6c5ce7 50%, #a29bfe 100%)',
+                'linear-gradient(135deg, #6c5ce7 0%, #a29bfe 50%, #fd79a8 100%)',
+                'linear-gradient(135deg, #6c5ce7 0%, #a29bfe 50%, #fd79a8 100%)',
+                ''
+            ],
+            // Picture 7: Tropical paradise
+            [
+                'linear-gradient(135deg, #55efc4 0%, #00b894 50%, #00cec9 100%)',
+                'linear-gradient(135deg, #55efc4 0%, #00b894 50%, #00cec9 100%)',
+                'linear-gradient(135deg, #55efc4 0%, #00b894 50%, #00cec9 100%)',
+                'linear-gradient(135deg, #00b894 0%, #00cec9 50%, #74b9ff 100%)',
+                'linear-gradient(135deg, #00b894 0%, #00cec9 50%, #74b9ff 100%)',
+                'linear-gradient(135deg, #00b894 0%, #00cec9 50%, #74b9ff 100%)',
+                'linear-gradient(135deg, #00cec9 0%, #74b9ff 50%, #0984e3 100%)',
+                'linear-gradient(135deg, #00cec9 0%, #74b9ff 50%, #0984e3 100%)',
+                ''
+            ],
+            // Picture 8: Autumn forest
+            [
+                'linear-gradient(135deg, #fdcb6e 0%, #e17055 50%, #d63031 100%)',
+                'linear-gradient(135deg, #fdcb6e 0%, #e17055 50%, #d63031 100%)',
+                'linear-gradient(135deg, #fdcb6e 0%, #e17055 50%, #d63031 100%)',
+                'linear-gradient(135deg, #e17055 0%, #d63031 50%, #e84393 100%)',
+                'linear-gradient(135deg, #e17055 0%, #d63031 50%, #e84393 100%)',
+                'linear-gradient(135deg, #e17055 0%, #d63031 50%, #e84393 100%)',
+                'linear-gradient(135deg, #d63031 0%, #e84393 50%, #a29bfe 100%)',
+                'linear-gradient(135deg, #d63031 0%, #e84393 50%, #a29bfe 100%)',
+                ''
+            ],
+            // Picture 9: Starry night
+            [
+                'linear-gradient(135deg, #2d3436 0%, #636e72 50%, #6c5ce7 100%)',
+                'linear-gradient(135deg, #2d3436 0%, #636e72 50%, #6c5ce7 100%)',
+                'linear-gradient(135deg, #2d3436 0%, #636e72 50%, #6c5ce7 100%)',
+                'linear-gradient(135deg, #636e72 0%, #6c5ce7 50%, #a29bfe 100%)',
+                'linear-gradient(135deg, #636e72 0%, #6c5ce7 50%, #a29bfe 100%)',
+                'linear-gradient(135deg, #636e72 0%, #6c5ce7 50%, #a29bfe 100%)',
+                'linear-gradient(135deg, #6c5ce7 0%, #a29bfe 50%, #74b9ff 100%)',
+                'linear-gradient(135deg, #6c5ce7 0%, #a29bfe 50%, #74b9ff 100%)',
+                ''
+            ],
+            // Picture 10: Spring meadow
+            [
+                'linear-gradient(135deg, #fd79a8 0%, #fdcb6e 50%, #55efc4 100%)',
+                'linear-gradient(135deg, #fd79a8 0%, #fdcb6e 50%, #55efc4 100%)',
+                'linear-gradient(135deg, #fd79a8 0%, #fdcb6e 50%, #55efc4 100%)',
+                'linear-gradient(135deg, #fdcb6e 0%, #55efc4 50%, #00b894 100%)',
+                'linear-gradient(135deg, #fdcb6e 0%, #55efc4 50%, #00b894 100%)',
+                'linear-gradient(135deg, #fdcb6e 0%, #55efc4 50%, #00b894 100%)',
+                'linear-gradient(135deg, #55efc4 0%, #00b894 50%, #00cec9 100%)',
+                'linear-gradient(135deg, #55efc4 0%, #00b894 50%, #00cec9 100%)',
+                ''
+            ]
+        ];
+
+        // Get current picture backgrounds
+        function getCurrentPictureBackgrounds() {
+            return pictureCollection[currentPictureIndex];
+        }
+
+        function initializePuzzle() {
+            const board = document.getElementById('puzzleBoard');
+            board.innerHTML = '';
+            tiles = [];
+            const currentBackgrounds = getCurrentPictureBackgrounds();
+
+            for (let i = 0; i < 9; i++) {
+                const tile = document.createElement('div');
+                tile.className = 'puzzle-tile';
+                tile.dataset.index = i;
+                
+                if (i === 8) {
+                    tile.classList.add('empty-tile');
+                    tile.textContent = '';
+                    tile.dataset.originalIndex = '';
+                } else {
+                    tile.style.background = currentBackgrounds[i];
+                    tile.textContent = i + 1;
+                    tile.dataset.originalIndex = i;
+                    // Set background position for proper image slicing
+                    if (currentBackgrounds[i].includes('url(')) {
+                        tile.style.backgroundPosition = `${-(i % 3) * 100}px ${-Math.floor(i / 3) * 100}px`;
+                        tile.style.backgroundSize = '300px 300px';
+                    } else {
+                        tile.style.backgroundPosition = `${-(i % 3) * 100}px ${-Math.floor(i / 3) * 100}px`;
+                    }
+                }
+                
+                tile.addEventListener('click', () => moveTile(i));
+                
+                // Mouse events
+                tile.addEventListener('mousedown', (e) => startDrag(e, i));
+                
+                // Touch events
+                tile.addEventListener('touchstart', (e) => startDrag(e, i), { passive: false });
+                
+                board.appendChild(tile);
+                tiles.push(tile);
+            }
+            
+            updateMoveCount();
+            updateStatus();
+        }
+
+        function moveTile(index) {
+            if (isShowingSolution) return;
+            
+            const clickedTile = tiles[index];
+            const emptyTile = tiles[emptyIndex];
+            
+            // Check if the clicked tile is adjacent to the empty space
+            const clickedRow = Math.floor(index / 3);
+            const clickedCol = index % 3;
+            const emptyRow = Math.floor(emptyIndex / 3);
+            const emptyCol = emptyIndex % 3;
+            
+            const isAdjacent = (Math.abs(clickedRow - emptyRow) === 1 && clickedCol === emptyCol) ||
+                              (Math.abs(clickedCol - emptyCol) === 1 && clickedRow === emptyRow);
+            
+            if (isAdjacent) {
+                // Store the original tile number that was clicked
+                const originalTileNumber = parseInt(clickedTile.textContent);
+                
+                // Store all properties before swapping
+                const tempBackground = clickedTile.style.background;
+                const tempBackgroundPosition = clickedTile.style.backgroundPosition;
+                const tempBackgroundSize = clickedTile.style.backgroundSize;
+                const tempText = clickedTile.textContent;
+                const tempClasses = clickedTile.className;
+                
+                // Move clicked tile properties to empty tile
+                emptyTile.style.background = tempBackground;
+                emptyTile.style.backgroundPosition = tempBackgroundPosition;
+                emptyTile.style.backgroundSize = tempBackgroundSize;
+                emptyTile.textContent = tempText;
+                emptyTile.className = 'puzzle-tile';
+                
+                // Make clicked tile the new empty tile
+                clickedTile.style.background = '#f0f0f0';
+                clickedTile.style.backgroundPosition = '';
+                clickedTile.style.backgroundSize = '';
+                clickedTile.textContent = '';
+                clickedTile.className = 'puzzle-tile empty-tile';
+                
+                // Update the dataset to track original positions
+                emptyTile.dataset.originalIndex = originalTileNumber - 1;
+                clickedTile.dataset.originalIndex = '';
+                
+                emptyIndex = index;
+                moves++;
+                updateMoveCount();
+                
+                setTimeout(() => {
+                    checkWin();
+                }, 100);
+            }
+        }
+
+        function scramblePuzzle() {
+            if (isShowingSolution) {
+                hideSolution();
+            }
+            
+            // Change to next picture
+            currentPictureIndex = (currentPictureIndex + 1) % pictureCollection.length;
+            
+            // Reinitialize with new picture
+            initializePuzzle();
+            
+            // Perform 100 random valid moves to scramble
+            for (let i = 0; i < 100; i++) {
+                const possibleMoves = getValidMoves();
+                const randomMove = possibleMoves[Math.floor(Math.random() * possibleMoves.length)];
+                moveTileForScramble(randomMove);
+            }
+            moves = 0;
+            updateMoveCount();
+            updateStatus();
+        }
+
+        function getValidMoves() {
+            const moves = [];
+            const emptyRow = Math.floor(emptyIndex / 3);
+            const emptyCol = emptyIndex % 3;
+            
+            // Check all four directions
+            if (emptyRow > 0) moves.push(emptyIndex - 3); // Up
+            if (emptyRow < 2) moves.push(emptyIndex + 3); // Down
+            if (emptyCol > 0) moves.push(emptyIndex - 1); // Left
+            if (emptyCol < 2) moves.push(emptyIndex + 1); // Right
+            
+            return moves;
+        }
+
+        function moveTileForScramble(index) {
+            const clickedTile = tiles[index];
+            const emptyTile = tiles[emptyIndex];
+            
+            // Store the original tile number that was clicked
+            const originalTileNumber = parseInt(clickedTile.textContent);
+            
+            // Store all properties before swapping
+            const tempBackground = clickedTile.style.background;
+            const tempBackgroundPosition = clickedTile.style.backgroundPosition;
+            const tempBackgroundSize = clickedTile.style.backgroundSize;
+            const tempText = clickedTile.textContent;
+            const tempClasses = clickedTile.className;
+            
+            // Move clicked tile properties to empty tile
+            emptyTile.style.background = tempBackground;
+            emptyTile.style.backgroundPosition = tempBackgroundPosition;
+            emptyTile.style.backgroundSize = tempBackgroundSize;
+            emptyTile.textContent = tempText;
+            emptyTile.className = 'puzzle-tile';
+            
+            // Make clicked tile the new empty tile
+            clickedTile.style.background = '#f0f0f0';
+            clickedTile.style.backgroundPosition = '';
+            clickedTile.style.backgroundSize = '';
+            clickedTile.textContent = '';
+            clickedTile.className = 'puzzle-tile empty-tile';
+            
+            // Update the dataset to track original positions
+            emptyTile.dataset.originalIndex = originalTileNumber - 1;
+            clickedTile.dataset.originalIndex = '';
+            
+            emptyIndex = index;
+        }
+
+        function resetPuzzle() {
+            if (isShowingSolution) {
+                hideSolution();
+            }
+            initializePuzzle();
+            moves = 0;
+            updateMoveCount();
+        }
+
+        function showSolution() {
+            if (isShowingSolution) {
+                hideSolution();
+                return;
+            }
+            
+            isShowingSolution = true;
+            const currentBackgrounds = getCurrentPictureBackgrounds();
+            
+            // Show the complete picture
+            for (let i = 0; i < 9; i++) {
+                if (i === 8) {
+                    tiles[i].style.background = currentBackgrounds[8];
+                    tiles[i].textContent = '9';
+                    tiles[i].classList.remove('empty-tile');
+                } else {
+                    tiles[i].style.background = currentBackgrounds[i];
+                    tiles[i].textContent = i + 1;
+                    tiles[i].classList.remove('empty-tile');
+                }
+            }
+            
+            document.getElementById('status').textContent = '👁️ Showing solution - Click "Peek Solution" again to return';
+            document.querySelector('button[onclick="showSolution()"]').textContent = '🔙 Back to Puzzle';
+        }
+
+        function hideSolution() {
+            isShowingSolution = false;
+            document.querySelector('button[onclick="showSolution()"]').textContent = '👁️ Peek Solution';
+            
+            // This would restore the current puzzle state
+            // For simplicity, we'll reset the puzzle
+            resetPuzzle();
+        }
+
+        function checkWin() {
+            let isWon = true;
+            
+            // Check if each tile is in its correct position
+            for (let i = 0; i < 8; i++) {
+                const tileNumber = parseInt(tiles[i].textContent);
+                if (isNaN(tileNumber) || tileNumber !== (i + 1)) {
+                    isWon = false;
+                    break;
+                }
+            }
+            
+            // Also check that position 8 is empty
+            if (isWon && tiles[8].classList.contains('empty-tile')) {
+                document.getElementById('status').innerHTML = '🎉 Congratulations! You solved the puzzle! 🎉';
+                document.getElementById('status').className = 'win-message';
+            } else {
+                updateStatus();
+            }
+        }
+
+        function updateStatus() {
+            const status = document.getElementById('status');
+            status.className = 'status';
+            status.textContent = 'Click, drag, or swipe tiles toward the empty space to move them';
+        }
+
+        function updateMoveCount() {
+            document.getElementById('moveCount').textContent = moves;
+            document.getElementById('pictureCount').textContent = currentPictureIndex + 1;
+        }
+
+        function startDrag(e, index) {
+            if (isShowingSolution || tiles[index].classList.contains('empty-tile')) return;
+            
+            e.preventDefault();
+            isDragging = true;
+            draggedTile = index;
+            
+            const clientX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
+            const clientY = e.type === 'touchstart' ? e.touches[0].clientY : e.clientY;
+            
+            startX = clientX;
+            startY = clientY;
+            
+            tiles[index].classList.add('dragging');
+            
+            // Add global event listeners
+            document.addEventListener('mousemove', handleDrag);
+            document.addEventListener('mouseup', endDrag);
+            document.addEventListener('touchmove', handleDrag, { passive: false });
+            document.addEventListener('touchend', endDrag);
+        }
+
+        function handleDrag(e) {
+            if (!isDragging || draggedTile === null) return;
+            
+            e.preventDefault();
+            
+            const clientX = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
+            const clientY = e.type === 'touchmove' ? e.touches[0].clientY : e.clientY;
+            
+            const deltaX = clientX - startX;
+            const deltaY = clientY - startY;
+            
+            // Apply transform to show dragging
+            tiles[draggedTile].style.transform = `translate(${deltaX}px, ${deltaY}px) scale(1.1)`;
+        }
+
+        function endDrag(e) {
+            if (!isDragging || draggedTile === null) return;
+            
+            const clientX = e.type === 'touchend' ? e.changedTouches[0].clientX : e.clientX;
+            const clientY = e.type === 'touchend' ? e.changedTouches[0].clientY : e.clientY;
+            
+            const deltaX = clientX - startX;
+            const deltaY = clientY - startY;
+            
+            // Determine direction based on drag distance
+            const threshold = 50; // Minimum drag distance
+            let targetIndex = -1;
+            
+            if (Math.abs(deltaX) > Math.abs(deltaY)) {
+                // Horizontal movement
+                if (Math.abs(deltaX) > threshold) {
+                    if (deltaX > 0) {
+                        // Dragged right, check if empty space is to the right
+                        if (draggedTile % 3 < 2 && emptyIndex === draggedTile + 1) {
+                            targetIndex = draggedTile + 1;
+                        }
+                    } else {
+                        // Dragged left, check if empty space is to the left
+                        if (draggedTile % 3 > 0 && emptyIndex === draggedTile - 1) {
+                            targetIndex = draggedTile - 1;
+                        }
+                    }
+                }
+            } else {
+                // Vertical movement
+                if (Math.abs(deltaY) > threshold) {
+                    if (deltaY > 0) {
+                        // Dragged down, check if empty space is below
+                        if (Math.floor(draggedTile / 3) < 2 && emptyIndex === draggedTile + 3) {
+                            targetIndex = draggedTile + 3;
+                        }
+                    } else {
+                        // Dragged up, check if empty space is above
+                        if (Math.floor(draggedTile / 3) > 0 && emptyIndex === draggedTile - 3) {
+                            targetIndex = draggedTile - 3;
+                        }
+                    }
+                }
+            }
+            
+            // Reset tile position and styling
+            tiles[draggedTile].style.transform = '';
+            tiles[draggedTile].classList.remove('dragging');
+            
+            // If valid move, execute it
+            if (targetIndex !== -1) {
+                moveTile(draggedTile);
+            }
+            
+            // Clean up
+            isDragging = false;
+            draggedTile = null;
+            
+            // Remove global event listeners
+            document.removeEventListener('mousemove', handleDrag);
+            document.removeEventListener('mouseup', endDrag);
+            document.removeEventListener('touchmove', handleDrag);
+            document.removeEventListener('touchend', endDrag);
+        }
+
+        // Initialize the game
+        initializePuzzle();
+        
+        // Auto-scramble after a short delay
+        setTimeout(() => {
+            scramblePuzzle();
+        }, 1000);
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97df447ec31d7143',t:'MTc1NzY3ODY2OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ludo Game</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f2f2f2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .game-card {
+            background-color: #fff;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        .game-title {
+            color: #8e2de2;
+            font-size: 2.5rem;
+            margin: 0;
+            text-align: center;
+        }
+
+        .game-board-container {
+            width: 90%;
+            aspect-ratio: 1 / 1;
+            position: relative;
+            background-color: #d1d1d1;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 2px solid #ccc;
+        }
+
+        .board-grid {
+            display: grid;
+            grid-template-columns: repeat(15, 1fr);
+            grid-template-rows: repeat(15, 1fr);
+            width: 100%;
+            height: 100%;
+        }
+
+        .cell {
+            border: 1px solid #c9c9c9;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        .home-base {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .home-base-red { background-color: #ff0000; }
+        .home-base-green { background-color: #008000; }
+        .home-base-yellow { background-color: #ffff00; }
+        .home-base-blue { background-color: #0000ff; }
+
+        .path-cell { background-color: #fff; }
+
+        .center-cell { background-color: #fff; }
+
+        .center-triangle-container {
+            position: absolute;
+            top: 6fr;
+            left: 6fr;
+            width: 3fr;
+            height: 3fr;
+        }
+
+        .piece-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 70%;
+            height: 70%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .piece {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            box-shadow: inset 0 3px 5px rgba(255, 255, 255, 0.4), inset 0 -3px 5px rgba(0, 0, 0, 0.2), 0 5px 10px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        .piece-red { background-color: #ff0000; }
+        .piece-green { background-color: #008000; }
+        .piece-yellow { background-color: #ffff00; }
+        .piece-blue { background-color: #0000ff; }
+
+        .turn-indicator {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #333;
+            text-align: center;
+        }
+
+        .dice-container {
+            width: 80px;
+            height: 80px;
+            background-color: #8e2de2;
+            border-radius: 15px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            place-items: center;
+            padding: 5px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .dot {
+            width: 15px;
+            height: 15px;
+            background-color: #fff;
+            border-radius: 50%;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+        }
+
+        .action-button {
+            padding: 12px 25px;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            background-color: #8e2de2;
+        }
+
+        /* SVG for center */
+        .center-svg {
+            position: absolute;
+            top: 6fr;
+            left: 6fr;
+            width: 3fr;
+            height: 3fr;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="game-card">
+        <h1 class="game-title">Ludo Game</h1>
+        <div class="game-board-container">
+            <div class="board-grid">
+                <!-- Top Left Home Base: Green -->
+                <div class="cell home-base home-base-green" style="grid-area: 1 / 1 / 7 / 7;">
+                    <div class="piece-container" style="left: 25%; top: 25%;"><div class="piece piece-green"></div></div>
+                    <div class="piece-container" style="left: 75%; top: 25%;"><div class="piece piece-green"></div></div>
+                    <div class="piece-container" style="left: 25%; top: 75%;"><div class="piece piece-green"></div></div>
+                    <div class="piece-container" style="left: 75%; top: 75%;"><div class="piece piece-green"></div></div>
+                </div>
+                <!-- Top Right Home Base: Yellow -->
+                <div class="cell home-base home-base-yellow" style="grid-area: 1 / 10 / 7 / 16;">
+                    <div class="piece-container" style="left: 25%; top: 25%;"><div class="piece piece-yellow"></div></div>
+                    <div class="piece-container" style="left: 75%; top: 25%;"><div class="piece piece-yellow"></div></div>
+                    <div class="piece-container" style="left: 25%; top: 75%;"><div class="piece piece-yellow"></div></div>
+                    <div class="piece-container" style="left: 75%; top: 75%;"><div class="piece piece-yellow"></div></div>
+                </div>
+                <!-- Bottom Left Home Base: Red -->
+                <div class="cell home-base home-base-red" style="grid-area: 10 / 1 / 16 / 7;">
+                    <div class="piece-container" style="left: 25%; top: 25%;"><div class="piece piece-red"></div></div>
+                    <div class="piece-container" style="left: 75%; top: 25%;"><div class="piece piece-red"></div></div>
+                    <div class="piece-container" style="left: 25%; top: 75%;"><div class="piece piece-red"></div></div>
+                    <div class="piece-container" style="left: 75%; top: 75%;"><div class="piece piece-red"></div></div>
+                </div>
+                <!-- Bottom Right Home Base: Blue -->
+                <div class="cell home-base home-base-blue" style="grid-area: 10 / 10 / 16 / 16;">
+                    <div class="piece-container" style="left: 25%; top: 25%;"><div class="piece piece-blue"></div></div>
+                    <div class="piece-container" style="left: 75%; top: 25%;"><div class="piece piece-blue"></div></div>
+                    <div class="piece-container" style="left: 25%; top: 75%;"><div class="piece piece-blue"></div></div>
+                    <div class="piece-container" style="left: 75%; top: 75%;"><div class="piece piece-blue"></div></div>
+                </div>
+
+                <!-- Paths -->
+                <div class="cell path-cell" style="grid-area: 1 / 7 / 7 / 10;"></div>
+                <div class="cell path-cell" style="grid-area: 7 / 1 / 10 / 7;"></div>
+                <div class="cell path-cell" style="grid-area: 7 / 10 / 10 / 16;"></div>
+                <div class="cell path-cell" style="grid-area: 10 / 7 / 16 / 10;"></div>
+                <div class="cell path-cell" style="grid-area: 7 / 7 / 10 / 10;"></div>
+
+                <!-- Home path colors -->
+                <div class="cell" style="grid-area: 2 / 7 / 7 / 8; background-color: #008000;"></div>
+                <div class="cell" style="grid-area: 7 / 2 / 8 / 7; background-color: #ffff00;"></div>
+                <div class="cell" style="grid-area: 8 / 10 / 10 / 15; background-color: #0000ff;"></div>
+                <div class="cell" style="grid-area: 10 / 8 / 15 / 9; background-color: #ff0000;"></div>
+
+                <!-- Center -->
+                <div class="cell center-cell" style="grid-area: 7 / 7 / 10 / 10;">
+                    <svg viewBox="0 0 100 100">
+                        <polygon points="50,0 100,50 50,100 0,50" fill="white" />
+                        <polygon points="50,0 100,50 50,50" fill="#ffff00" />
+                        <polygon points="100,50 50,100 50,50" fill="#0000ff" />
+                        <polygon points="50,100 0,50 50,50" fill="#ff0000" />
+                        <polygon points="0,50 50,0 50,50" fill="#008000" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <p class="turn-indicator">It's Red's turn</p>
+        <div class="dice-container">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+        <div class="button-group">
+            <button class="action-button">Roll Dice</button>
+            <button class="action-button">Restart Game</button>
+        </div>
+    </div>
+</body>
+</html>
