@@ -24,7 +24,7 @@ window.onload = function() {
     highScoreDisplayElement2.innerText = highScore;
 
     // Load sound effects
-    const biteSound = new Audio('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3');
+    const biteSound = new Audio('./eat-sound.mp3');
 
     // Resize canvas to be a perfect square and fit the container
     function resizeCanvas() {
