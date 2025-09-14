@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtual 3D Dice Flipper</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <h1 class="title">🎲 Virtual 3D Dice Flipper</h1>
+        <p class="subtitle">Roll the dice and test your luck!</p>
+        
+        <div class="controls">
+            <div class="dice-count">
+                <label>Dice Count:</label>
+                <select id="diceCount">
+                    <option value="1">1 Die</option>
+                    <option value="2" selected>2 Dice</option>
+                    <option value="3">3 Dice</option>
+                    <option value="4">4 Dice</option>
+                    <option value="5">5 Dice</option>
+                    <option value="6">6 Dice</option>
+                </select>
+            </div>
+            <button class="btn theme-toggle" onclick="toggleTheme()">🌙 Dark</button>
+        </div>
+        
+        <div class="dice-area" id="diceArea">
+            <!-- Dice will be generated here -->
+        </div>
+
+        <div class="controls">
+            <button class="btn" onclick="rollDice()">🎲 Roll Dice</button>
+            <button class="btn secondary" onclick="resetGame()">🔄 Reset</button>
+        </div>
+
+        <div class="results" id="results" style="display: none;">
+            <div class="result-item">Individual Results: <span id="individualResults"></span></div>
+            <div class="result-item total">Total: <span id="totalResult">0</span></div>
+            <div class="result-item">Average: <span id="averageResult">0</span></div>
+        </div>
+    </div>
+    <footer>
+        <div class="footer-links">
+            <a href="../../index.html">Games</a>
+            <a href="#">About</a>
+            <a href="#">Contact</a>
+        </div>
+        <div class="footer-copyright">
+            <p>© 2024 Mahsua Games. Play instantly, no downloads required!</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97ed710bc0b198ef',t:'MTc1NzgyNzI5NC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
