@@ -222,6 +222,85 @@
             color: #777;
             font-size: 0.7em;
         }
+        /* Completion Popup Styles */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .popup-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .popup-content {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            transform: scale(0.7);
+            transition: transform 0.3s ease;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .popup-overlay.active .popup-content {
+            transform: scale(1);
+        }
+
+        .popup-title {
+            color: #4CAF50;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .popup-message {
+            color: #333;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+
+        .popup-stats {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-size: 1.1rem;
+            color: #555;
+        }
+
+        .popup-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            margin-top: 10px;
+        }
+
+        .popup-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
     </style>
 </head>
 <body>
@@ -242,6 +321,17 @@
             <a href="../../index.html">Games</a>
             <a href="#">About</a>
             <a href="#">Contact</a>
+        </div>
+        <!-- Completion Popup -->
+        <div class="popup-overlay" id="completionPopup">
+            <div class="popup-content">
+                <div class="popup-title">🎉 Level Complete! 🎉</div>
+                <div class="popup-message">You've successfully solved the puzzle!</div>
+                <div class="popup-stats" id="popupStats">
+                    <!-- Stats will be inserted here by JavaScript -->
+                </div>
+                <button class="popup-button" onclick="playNextLevel()">🚀 Play Next Level</button>
+            </div>
         </div>
         <div class="footer-copyright">
             <p>© 2024 Mahsua Games. Play instantly, no downloads required!</p>
@@ -275,86 +365,86 @@
             ],
             // Picture 2: Sunset landscape
             [
-                'linear-gradient(135deg, #FF6B6B 0%, #FFE66D 50%, #4ECDC4 100%)',
-                'linear-gradient(135deg, #FF6B6B 0%, #FFE66D 50%, #4ECDC4 100%)',
-                'linear-gradient(135deg, #FF6B6B 0%, #FFE66D 50%, #4ECDC4 100%)',
-                'linear-gradient(135deg, #FFE66D 0%, #4ECDC4 50%, #45B7D1 100%)',
-                'linear-gradient(135deg, #FFE66D 0%, #4ECDC4 50%, #45B7D1 100%)',
-                'linear-gradient(135deg, #FFE66D 0%, #4ECDC4 50%, #45B7D1 100%)',
-                'linear-gradient(135deg, #4ECDC4 0%, #45B7D1 50%, #96CEB4 100%)',
-                'linear-gradient(135deg, #4ECDC4 0%, #45B7D1 50%, #96CEB4 100%)',
+                'url("apple.jpg")',
+                'url("apple.jpg")',
+                'url("apple.jpg")',
+                'url("apple.jpg")',
+                'url("apple.jpg")',
+                'url("apple.jpg")',
+                'url("apple.jpg")',
+                'url("apple.jpg")',
                 ''
             ],
             // Picture 2: Ocean waves
             [
-                'linear-gradient(135deg, #74b9ff 0%, #0984e3 50%, #00b894 100%)',
-                'linear-gradient(135deg, #74b9ff 0%, #0984e3 50%, #00b894 100%)',
-                'linear-gradient(135deg, #74b9ff 0%, #0984e3 50%, #00b894 100%)',
-                'linear-gradient(135deg, #0984e3 0%, #00b894 50%, #00cec9 100%)',
-                'linear-gradient(135deg, #0984e3 0%, #00b894 50%, #00cec9 100%)',
-                'linear-gradient(135deg, #0984e3 0%, #00b894 50%, #00cec9 100%)',
-                'linear-gradient(135deg, #00b894 0%, #00cec9 50%, #55a3ff 100%)',
-                'linear-gradient(135deg, #00b894 0%, #00cec9 50%, #55a3ff 100%)',
+                'url("car.jpg")',
+                'url("car.jpg")',
+                'url("car.jpg")',
+                'url("car.jpg")',
+                'url("car.jpg")',
+                'url("car.jpg")',
+                'url("car.jpg")',
+                'url("car.jpg")',
                 ''
             ],
             // Picture 3: Forest canopy
             [
-                'linear-gradient(135deg, #6c5ce7 0%, #a29bfe 50%, #fd79a8 100%)',
-                'linear-gradient(135deg, #6c5ce7 0%, #a29bfe 50%, #fd79a8 100%)',
-                'linear-gradient(135deg, #6c5ce7 0%, #a29bfe 50%, #fd79a8 100%)',
-                'linear-gradient(135deg, #a29bfe 0%, #fd79a8 50%, #fdcb6e 100%)',
-                'linear-gradient(135deg, #a29bfe 0%, #fd79a8 50%, #fdcb6e 100%)',
-                'linear-gradient(135deg, #a29bfe 0%, #fd79a8 50%, #fdcb6e 100%)',
-                'linear-gradient(135deg, #fd79a8 0%, #fdcb6e 50%, #e17055 100%)',
-                'linear-gradient(135deg, #fd79a8 0%, #fdcb6e 50%, #e17055 100%)',
+                'url("edu.jpg")',
+                'url("edu.jpg")',
+                'url("edu.jpg")',
+                'url("edu.jpg")',
+                'url("edu.jpg")',
+                'url("edu.jpg")',
+                'url("edu.jpg")',
+                'url("edu.jpg")',
                 ''
             ],
             // Picture 4: Mountain peaks
             [
-                'linear-gradient(135deg, #636e72 0%, #2d3436 50%, #00b894 100%)',
-                'linear-gradient(135deg, #636e72 0%, #2d3436 50%, #00b894 100%)',
-                'linear-gradient(135deg, #636e72 0%, #2d3436 50%, #00b894 100%)',
-                'linear-gradient(135deg, #2d3436 0%, #00b894 50%, #00cec9 100%)',
-                'linear-gradient(135deg, #2d3436 0%, #00b894 50%, #00cec9 100%)',
-                'linear-gradient(135deg, #2d3436 0%, #00b894 50%, #00cec9 100%)',
-                'linear-gradient(135deg, #00b894 0%, #00cec9 50%, #81ecec 100%)',
-                'linear-gradient(135deg, #00b894 0%, #00cec9 50%, #81ecec 100%)',
+                'url("tajmahal.jpg")',
+                'url("tajmahal.jpg")',
+                'url("tajmahal.jpg")',
+                'url("tajmahal.jpg")',
+                'url("tajmahal.jpg")',
+                'url("tajmahal.jpg")',
+                'url("tajmahal.jpg")',
+                'url("tajmahal.jpg")',
                 ''
             ],
             // Picture 5: Desert dunes
             [
-                'linear-gradient(135deg, #fab1a0 0%, #e17055 50%, #d63031 100%)',
-                'linear-gradient(135deg, #fab1a0 0%, #e17055 50%, #d63031 100%)',
-                'linear-gradient(135deg, #fab1a0 0%, #e17055 50%, #d63031 100%)',
-                'linear-gradient(135deg, #e17055 0%, #d63031 50%, #fdcb6e 100%)',
-                'linear-gradient(135deg, #e17055 0%, #d63031 50%, #fdcb6e 100%)',
-                'linear-gradient(135deg, #e17055 0%, #d63031 50%, #fdcb6e 100%)',
-                'linear-gradient(135deg, #d63031 0%, #fdcb6e 50%, #e84393 100%)',
-                'linear-gradient(135deg, #d63031 0%, #fdcb6e 50%, #e84393 100%)',
+                'url("flwor.jpg")',
+                'url("flwor.jpg")',
+                'url("flwor.jpg")',
+                'url("flwor.jpg")',
+                'url("flwor.jpg")',
+                'url("flwor.jpg")',
+                'url("flwor.jpg")',
+                'url("flwor.jpg")',
                 ''
             ],
             // Picture 6: Aurora borealis
             [
-                'linear-gradient(135deg, #00b894 0%, #00cec9 50%, #6c5ce7 100%)',
-                'linear-gradient(135deg, #00b894 0%, #00cec9 50%, #6c5ce7 100%)',
-                'linear-gradient(135deg, #00b894 0%, #00cec9 50%, #6c5ce7 100%)',
-                'linear-gradient(135deg, #00cec9 0%, #6c5ce7 50%, #a29bfe 100%)',
-                'linear-gradient(135deg, #00cec9 0%, #6c5ce7 50%, #a29bfe 100%)',
-                'linear-gradient(135deg, #00cec9 0%, #6c5ce7 50%, #a29bfe 100%)',
-                'linear-gradient(135deg, #6c5ce7 0%, #a29bfe 50%, #fd79a8 100%)',
-                'linear-gradient(135deg, #6c5ce7 0%, #a29bfe 50%, #fd79a8 100%)',
+                'url("kids.jpg")',
+                'url("kids.jpg")',
+                'url("kids.jpg")',
+                'url("kids.jpg")',
+                'url("kids.jpg")',
+                'url("kids.jpg")',
+                'url("kids.jpg")',
+                'url("kids.jpg")',
                 ''
             ],
             // Picture 7: Tropical paradise
             [
-                'linear-gradient(135deg, #55efc4 0%, #00b894 50%, #00cec9 100%)',
-                'linear-gradient(135deg, #55efc4 0%, #00b894 50%, #00cec9 100%)',
-                'linear-gradient(135deg, #55efc4 0%, #00b894 50%, #00cec9 100%)',
-                'linear-gradient(135deg, #00b894 0%, #00cec9 50%, #74b9ff 100%)',
-                'linear-gradient(135deg, #00b894 0%, #00cec9 50%, #74b9ff 100%)',
-                'linear-gradient(135deg, #00b894 0%, #00cec9 50%, #74b9ff 100%)',
-                'linear-gradient(135deg, #00cec9 0%, #74b9ff 50%, #0984e3 100%)',
-                'linear-gradient(135deg, #00cec9 0%, #74b9ff 50%, #0984e3 100%)',
+                'url("tree.jpg")',
+                'url("tree.jpg")',
+                'url("tree.jpg")',
+                'url("tree.jpg")',
+                'url("tree.jpg")',
+                'url("tree.jpg")',
+                'url("tree.jpg")',
+                'url("tree.jpg")',
                 ''
             ],
             // Picture 8: Autumn forest
@@ -629,11 +719,15 @@
             if (isWon && tiles[8].classList.contains('empty-tile')) {
                 document.getElementById('status').innerHTML = '🎉 Congratulations! You solved the puzzle! 🎉';
                 document.getElementById('status').className = 'win-message';
+                
+                // Show completion popup after a short delay
+                setTimeout(() => {
+                    showCompletionPopup();
+                }, 1000);
             } else {
                 updateStatus();
             }
-        }
-
+}
         function updateStatus() {
             const status = document.getElementById('status');
             status.className = 'status';
@@ -747,12 +841,74 @@
             document.removeEventListener('touchend', endDrag);
         }
 
+        function showCompletionPopup() {
+            const popup = document.getElementById('completionPopup');
+            const popupStats = document.getElementById('popupStats');
+            
+            // Update popup stats
+            popupStats.innerHTML = `
+                Level: <strong>${currentPictureIndex + 1}</strong> of ${pictureCollection.length}<br>
+                Moves: <strong>${moves}</strong><br>
+                Efficiency: <strong>${calculateEfficiency()}</strong>
+            `;
+            
+            // Show popup
+            popup.classList.add('active');
+            
+            // Prevent interaction with the game board
+            document.getElementById('puzzleBoard').style.pointerEvents = 'none';
+        }
+
+        function hideCompletionPopup() {
+            const popup = document.getElementById('completionPopup');
+            popup.classList.remove('active');
+            
+            // Re-enable interaction with the game board
+            document.getElementById('puzzleBoard').style.pointerEvents = 'auto';
+        }
+
+        function playNextLevel() {
+            hideCompletionPopup();
+            
+            // Move to next level (only +1)
+            currentPictureIndex = (currentPictureIndex + 1) % pictureCollection.length;
+            
+            // Reset and scramble the new level WITHOUT auto-advancing again
+            initializePuzzle(); // This will use the new currentPictureIndex
+            
+            // Now scramble without changing the picture index again
+            for (let i = 0; i < 100; i++) {
+                const possibleMoves = getValidMoves();
+                const randomMove = possibleMoves[Math.floor(Math.random() * possibleMoves.length)];
+                moveTileForScramble(randomMove);
+            }
+            
+            moves = 0;
+            updateMoveCount();
+            updateStatus();
+        }
+
+        function calculateEfficiency() {
+            // Simple efficiency calculation based on moves
+            const minMoves = 10; // Theoretical minimum
+            const efficiency = Math.max(0, Math.min(100, Math.round((minMoves / moves) * 100)));
+            return `${efficiency}%`;
+        }
+
         // Initialize the game
         initializePuzzle();
-        
-        // Auto-scramble after a short delay
+
+        // Auto-scramble after a short delay - but don't change the picture
         setTimeout(() => {
-            scramblePuzzle();
+            // Scramble without changing picture index
+            for (let i = 0; i < 100; i++) {
+                const possibleMoves = getValidMoves();
+                const randomMove = possibleMoves[Math.floor(Math.random() * possibleMoves.length)];
+                moveTileForScramble(randomMove);
+            }
+            moves = 0;
+            updateMoveCount();
+            updateStatus();
         }, 1000);
     </script>
 <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97df447ec31d7143',t:'MTc1NzY3ODY2OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
