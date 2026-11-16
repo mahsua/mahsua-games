@@ -1,84 +1,45 @@
 # 🎮 Mahsua Games
 
-Welcome to the **Mahsua Games** repository!  
-This project is a collection of classic web-based games, built using a single-file approach with **HTML, CSS, and JavaScript**.  
-The goal is to create simple, fun, and easy-to-run games that can be played directly in your web browser.
+Welcome to **Mahsua Games** ([games.mahsua.com](https://games.mahsua.com/))!
+A collection of **27 free, mobile-friendly browser games** built with HTML, CSS, and JavaScript.
 
----
+## ✅ Playable Games (27)
 
-## ✅ Completed Games
+| # | Game | Description | Play |
+| :--- | :--- | :--- | :--- |
+| 1 | **2048** | Swipe or use arrow keys to merge tiles and reach 2048. | [Play Now](https://games.mahsua.com/2048-game.html) |
+| 2 | **Bicycle Racing** | Switch lanes, collect coins, and dodge road obstacles. | [Play Now](https://games.mahsua.com/bicycle-racing.html) |
+| 3 | **Block Puzzle** | Fit falling blocks into lines to clear the board. | [Play Now](https://games.mahsua.com/block-puzzle.html) |
+| 4 | **Breakout Bricks** | Bounce the ball to smash colorful bricks across levels. | [Play Now](https://games.mahsua.com/breakout.html) |
+| 5 | **Bubble Shooter** | Aim and match colorful bubbles to clear the board. | [Play Now](https://games.mahsua.com/bubble-shooter.html) |
+| 6 | **Car Racing** | Dodge oncoming cars and set a high distance score. | [Play Now](https://games.mahsua.com/car-racing.html) |
+| 7 | **Coin Flip** | Flip a virtual coin for instant heads or tails. | [Play Now](https://games.mahsua.com/coin-flip.html) |
+| 8 | **Crossword Puzzle** | Solve 90 levels of fun crossword clues. | [Play Now](https://games.mahsua.com/crossword-puzzle.html) |
+| 9 | **Dice Flipper** | Roll 3D virtual dice with sound effects. | [Play Now](https://games.mahsua.com/dice-flipper.html) |
+| 10 | **Free the Key** | Slide blocks to free the key from the board. | [Play Now](https://games.mahsua.com/free-the-key.html) |
+| 11 | **Fruit Ninja** | Swipe to slice flying fruits and avoid bombs. | [Play Now](https://games.mahsua.com/fruit-ninja.html) |
+| 12 | **Guess the Number** | Guess the secret number in as few tries as possible. | [Play Now](https://games.mahsua.com/guess-the-number.html) |
+| 13 | **Karate Fight** | Punch, kick, and block to defeat your dojo rival. | [Play Now](https://games.mahsua.com/karate-fight.html) |
+| 14 | **Ludo** | Classic multiplayer board game in your browser. | [Play Now](https://games.mahsua.com/ludo.html) |
+| 15 | **Math Quiz** | Test your arithmetic speed against the clock. | [Play Now](https://games.mahsua.com/math-quiz.html) |
+| 16 | **Memory Match** | Flip cards and match pairs to win. | [Play Now](https://games.mahsua.com/memory-match.html) |
+| 17 | **PAC-MAN** | Eat dots, grab power orbs, and dodge ghosts. | [Play Now](https://games.mahsua.com/pac-man.html) |
+| 18 | **Picture Puzzle** | Slide image tiles back into place. | [Play Now](https://games.mahsua.com/picture-puzzle.html) |
+| 19 | **Pong Classic** | Beat the AI in the timeless paddle arcade game. | [Play Now](https://games.mahsua.com/pong.html) |
+| 20 | **Rock, Paper, Scissors** | Play the classic hand game against the computer. | [Play Now](https://games.mahsua.com/rock-paper-scissors.html) |
+| 21 | **Snake Game** | Eat food to grow longer without hitting walls or yourself. | [Play Now](https://games.mahsua.com/snake-game.html) |
+| 22 | **Sniper Target** | Hit moving bullseye targets before time runs out. | [Play Now](https://games.mahsua.com/sniper-gun.html) |
+| 23 | **Solitaire** | Classic Klondike card game with undo and timer. | [Play Now](https://games.mahsua.com/solitaire.html) |
+| 24 | **Tennis Game** | Serve and rally against the AI on the green court. | [Play Now](https://games.mahsua.com/tennis-game.html) |
+| 25 | **Tic-Tac-Toe** | Get three X or O marks in a row to win. | [Play Now](https://games.mahsua.com/tic-tac-toe.html) |
+| 26 | **Wall Dodge** | Dodge incoming walls and survive as long as you can. | [Play Now](https://games.mahsua.com/wall-dodge.html) |
+| 27 | **Word Search** | Find hidden words across 90 levels. | [Play Now](https://games.mahsua.com/word-search.html) |
 
-These games are fully developed and ready to play. Click the links below to start playing in your browser:
+## 📁 Project Structure
 
-### 🐍 Snake Game
-A classic arcade game where you control a continuously moving snake. The objective is to eat the food to grow longer and score points while avoiding collisions with the walls or your own body.  
-👉 [Play Now](https://games.mahsua.com/snake-game.html)
+- `index.html` — Main games portal
+- `<game-name>.html` — Individual game pages
+- `assets/` — Images, audio, and Ludo modules
+- `robots.txt` & `sitemap.xml` — Search engine indexing for `games.mahsua.com`
 
----
-
-### 🧱 Tetris Game
-A famous puzzle game where you manipulate falling blocks of different shapes to form complete horizontal lines. These lines then disappear, and the game challenges you to keep up as the speed increases.  
-👉 [Play Now](https://games.mahsua.com/tetris-game.html)
-
----
-
-### 🧠 Math Quiz
-A fast-paced brain game that challenges your arithmetic skills. Answer a series of random math problems (addition, subtraction, multiplication, division) within a time limit to get the highest score.  
-👉 [Play Now](https://games.mahsua.com/math-quiz.html)
-
----
-
-### 🪙 Coin Flip
-A simple digital coin toss simulator. Perfect for making a quick decision or just for a bit of fun. Flip the coin and see if it lands on heads or tails!  
-👉 [Play Now](https://games.mahsua.com/coin-flip.html)
-
----
-
-### 👊 Rock, Paper, Scissors
-The classic hand game brought to your browser. Play against the computer in this game of chance and strategy.  
-👉 [Play Now](https://games.mahsua.com/rock-paper-scissors.html)
-
----
-
-### ❌⭕ Tic-Tac-Toe
-A turn-based game for two players, played on a 3x3 grid. The goal is to get three of your marks (X or O) in a row, either horizontally, vertically, or diagonally.  
-👉 [Play Now](https://games.mahsua.com/tic-tac-toe.html)
-
----
-
-### 🏃‍♂️ Wall-Dodge
-A fast-reaction game where you control a character that must dodge incoming walls by moving left and right. The speed increases as you survive, providing a challenging and addictive experience.  
-👉 [Play Now](https://games.mahsua.com/wall-dodge.html)
-
----
-
-### 🧩 Free the Key
-A sliding block puzzle game where the objective is to move a designated "key" block to the exit. You must strategically slide other blocks out of the way to clear a path.  
-👉 [Play Now](https://games.mahsua.com/free-the-key.html)
-
----
-
-### 🤔 Guess the Number
-A simple guessing game where the computer thinks of a random number, and you have to guess it. The game provides clues (higher/lower) to guide your next guess.  
-👉 [Play Now](https://games.mahsua.com/guess-the-number.html)
-
----
-
-### 🖼️ Picture Puzzle
-A classic jigsaw puzzle reimagined as a tile-sliding game. The goal is to rearrange the scrambled tiles to form the original image.  
-👉 [Play Now](https://games.mahsua.com/picture-puzzle.html)
-
----
-
-## 🚧 Pending Games
-
-These games are currently in our development pipeline. They will also follow the **single-file format**:
-
-- 🃏 **Memory Card Game**: A fun and engaging card-matching game where players flip over cards to find pairs. This game will include a scoring system and a timer to add a competitive element.
-
----
-
-## 💡 Contributing
-
-Have suggestions for new games or improvements?  
-Feel free to **open an issue** or **submit a pull request**! 🚀
+Built by **Mahsua Technology** ([technology.mahsua.com](https://technology.mahsua.com/)).

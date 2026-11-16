@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>PAC-MAN | Mahsua Games</title>
+    <link rel="icon" href="./favicon.png" type="image/png">
+    <meta name="description" content="Play PAC-MAN online for free at Mahsua Games! Eat pellets, dodge ghosts, grab power orbs, and set a high score.">
+    <meta name="keywords" content="pac-man, pacman game, arcade game, mahsua games, free browser game">
+    <meta name="author" content="Mahsua Games">
+    <meta name="robots" content="index, follow">
+
+    <!-- Google Ads -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9351361840615541" crossorigin="anonymous"></script>
+    <meta name="google-adsense-account" content="ca-pub-9351361840615541">
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-095F8QMZ5S"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-095F8QMZ5S');
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-gradient: linear-gradient(135deg, #ffe6f0 0%, #e0f3ff 50%, #e6ffe6 100%);
+            --card-bg: rgba(255, 255, 255, 0.94);
+            --card-border: rgba(236, 72, 153, 0.2);
+            --text-color: #1e293b;
+            --text-secondary: #64748b;
+            --canvas-bg: #f8fafc;
+            --wall-color: #3b82f6;
+            --accent-pink: #ec4899;
+            --accent-blue: #3b82f6;
+            --accent-green: #10b981;
+            --shadow: 0 12px 32px rgba(15, 23, 42, 0.08);
+        }
+
+        body.dark {
+            --bg-gradient: linear-gradient(135deg, #1f1024 0%, #0f172a 50%, #0b221a 100%);
+            --card-bg: rgba(30, 41, 59, 0.92);
+            --card-border: rgba(236, 72, 153, 0.3);
+            --text-color: #f8fafc;
+            --text-secondary: #94a3b8;
+            --canvas-bg: #0f172a;
+            --wall-color: #60a5fa;
+            --shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 540px;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 1.2rem;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(16px);
+        }
+
+        .top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.8rem;
+            gap: 0.5rem;
+        }
+
+        .back-link {
+            text-decoration: none;
+            color: var(--accent-blue);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .top-actions {
+            display: flex;
+            gap: 0.45rem;
+        }
+
+        .pill-btn {
+            background: rgba(59, 130, 246, 0.12);
+            color: var(--text-color);
+            border: 1px solid var(--card-border);
+            border-radius: 999px;
+            padding: 0.35rem 0.75rem;
+            font-family: inherit;
+            font-size: 0.82rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-bottom: 0.8rem;
+        }
+
+        h1 {
+            font-size: 1.85rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent-pink), var(--accent-blue), var(--accent-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stats {
+            display: flex;
+            gap: 0.45rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-box {
+            background: linear-gradient(135deg, rgba(236, 72, 153, 0.12), rgba(59, 130, 246, 0.12));
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 0.35rem 0.65rem;
+            text-align: center;
+            min-width: 62px;
+        }
+
+        .stat-label {
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+        }
+
+        .stat-value {
+            font-size: 1rem;
+            font-weight: 800;
+        }
+
+        .controls-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .subtitle {
+            font-size: 0.84rem;
+            color: var(--text-secondary);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 0.45rem;
+        }
+
+        .btn {
+            border: none;
+            border-radius: 12px;
+            padding: 0.48rem 0.85rem;
+            font-family: inherit;
+            font-size: 0.84rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-pink), var(--accent-blue));
+            color: #fff;
+        }
+
+        .btn-secondary {
+            background: rgba(16, 185, 129, 0.15);
+            color: #059669;
+            border: 1px solid rgba(16, 185, 129, 0.35);
+        }
+
+        body.dark .btn-secondary {
+            color: #34d399;
+        }
+
+        .canvas-wrap {
+            position: relative;
+            width: 100%;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 2px solid var(--card-border);
+            background: var(--canvas-bg);
+            touch-action: none;
+        }
+
+        canvas {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        .overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(4px);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            color: #fff;
+            text-align: center;
+            padding: 1.5rem;
+        }
+
+        .overlay.active {
+            display: flex;
+        }
+
+        .overlay h2 {
+            font-size: 1.75rem;
+            font-weight: 800;
+        }
+
+        .dpad {
+            display: none;
+            grid-template-columns: repeat(3, 56px);
+            grid-template-rows: repeat(2, 48px);
+            gap: 0.45rem;
+            justify-content: center;
+            margin-top: 0.85rem;
+        }
+
+        .dpad button {
+            border-radius: 12px;
+            border: 1px solid var(--card-border);
+            background: rgba(59, 130, 246, 0.14);
+            color: var(--text-color);
+            font-size: 1.1rem;
+            font-weight: 800;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .dpad .up    { grid-column: 2; grid-row: 1; }
+        .dpad .left  { grid-column: 1; grid-row: 2; }
+        .dpad .down  { grid-column: 2; grid-row: 2; }
+        .dpad .right { grid-column: 3; grid-row: 2; }
+
+        @media (max-width: 768px) {
+            .dpad {
+                display: grid;
+            }
+        }
+
+        .hint {
+            margin-top: 0.75rem;
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="top-bar">
+            <a href="./index.html" class="back-link">← All Games</a>
+            <div class="top-actions">
+                <button class="pill-btn" id="soundToggle" type="button">🔊 Sound</button>
+                <button class="pill-btn" id="themeToggle" type="button">🌙 Dark</button>
+            </div>
+        </div>
+
+        <div class="header">
+            <h1>👻 PAC-MAN</h1>
+            <div class="stats">
+                <div class="stat-box">
+                    <div class="stat-label">Score</div>
+                    <div class="stat-value" id="score">0</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">Best</div>
+                    <div class="stat-value" id="bestScore">0</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">Lives</div>
+                    <div class="stat-value" id="lives">❤️❤️❤️</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="controls-row">
+            <span class="subtitle">Eat all dots & grab orbs to scare ghosts!</span>
+            <div class="btn-group">
+                <button class="btn btn-secondary" id="pauseBtn" type="button">Pause</button>
+                <button class="btn btn-primary" id="restartBtn" type="button">New Game</button>
+            </div>
+        </div>
+
+        <div class="canvas-wrap" id="canvasWrap">
+            <canvas id="pacCanvas" width="456" height="456"></canvas>
+            <div class="overlay active" id="overlay">
+                <h2 id="overlayTitle">PAC-MAN</h2>
+                <p id="overlayMsg">Clear the maze while dodging the ghosts!</p>
+                <button class="btn btn-primary" id="startBtn" type="button">Start Game</button>
+            </div>
+        </div>
+
+        <div class="dpad">
+            <button class="up" data-dir="up" type="button">▲</button>
+            <button class="left" data-dir="left" type="button">◀</button>
+            <button class="down" data-dir="down" type="button">▼</button>
+            <button class="right" data-dir="right" type="button">▶</button>
+        </div>
+
+        <p class="hint">Use Arrow keys / WASD on desktop, or swipe / tap the D-pad on mobile.</p>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('pacCanvas');
+        const ctx = canvas.getContext('2d');
+        const scoreEl = document.getElementById('score');
+        const bestScoreEl = document.getElementById('bestScore');
+        const livesEl = document.getElementById('lives');
+        const pauseBtn = document.getElementById('pauseBtn');
+        const restartBtn = document.getElementById('restartBtn');
+        const overlay = document.getElementById('overlay');
+        const overlayTitle = document.getElementById('overlayTitle');
+        const overlayMsg = document.getElementById('overlayMsg');
+        const startBtn = document.getElementById('startBtn');
+        const soundToggle = document.getElementById('soundToggle');
+        const themeToggle = document.getElementById('themeToggle');
+        const canvasWrap = document.getElementById('canvasWrap');
+
+        const TILE = 24;
+        const COLS = 19;
+        const ROWS = 19;
+
+        // 1 = wall, 0 = dot, 2 = power orb, 3 = empty
+        const BASE_MAP = [
+            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+            [1,2,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,2,1],
+            [1,0,1,1,0,1,1,1,0,1,0,1,1,1,0,1,1,0,1],
+            [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+            [1,0,1,1,0,1,0,1,1,1,1,1,0,1,0,1,1,0,1],
+            [1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1],
+            [1,1,1,1,0,1,1,1,3,1,3,1,1,1,0,1,1,1,1],
+            [1,3,3,1,0,1,3,3,3,3,3,3,3,1,0,1,3,3,1],
+            [1,1,1,1,0,1,3,1,1,3,1,1,3,1,0,1,1,1,1],
+            [3,3,3,3,0,3,3,1,3,3,3,1,3,3,0,3,3,3,3],
+            [1,1,1,1,0,1,3,1,1,1,1,1,3,1,0,1,1,1,1],
+            [1,3,3,1,0,1,3,3,3,3,3,3,3,1,0,1,3,3,1],
+            [1,1,1,1,0,1,3,1,1,1,1,1,3,1,0,1,1,1,1],
+            [1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1],
+            [1,0,1,1,0,1,1,1,0,1,0,1,1,1,0,1,1,0,1],
+            [1,2,0,1,0,0,0,0,0,3,0,0,0,0,0,1,0,2,1],
+            [1,1,0,1,0,1,0,1,1,1,1,1,0,1,0,1,0,1,1],
+            [1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1],
+            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+        ];
+
+        const DIRS = {
+            left:  { dx: -1, dy: 0 },
+            right: { dx: 1, dy: 0 },
+            up:    { dx: 0, dy: -1 },
+            down:  { dx: 0, dy: 1 },
+        };
+
+        let map = [];
+        let score = 0;
+        let bestScore = parseInt(localStorage.getItem('mahsua_pacman_best') || '0', 10);
+        let lives = 3;
+        let running = false;
+        let paused = false;
+        let soundOn = true;
+        let frightenedTimer = 0;
+        let tickCount = 0;
+        let pac = { x: 9, y: 15, dir: 'left', nextDir: 'left' };
+        let ghosts = [];
+
+        bestScoreEl.textContent = bestScore;
+
+        let audioCtx = null;
+        function beep(freq, dur = 0.05) {
+            if (!soundOn) return;
+            try {
+                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'sine';
+                osc.frequency.value = freq;
+                gain.gain.setValueAtTime(0.06, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + dur);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + dur);
+            } catch (_) {}
+        }
+
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark');
+            themeToggle.textContent = document.body.classList.contains('dark') ? '☀️ Light' : '🌙 Dark';
+        });
+
+        soundToggle.addEventListener('click', () => {
+            soundOn = !soundOn;
+            soundToggle.textContent = soundOn ? '🔊 Sound' : '🔇 Muted';
+        });
+
+        function resetEntities() {
+            pac = { x: 9, y: 15, dir: 'left', nextDir: 'left' };
+            ghosts = [
+                { x: 9, y: 9, dir: 'left', color: '#ec4899' },
+                { x: 8, y: 9, dir: 'up',   color: '#3b82f6' },
+                { x: 10, y: 9, dir: 'right', color: '#10b981' },
+            ];
+            frightenedTimer = 0;
+        }
+
+        function updateHUD() {
+            scoreEl.textContent = score;
+            livesEl.textContent = '❤️'.repeat(Math.max(0, lives)) || '💔';
+            if (score > bestScore) {
+                bestScore = score;
+                localStorage.setItem('mahsua_pacman_best', String(bestScore));
+                bestScoreEl.textContent = bestScore;
+            }
+        }
+
+        function startGame() {
+            map = BASE_MAP.map(r => [...r]);
+            score = 0;
+            lives = 3;
+            resetEntities();
+            updateHUD();
+            running = true;
+            paused = false;
+            pauseBtn.textContent = 'Pause';
+            overlay.classList.remove('active');
+        }
+
+        pauseBtn.addEventListener('click', () => {
+            if (!running) return;
+            paused = !paused;
+            pauseBtn.textContent = paused ? 'Resume' : 'Pause';
+        });
+
+        restartBtn.addEventListener('click', startGame);
+        startBtn.addEventListener('click', startGame);
+
+        function canMoveTo(x, y) {
+            const nx = (x + COLS) % COLS;
+            if (y < 0 || y >= ROWS) return false;
+            return map[y][nx] !== 1;
+        }
+
+        function step() {
+            if (!running || paused) return;
+
+            if (frightenedTimer > 0) frightenedTimer--;
+
+            // Try queued direction first
+            const nd = DIRS[pac.nextDir];
+            if (canMoveTo(pac.x + nd.dx, pac.y + nd.dy)) {
+                pac.dir = pac.nextDir;
+            }
+            const cd = DIRS[pac.dir];
+            if (canMoveTo(pac.x + cd.dx, pac.y + cd.dy)) {
+                pac.x = (pac.x + cd.dx + COLS) % COLS;
+                pac.y += cd.dy;
+            }
+
+            // Eat dot or power orb
+            const cell = map[pac.y][pac.x];
+            if (cell === 0) {
+                map[pac.y][pac.x] = 3;
+                score += 10;
+                beep(520, 0.03);
+                updateHUD();
+            } else if (cell === 2) {
+                map[pac.y][pac.x] = 3;
+                score += 50;
+                frightenedTimer = 45;
+                beep(760, 0.12);
+                updateHUD();
+            }
+
+            // Check win
+            if (map.every(row => row.every(c => c !== 0 && c !== 2))) {
+                running = false;
+                overlayTitle.textContent = '🏆 Maze Cleared!';
+                overlayMsg.textContent = 'Score: ' + score;
+                startBtn.textContent = 'Play Again';
+                overlay.classList.add('active');
+                return;
+            }
+
+            // Move ghosts
+            for (const g of ghosts) {
+                const options = Object.keys(DIRS).filter(d => canMoveTo(g.x + DIRS[d].dx, g.y + DIRS[d].dy));
+                const opp = { left: 'right', right: 'left', up: 'down', down: 'up' }[g.dir];
+                const filtered = options.length > 1 ? options.filter(d => d !== opp) : options;
+                if (filtered.length > 0) {
+                    // Slight chase when not frightened
+                    if (frightenedTimer === 0 && Math.random() < 0.55) {
+                        filtered.sort((a, b) => {
+                            const da = Math.hypot((g.x + DIRS[a].dx) - pac.x, (g.y + DIRS[a].dy) - pac.y);
+                            const db = Math.hypot((g.x + DIRS[b].dx) - pac.x, (g.y + DIRS[b].dy) - pac.y);
+                            return da - db;
+                        });
+                        g.dir = filtered[0];
+                    } else {
+                        g.dir = filtered[Math.floor(Math.random() * filtered.length)];
+                    }
+                }
+                g.x = (g.x + DIRS[g.dir].dx + COLS) % COLS;
+                g.y += DIRS[g.dir].dy;
+
+                // Collision check
+                if (g.x === pac.x && g.y === pac.y) {
+                    if (frightenedTimer > 0) {
+                        score += 200;
+                        g.x = 9;
+                        g.y = 9;
+                        beep(880, 0.1);
+                        updateHUD();
+                    } else {
+                        lives--;
+                        updateHUD();
+                        beep(180, 0.2);
+                        if (lives <= 0) {
+                            running = false;
+                            overlayTitle.textContent = 'Game Over!';
+                            overlayMsg.textContent = 'Final Score: ' + score;
+                            startBtn.textContent = 'Play Again';
+                            overlay.classList.add('active');
+                            return;
+                        }
+                        resetEntities();
+                        break;
+                    }
+                }
+            }
+        }
+
+        function draw() {
+            const isDark = document.body.classList.contains('dark');
+            ctx.fillStyle = isDark ? '#0f172a' : '#f8fafc';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            const wallColor = isDark ? '#60a5fa' : '#3b82f6';
+            for (let r = 0; r < ROWS; r++) {
+                for (let c = 0; c < COLS; c++) {
+                    const cell = (map[r] && map[r][c] !== undefined) ? map[r][c] : BASE_MAP[r][c];
+                    const x = c * TILE;
+                    const y = r * TILE;
+                    if (cell === 1) {
+                        ctx.fillStyle = wallColor;
+                        ctx.beginPath();
+                        ctx.roundRect(x + 2, y + 2, TILE - 4, TILE - 4, 5);
+                        ctx.fill();
+                    } else if (cell === 0) {
+                        ctx.fillStyle = '#ec4899';
+                        ctx.beginPath();
+                        ctx.arc(x + TILE / 2, y + TILE / 2, 3, 0, Math.PI * 2);
+                        ctx.fill();
+                    } else if (cell === 2) {
+                        ctx.fillStyle = '#10b981';
+                        ctx.beginPath();
+                        ctx.arc(x + TILE / 2, y + TILE / 2, 6, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                }
+            }
+
+            // Draw PAC-MAN
+            const px = pac.x * TILE + TILE / 2;
+            const py = pac.y * TILE + TILE / 2;
+            const mouth = (tickCount % 2 === 0) ? 0.35 : 0.08;
+            const angles = { right: 0, down: Math.PI / 2, left: Math.PI, up: -Math.PI / 2 };
+            const baseAngle = angles[pac.dir] || 0;
+            ctx.fillStyle = '#facc15';
+            ctx.beginPath();
+            ctx.moveTo(px, py);
+            ctx.arc(px, py, TILE * 0.42, baseAngle + mouth, baseAngle + Math.PI * 2 - mouth);
+            ctx.closePath();
+            ctx.fill();
+
+            // Draw Ghosts
+            for (const g of ghosts) {
+                const gx = g.x * TILE + TILE / 2;
+                const gy = g.y * TILE + TILE / 2;
+                ctx.fillStyle = frightenedTimer > 0 ? '#6366f1' : g.color;
+                ctx.beginPath();
+                ctx.arc(gx, gy - 2, TILE * 0.38, Math.PI, 0);
+                ctx.lineTo(gx + TILE * 0.38, gy + TILE * 0.38);
+                ctx.lineTo(gx - TILE * 0.38, gy + TILE * 0.38);
+                ctx.closePath();
+                ctx.fill();
+
+                ctx.fillStyle = '#fff';
+                ctx.beginPath();
+                ctx.arc(gx - 4, gy - 3, 3, 0, Math.PI * 2);
+                ctx.arc(gx + 4, gy - 3, 3, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        window.addEventListener('keydown', (e) => {
+            const keyMap = {
+                ArrowLeft: 'left', a: 'left', A: 'left',
+                ArrowRight: 'right', d: 'right', D: 'right',
+                ArrowUp: 'up', w: 'up', W: 'up',
+                ArrowDown: 'down', s: 'down', S: 'down'
+            };
+            if (keyMap[e.key]) {
+                e.preventDefault();
+                pac.nextDir = keyMap[e.key];
+            }
+        });
+
+        document.querySelectorAll('.dpad button').forEach(btn => {
+            btn.addEventListener('click', () => {
+                pac.nextDir = btn.dataset.dir;
+            });
+        });
+
+        let tsX = 0, tsY = 0;
+        canvasWrap.addEventListener('touchstart', (e) => {
+            tsX = e.touches[0].clientX;
+            tsY = e.touches[0].clientY;
+        }, { passive: true });
+        canvasWrap.addEventListener('touchend', (e) => {
+            const dx = e.changedTouches[0].clientX - tsX;
+            const dy = e.changedTouches[0].clientY - tsY;
+            if (Math.max(Math.abs(dx), Math.abs(dy)) < 20) return;
+            pac.nextDir = Math.abs(dx) > Math.abs(dy) ? (dx > 0 ? 'right' : 'left') : (dy > 0 ? 'down' : 'up');
+        }, { passive: true });
+
+        setInterval(() => {
+            tickCount++;
+            step();
+            draw();
+        }, 165);
+
+        map = BASE_MAP.map(r => [...r]);
+        resetEntities();
+        draw();
+    </script>
+
+<!-- Mahsua Floating Home & Fullscreen Bar -->
+<style>
+  #mahsua-nav-bar {
+    position: fixed;
+    bottom: 12px;
+    right: 12px;
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.88);
+    border: 1px solid rgba(236, 72, 153, 0.3);
+    box-shadow: 0 6px 20px rgba(15, 23, 42, 0.16);
+    backdrop-filter: blur(12px);
+    font-family: 'Outfit', system-ui, -apple-system, sans-serif;
+  }
+  body.dark #mahsua-nav-bar,
+  body.dark-mode #mahsua-nav-bar {
+    background: rgba(15, 23, 42, 0.88);
+    border-color: rgba(59, 130, 246, 0.35);
+  }
+  .mahsua-nav-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    border: none;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform 0.15s ease, opacity 0.15s ease;
+  }
+  .mahsua-nav-btn:active {
+    transform: scale(0.95);
+  }
+  .mahsua-home-btn {
+    background: linear-gradient(135deg, #ec4899, #3b82f6);
+    color: #ffffff;
+  }
+  .mahsua-fs-btn {
+    background: linear-gradient(135deg, #10b981, #3b82f6);
+    color: #ffffff;
+  }
+</style>
+<div id="mahsua-nav-bar">
+  <a href="https://games.mahsua.com/" class="mahsua-nav-btn mahsua-home-btn" title="Go to Mahsua Games Home">🏠 Home</a>
+  <button type="button" id="mahsuaFsBtn" class="mahsua-nav-btn mahsua-fs-btn" title="Toggle Full Screen">⛶ Full Screen</button>
+</div>
+<script>
+  (function() {
+    var fsBtn = document.getElementById('mahsuaFsBtn');
+    if (!fsBtn) return;
+    function isFull() {
+      return !!(document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement);
+    }
+    function updateFsLabel() {
+      fsBtn.textContent = isFull() ? '✕ Exit Full' : '⛶ Full Screen';
+    }
+    fsBtn.addEventListener('click', function() {
+      var el = document.documentElement;
+      if (!isFull()) {
+        if (el.requestFullscreen) el.requestFullscreen();
+        else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+        else if (el.msRequestFullscreen) el.msRequestFullscreen();
+      } else {
+        if (document.exitFullscreen) document.exitFullscreen();
+        else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+        else if (document.msExitFullscreen) document.msExitFullscreen();
+      }
+    });
+    document.addEventListener('fullscreenchange', updateFsLabel);
+    document.addEventListener('webkitfullscreenchange', updateFsLabel);
+  })();
+</script>
+
+</body>
+</html>

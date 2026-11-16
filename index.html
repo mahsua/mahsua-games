@@ -4,860 +4,507 @@
     <!-- Google Ads -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9351361840615541" crossorigin="anonymous"></script>
     <meta name="google-adsense-account" content="ca-pub-9351361840615541">
-        <!-- Google tag (gtag.js) -->
+
+    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-095F8QMZ5S"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
-
         gtag('config', 'G-095F8QMZ5S');
     </script>
-    <!-- Basic Meta Tags -->
-    <meta name="description" content="Welcome to Mahsua Games! Play a wide selection of free online games for all ages. Enjoy classic arcade games, brain-teasing puzzles, and more, all without any downloads.">
-    <meta name="keywords" content="mahsua games, free games, online games, play games, fun games, family games, browser games, casual games, arcade games, puzzle games">
-    <meta name="author" content="Mahsua Games">
-    <meta name="robots" content="index, follow">
-    <meta property="og:title" content="Mahsua Games - Play Free Online Games">
-    <meta property="og:description" content="Play free online games instantly on Mahsua Games. We offer a variety of fun and engaging games, from timeless classics to new favorites.">
-    <meta property="og:type" content="website">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Mahsua Games - Play Free Online Games">
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mahsua Games - Play Free Online Games</title>
-    <link rel="icon" href="./favicon.png" type="image/svg+xml">
+    <link rel="icon" href="./favicon.png" type="image/png">
+    <meta name="description" content="Welcome to Mahsua Games! Launch 27 free online browser games instantly on mobile and desktop.">
+    <meta name="keywords" content="mahsua games, free games, online games, browser games, arcade games, puzzle games">
+    <meta name="author" content="Mahsua Games">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="Mahsua Games - Play Free Online Games">
+    <meta property="og:description" content="Launch 27 free online browser games instantly on Mahsua Games.">
+    <meta property="og:type" content="website">
+
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        /* CSS Variables for Pink/Blue/Green Theme */
         :root {
-            /* Light Mode */
-            --bg-gradient-start: #ffe6f0;
-            --bg-gradient-middle: #e0f3ff;
-            --bg-gradient-end: #e6ffe6;
-            --container-bg: rgba(255, 255, 255, 0.95);
-            --text-color: #2d3748;
-            --text-secondary: #4a5568;
-            --heading-gradient: linear-gradient(135deg, #ec489a, #3b82f6, #22c55e);
-            --card-bg: rgba(255, 255, 255, 0.9);
-            --card-border: rgba(236, 72, 153, 0.2);
-            --button-gradient: linear-gradient(135deg, #ec489a, #3b82f6);
-            --button-hover: linear-gradient(135deg, #db2777, #2563eb);
-            --glass-border: rgba(236, 72, 153, 0.2);
-            --shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
-            --shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.1);
-            --feature-bg: rgba(255, 255, 255, 0.8);
+            --bg-wallpaper: radial-gradient(circle at 15% 20%, #ffd6e8 0%, transparent 45%),
+                            radial-gradient(circle at 85% 25%, #cce7ff 0%, transparent 45%),
+                            radial-gradient(circle at 50% 85%, #d1fae5 0%, transparent 50%),
+                            linear-gradient(135deg, #ffe6f0 0%, #e0f3ff 50%, #e6ffe6 100%);
+            --glass-bg: rgba(255, 255, 255, 0.58);
+            --glass-border: rgba(255, 255, 255, 0.72);
+            --text-color: #0f172a;
+            --text-muted: #475569;
+            --dock-bg: rgba(255, 255, 255, 0.55);
+            --icon-shadow: 0 10px 22px rgba(15, 23, 42, 0.14);
         }
 
-        [data-theme="dark"] {
-            --bg-gradient-start: #1a1a2e;
-            --bg-gradient-middle: #16213e;
-            --bg-gradient-end: #0f3460;
-            --container-bg: rgba(30, 41, 59, 0.95);
-            --text-color: #e2e8f0;
-            --text-secondary: #94a3b8;
-            --card-bg: rgba(51, 65, 85, 0.9);
-            --card-border: rgba(236, 72, 153, 0.2);
-            --glass-border: rgba(236, 72, 153, 0.2);
-            --shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            --shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.4);
-            --feature-bg: rgba(51, 65, 85, 0.8);
+        body.dark {
+            --bg-wallpaper: radial-gradient(circle at 15% 20%, #4c1d4b 0%, transparent 45%),
+                            radial-gradient(circle at 85% 25%, #1e3a8a 0%, transparent 45%),
+                            radial-gradient(circle at 50% 85%, #064e3b 0%, transparent 50%),
+                            linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #091e1a 100%);
+            --glass-bg: rgba(30, 41, 59, 0.58);
+            --glass-border: rgba(255, 255, 255, 0.14);
+            --text-color: #f8fafc;
+            --text-muted: #cbd5e1;
+            --dock-bg: rgba(15, 23, 42, 0.55);
+            --icon-shadow: 0 10px 22px rgba(0, 0, 0, 0.42);
         }
 
         body {
-            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-middle) 50%, var(--bg-gradient-end) 100%);
-            color: var(--text-color);
-            line-height: 1.6;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        /* Glass Grid Background */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            pointer-events: none;
-            background-image: 
-                linear-gradient(rgba(236, 72, 153, 0.08) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(59, 130, 246, 0.08) 1px, transparent 1px),
-                radial-gradient(circle at top left, rgba(236, 72, 153, 0.12), transparent 28%),
-                radial-gradient(circle at bottom right, rgba(34, 197, 94, 0.1), transparent 26%);
-            background-size: 26px 26px, 26px 26px, 100% 100%, 100% 100%;
-            background-position: 0 0, 0 0, 0 0, 0 0;
-            z-index: 0;
-        }
-
-        .container {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 0 24px;
-            position: relative;
-            z-index: 1;
-        }
-
-        /* Header */
-        header {
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            background: var(--container-bg);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--glass-border);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-            padding: 1rem 0;
-        }
-
-        .header-container {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 0 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo-container h1 {
-            font-size: 1.8rem;
-            font-weight: 800;
-            background: var(--heading-gradient);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        .domain {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-            display: block;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text-color);
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-
-        .nav-links a:hover {
-            color: #ec489a;
-        }
-
-        .theme-toggle {
-            background: var(--button-gradient);
-            border: none;
-            padding: 8px 20px;
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: 600;
-            color: white;
-            transition: all 0.3s ease;
             font-family: 'Outfit', sans-serif;
-            margin-left: 1rem;
-        }
-
-        .theme-toggle:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 12px rgba(236, 72, 153, 0.3);
-        }
-
-        /* Hero Section */
-        .hero-section {
-            text-align: center;
-            padding: 80px 24px 60px;
-            animation: riseIn 0.7s ease-out;
-        }
-
-        .hero-section h1 {
-            font-size: 4rem;
-            font-weight: 800;
-            background: var(--heading-gradient);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            margin-bottom: 1rem;
-        }
-
-        .hero-section p {
-            max-width: 700px;
-            margin: 0 auto 2rem;
-            color: var(--text-secondary);
-            font-size: 1.1rem;
-        }
-
-        .play-button {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 1rem 2rem;
-            background: var(--button-gradient);
-            color: white;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(236, 72, 153, 0.3);
-        }
-
-        .play-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(236, 72, 153, 0.4);
-        }
-
-        .play-button svg {
-            fill: white;
-            width: 20px;
-            height: 20px;
-        }
-
-        /* Featured Games Section */
-        .featured-games {
-            padding: 60px 24px;
-        }
-
-        .featured-games h2 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            text-align: center;
-            margin-bottom: 3rem;
-            background: linear-gradient(135deg, #ec489a, #3b82f6);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        .game-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 2rem;
-            max-width: 1280px;
-            margin: 0 auto;
-        }
-
-        .game-card {
-            background: var(--card-bg);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--card-border);
-            border-radius: 28px;
-            padding: 1.5rem;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            animation: riseIn 0.7s ease-out;
-        }
-
-        .game-card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-hover);
-            border-color: rgba(236, 72, 153, 0.4);
-        }
-
-        .game-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
-        .game-card h3 {
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
+            background: var(--bg-wallpaper);
+            background-attachment: fixed;
             color: var(--text-color);
-        }
-
-        .game-card p {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
-            line-height: 1.5;
-        }
-
-        .game-meta {
+            min-height: 100vh;
             display: flex;
+            flex-direction: column;
             justify-content: space-between;
+            padding: 0.9rem 1rem 6.4rem;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        /* Top Status / Launcher Bar */
+        .status-bar {
+            width: 100%;
+            max-width: 1040px;
+            margin: 0 auto 1.1rem;
+            display: flex;
             align-items: center;
+            justify-content: space-between;
+            gap: 0.75rem;
         }
 
-        .difficulty {
-            background: var(--tag-bg);
-            color: var(--tag-color);
-            padding: 0.25rem 0.75rem;
-            border-radius: 50px;
-            font-size: 0.7rem;
-            font-weight: 600;
-        }
-
-        .rating {
-            color: #f59e0b;
-            font-size: 0.8rem;
-        }
-
-        /* About Section */
-        .about {
-            padding: 60px 24px;
-        }
-
-        .about-content {
-            max-width: 800px;
-            margin: 0 auto;
-            text-align: center;
-            background: var(--card-bg);
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--card-border);
-            border-radius: 28px;
-            padding: 2.5rem;
-        }
-
-        .about-content h2 {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, #ec489a, #3b82f6);
+        .brand {
+            font-size: 1.05rem;
+            font-weight: 800;
+            letter-spacing: -0.01em;
+            background: linear-gradient(135deg, #ec4899, #3b82f6, #10b981);
             -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+            -webkit-text-fill-color: transparent;
+            white-space: nowrap;
         }
 
-        .about-content p {
-            color: var(--text-secondary);
-            line-height: 1.8;
+        .search-pill {
+            flex: 1;
+            max-width: 340px;
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(18px);
+            border-radius: 999px;
+            padding: 0.45rem 0.9rem;
+            box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06);
         }
 
-        /* Why Choose Section */
-        .why-choose-section {
-            padding: 60px 24px;
-            text-align: center;
-        }
-
-        .why-choose-section h2 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 3rem;
-            background: linear-gradient(135deg, #ec489a, #3b82f6);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .feature-item {
-            background: var(--feature-bg);
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--card-border);
-            border-radius: 24px;
-            padding: 2rem;
-            transition: all 0.3s ease;
-        }
-
-        .feature-item:hover {
-            transform: translateY(-4px);
-            border-color: rgba(236, 72, 153, 0.4);
-        }
-
-        .feature-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .feature-item h3 {
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
+        .search-pill input {
+            width: 100%;
+            border: none;
+            outline: none;
+            background: transparent;
             color: var(--text-color);
+            font-family: inherit;
+            font-size: 0.9rem;
+            font-weight: 500;
         }
 
-        .feature-item p {
-            color: var(--text-secondary);
+        .search-pill input::placeholder {
+            color: var(--text-muted);
         }
 
-        /* Footer */
-        footer {
-            background: var(--container-bg);
-            backdrop-filter: blur(20px);
-            border-top: 1px solid var(--glass-border);
-            padding: 3rem 0 2rem;
-            margin-top: 2rem;
-            text-align: center;
-        }
-
-        .footer-links {
-            margin-bottom: 1rem;
-        }
-
-        .footer-links p {
-            font-weight: 600;
+        .theme-btn {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(18px);
             color: var(--text-color);
-        }
-
-        .footer-copyright {
-            color: var(--text-secondary);
+            border-radius: 999px;
+            padding: 0.45rem 0.85rem;
+            font-family: inherit;
             font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
         }
 
-        .footer-copyright a {
-            color: #ec489a;
+        /* App Launcher Grid */
+        .launcher-wrap {
+            width: 100%;
+            max-width: 980px;
+            margin: 0 auto;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .app-grid {
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(7, minmax(0, 1fr));
+            gap: 1.5rem 1.15rem;
+            justify-items: center;
+        }
+
+        .app-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.45rem;
             text-decoration: none;
+            color: var(--text-color);
+            width: 100%;
+            max-width: 96px;
+            transition: transform 0.18s ease;
         }
 
-        .footer-copyright a:hover {
-            text-decoration: underline;
+        .app-item:hover {
+            transform: translateY(-4px) scale(1.06);
         }
 
-        /* Animations */
-        @keyframes riseIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
+        .app-item:active {
+            transform: scale(0.94);
+        }
+
+        .app-icon {
+            width: 72px;
+            height: 72px;
+            border-radius: 22%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.15rem;
+            box-shadow: var(--icon-shadow), inset 0 1px 1px rgba(255, 255, 255, 0.45);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .app-icon::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(255,255,255,0.28) 0%, rgba(255,255,255,0) 55%);
+            pointer-events: none;
+        }
+
+        .app-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-align: center;
+            line-height: 1.2;
+            max-width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .empty-msg {
+            display: none;
+            margin-top: 2rem;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        /* Bottom Floating Dock */
+        .dock-wrap {
+            position: fixed;
+            bottom: 0.9rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 50;
+            max-width: calc(100vw - 1.5rem);
+        }
+
+        .dock {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            padding: 0.55rem 0.85rem;
+            background: var(--dock-bg);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(24px);
+            border-radius: 24px;
+            box-shadow: 0 14px 32px rgba(15, 23, 42, 0.18);
+        }
+
+        .dock-item {
+            text-decoration: none;
+            transition: transform 0.18s ease;
+        }
+
+        .dock-item:hover {
+            transform: translateY(-6px) scale(1.12);
+        }
+
+        .dock-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 22%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.55rem;
+            box-shadow: 0 6px 14px rgba(15, 23, 42, 0.18), inset 0 1px 1px rgba(255, 255, 255, 0.45);
+        }
+
+        .dock-divider {
+            width: 1px;
+            height: 34px;
+            background: var(--glass-border);
+        }
+
+        .shuffle-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 22%;
+            border: none;
+            background: linear-gradient(135deg, #ec4899, #3b82f6, #10b981);
+            color: #fff;
+            font-size: 1.4rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 6px 14px rgba(236, 72, 153, 0.3);
+            transition: transform 0.18s ease;
+        }
+
+        .shuffle-btn:hover {
+            transform: translateY(-6px) scale(1.12);
+        }
+
+        /* Tablet */
+        @media (max-width: 900px) {
+            .app-grid {
+                grid-template-columns: repeat(5, minmax(0, 1fr));
+                gap: 1.25rem 0.85rem;
             }
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .header-container {
-                flex-direction: column;
-                gap: 1rem;
+        /* Mobile App Home Screen */
+        @media (max-width: 560px) {
+            body {
+                padding: 0.75rem 0.75rem 5.8rem;
             }
-
-            .nav-links {
+            .status-bar {
                 flex-wrap: wrap;
-                justify-content: center;
-                gap: 1rem;
+                gap: 0.5rem;
             }
-
-            .hero-section h1 {
-                font-size: 2.5rem;
+            .search-pill {
+                order: 3;
+                max-width: 100%;
+                flex-basis: 100%;
             }
-
-            .featured-games h2,
-            .why-choose-section h2,
-            .about-content h2 {
+            .app-grid {
+                grid-template-columns: repeat(4, minmax(0, 1fr));
+                gap: 1.05rem 0.5rem;
+            }
+            .app-icon {
+                width: 60px;
+                height: 60px;
                 font-size: 1.8rem;
             }
-
-            .game-grid {
-                grid-template-columns: 1fr;
+            .app-label {
+                font-size: 0.72rem;
             }
-
-            .features-grid {
-                grid-template-columns: 1fr;
+            .dock {
+                gap: 0.5rem;
+                padding: 0.45rem 0.65rem;
+                border-radius: 20px;
+            }
+            .dock-icon, .shuffle-btn {
+                width: 44px;
+                height: 44px;
+                font-size: 1.35rem;
             }
         }
-    
-        .game-card.coming-soon {
-            position: relative;
-            opacity: 0.72;
-            cursor: not-allowed;
-            pointer-events: none;
-        }
-        .game-card.coming-soon:hover {
-            transform: none;
-            box-shadow: none;
-            border-color: var(--card-border);
-        }
-        .coming-soon-badge {
-            display: inline-block;
-            margin-top: 0.75rem;
-            padding: 0.25rem 0.7rem;
-            font-size: 0.75rem;
-            font-weight: 700;
-            border-radius: 999px;
-            background: rgba(236, 72, 153, 0.14);
-            color: #db2777;
-            border: 1px solid rgba(236, 72, 153, 0.35);
-        }
-
     </style>
 </head>
-<body data-theme="light">
-    <header>
-        <div class="header-container">
-            <div class="logo-container">
-                <h1>Mahsua Games</h1>
-                <span class="domain">games.mahsua.com</span>
-            </div>
-            <div style="display: flex; align-items: center; gap: 1rem;">
-                <nav class="nav-links">
-                    <a href="#">Games</a>
-                    <a href="#">About</a>
-                    <a href="#">Contact</a>
-                </nav>
-                <button class="theme-toggle" onclick="toggleTheme()">🌙 Dark</button>
-            </div>
+<body>
+    <header class="status-bar">
+        <div class="brand">🎮 Mahsua Games</div>
+        <div class="search-pill">
+            <span>🔍</span>
+            <input type="search" id="searchInput" placeholder="Search Games..." aria-label="Search Games">
         </div>
+        <button class="theme-btn" id="themeToggle" type="button">🌙 Dark</button>
     </header>
 
-    <div class="hero-section">
-        <h1>Mahsua Games</h1>
-        <p>Mahsua Games is a collection of classic, single-file games designed to be lightweight and playable directly in a web browser. The project focuses on timeless games like Snake, Tetris, and Tic-Tac-Toe, providing a fun and simple experience for players of all ages.</p>
-        <a href="snake-game.html" class="play-button">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
-                <path d="M8 5v14l11-7z" />
-            </svg>
-            Start Playing Now
-        </a>
-    </div>
-
-    <main class="featured-games">
-        <h2>Featured Games</h2>
-        <div class="game-grid">
-            <a class="game-card" href="snake-game.html">
-                <div class="game-icon">🐍</div>
-                <h3>Snake Classic</h3>
-                <p>The timeless classic! Eat food, grow longer, avoid walls and yourself.</p>
-                <div class="game-meta">
-                    <span class="difficulty">Easy</span>
-                    <div class="rating">★★★★★</div>
-                </div>
+    <main class="launcher-wrap">
+        <div class="app-grid" id="appGrid">
+            <a class="app-item" href="2048-game.html" data-name="2048">
+                <div class="app-icon" style="background: linear-gradient(135deg, #ec4899, #f472b6);"><span>🔢</span></div>
+                <span class="app-label">2048</span>
             </a>
-            
-            <a class="game-card" href="block-puzzle.html">
-                <div class="game-icon">🧱</div>
-                <h3>Tetris Blocks</h3>
-                <p>Arrange falling blocks to clear lines. A puzzle game that never gets old!</p>
-                <div class="game-meta">
-                    <span class="difficulty">Medium</span>
-                    <div class="rating">★★★★☆</div>
-                </div>
+            <a class="app-item" href="bicycle-racing.html" data-name="bicycle race">
+                <div class="app-icon" style="background: linear-gradient(135deg, #10b981, #34d399);"><span>🚲</span></div>
+                <span class="app-label">Bicycle Race</span>
             </a>
-            
-            <a class="game-card" href="memory-match.html">
-                <div class="game-icon">🧠</div>
-                <h3>Memory Match</h3>
-                <p>Test your memory by matching pairs of cards. Great for brain training!</p>
-                <div class="game-meta">
-                    <span class="difficulty">Easy</span>
-                    <div class="rating">★★★★★</div>
-                </div>
+            <a class="app-item" href="block-puzzle.html" data-name="block puzzle">
+                <div class="app-icon" style="background: linear-gradient(135deg, #3b82f6, #60a5fa);"><span>🧱</span></div>
+                <span class="app-label">Block Puzzle</span>
             </a>
-
-            <a class="game-card" href="word-search.html">
-                <div class="game-icon">🧠</div>
-                <h3>Word Search</h3>
-                <p>Find hidden words in a grid of letters. A classic puzzle game!</p>
-                <div class="game-meta">
-                    <span class="difficulty">Easy</span>
-                    <div class="rating">★★★★★</div>
-                </div>
+            <a class="app-item" href="breakout.html" data-name="breakout">
+                <div class="app-icon" style="background: linear-gradient(135deg, #f43f5e, #fb7185);"><span>🎯</span></div>
+                <span class="app-label">Breakout</span>
             </a>
-
-            <a class="game-card" href="crossword-puzzle.html">
-                <div class="game-icon">🧠</div>
-                <h3>Crossword Puzzle</h3>
-                <p>Solve clues to fill the grid with words. A classic brain teaser!</p>
-                <div class="game-meta">
-                    <span class="difficulty">Medium</span>
-                    <div class="rating">★★★★☆</div>
-                </div>
+            <a class="app-item" href="bubble-shooter.html" data-name="bubble shoot">
+                <div class="app-icon" style="background: linear-gradient(135deg, #06b6d4, #3b82f6);"><span>🫧</span></div>
+                <span class="app-label">Bubble Shoot</span>
             </a>
-            
-            <div class="game-card coming-soon" aria-disabled="true">
-                <div class="game-icon">🏓</div>
-                <h3>Pong Classic</h3>
-                <p>The original arcade game! Control your paddle and beat the AI opponent.</p>
-                <div class="game-meta">
-                    <span class="difficulty">Easy</span>
-                    <div class="rating">★★★★★</div>
-                </div>
-                <span class="coming-soon-badge">Coming Soon</span>
-            </div>
-            
-            <div class="game-card coming-soon" aria-disabled="true">
-                <div class="game-icon">🔢</div>
-                <h3>2048 Puzzle</h3>
-                <p>Slide tiles to combine numbers and reach 2048. Addictive math puzzle!</p>
-                <div class="game-meta">
-                    <span class="difficulty">Hard</span>
-                    <div class="rating">★★★★★</div>
-                </div>
-                <span class="coming-soon-badge">Coming Soon</span>
-            </div>
-            
-            <div class="game-card coming-soon" aria-disabled="true">
-                <div class="game-icon">🎯</div>
-                <h3>Breakout Bricks</h3>
-                <p>Bounce the ball to break all bricks. Classic arcade action!</p>
-                <div class="game-meta">
-                    <span class="difficulty">Medium</span>
-                    <div class="rating">★★★★☆</div>
-                </div>
-                <span class="coming-soon-badge">Coming Soon</span>
-            </div>
-
-            <a class="game-card" href="math-quiz.html">
-                <div class="game-icon">➗</div>
-                <h3>Math Quiz</h3>
-                <p>Test your math skills with addition, subtraction, multiplication, and division problems.</p>
-                <div class="game-meta">
-                    <span class="difficulty">Easy/Hard</span>
-                    <div class="rating">★★★★☆</div>
-                </div>
+            <a class="app-item" href="car-racing.html" data-name="car racing">
+                <div class="app-icon" style="background: linear-gradient(135deg, #ec4899, #8b5cf6);"><span>🏎️</span></div>
+                <span class="app-label">Car Racing</span>
             </a>
-
-            <a class="game-card" href="coin-flip.html">
-                <div class="game-icon">🪙</div>
-                <h3>Virtual Coin Flip</h3>
-                <p>Flip a virtual coin to get a random result: Heads or Tails.</p>
-                <div class="game-meta">
-                    <span class="difficulty">Easy</span>
-                    <div class="rating">★★★★★</div>
-                </div>
+            <a class="app-item" href="coin-flip.html" data-name="coin flip">
+                <div class="app-icon" style="background: linear-gradient(135deg, #f59e0b, #fbbf24);"><span>🪙</span></div>
+                <span class="app-label">Coin Flip</span>
             </a>
-
-            <a class="game-card" href="car-racing.html">
-                <div class="game-icon">🚗</div>
-                <h3>Car Racing Game</h3>
-                <p>Race your car to victory in this fast-paced racing game.</p>
-                <div class="game-meta">
-                    <span class="difficulty">Medium</span>
-                    <div class="rating">★★★☆☆</div>
-                </div>
+            <a class="app-item" href="crossword-puzzle.html" data-name="crossword">
+                <div class="app-icon" style="background: linear-gradient(135deg, #10b981, #059669);"><span>📝</span></div>
+                <span class="app-label">Crossword</span>
             </a>
-
-            <a class="game-card" href="dice-flipper.html">
-                <div class="game-icon">🎲</div>
-                <h3>Virtual 3D Dice Flipper</h3>
-                <p>Roll up to four virtual 3D dice to get a random number.</p>
-                <div class="game-meta">
-                    <span class="difficulty">Easy</span>
-                    <div class="rating">★★★★★</div>
-                </div>
+            <a class="app-item" href="dice-flipper.html" data-name="dice flipper">
+                <div class="app-icon" style="background: linear-gradient(135deg, #6366f1, #3b82f6);"><span>🎲</span></div>
+                <span class="app-label">Dice Flipper</span>
             </a>
-
-            <a class="game-card" href="rock-paper-scissors.html">
-                <div class="game-icon">✂️</div>
-                <h3>Rock Paper Scissors</h3>
-                <p>Challenge the computer in a classic game of rock, paper, scissors.</p>
-                <div class="game-meta">
-                    <span class="difficulty">Easy</span>
-                    <div class="rating">★★★★☆</div>
-                </div>
+            <a class="app-item" href="free-the-key.html" data-name="free the key">
+                <div class="app-icon" style="background: linear-gradient(135deg, #f59e0b, #ec4899);"><span>🔑</span></div>
+                <span class="app-label">Free the Key</span>
             </a>
-
-            <a class="game-card" href="tic-tac-toe.html">
-                <div class="game-icon">❌</div>
-                <h3>Tic-Tac-Toe</h3>
-                <p>Play against a friend or an intelligent computer in this classic game.</p>
-                <div class="game-meta">
-                    <span class="difficulty">Easy/Hard</span>
-                    <div class="rating">★★★★★</div>
-                </div>
+            <a class="app-item" href="fruit-ninja.html" data-name="fruit ninja">
+                <div class="app-icon" style="background: linear-gradient(135deg, #10b981, #ec4899);"><span>🍉</span></div>
+                <span class="app-label">Fruit Ninja</span>
             </a>
-
-            <a class="game-card" href="wall-dodge.html">
-                <div class="game-icon">🚧</div>
-                <h3>Wall Dodge Challenge</h3>
-                <p>Dodge moving walls and survive as long as you can in this endless runner.</p>
-                <div class="game-meta">
-                    <span class="difficulty">Hard</span>
-                    <div class="rating">★★★☆☆</div>
-                </div>
+            <a class="app-item" href="guess-the-number.html" data-name="guess number">
+                <div class="app-icon" style="background: linear-gradient(135deg, #3b82f6, #10b981);"><span>🔍</span></div>
+                <span class="app-label">Guess Number</span>
             </a>
-
-            <div class="game-card coming-soon" aria-disabled="true">
-                <div class="game-icon">🕹️</div>
-                <h3>PAC-MAN</h3>
-                <p>Eat all the dots and avoid ghosts in this classic arcade game.</p>
-                <div class="game-meta">
-                    <span class="difficulty">Medium</span>
-                    <div class="rating">★★★★☆</div>
-                </div>
-                <span class="coming-soon-badge">Coming Soon</span>
-            </div>
-
-            <div class="game-card coming-soon" aria-disabled="true">
-                <div class="game-icon">🃏</div>
-                <h3>Solitaire</h3>
-                <p>Relax and play a classic game of Solitaire.</p>
-                <div class="game-meta">
-                    <span class="difficulty">Easy</span>
-                    <div class="rating">★★★★★</div>
-                </div>
-                <span class="coming-soon-badge">Coming Soon</span>
-            </div>
-
-            <div class="game-card coming-soon" aria-disabled="true">
-                <div class="game-icon">🍉</div>
-                <h3>Fruit Ninja</h3>
-                <p>Slice as many fruits as you can while avoiding bombs.</p>
-                <div class="game-meta">
-                    <span class="difficulty">Medium</span>
-                    <div class="rating">★★★★☆</div>
-                </div>
-                <span class="coming-soon-badge">Coming Soon</span>
-            </div>
-
-            <a class="game-card" href="bubble-shooter.html">
-                <div class="game-icon">🫧</div>
-                <h3>Bubble Shooter</h3>
-                <p>Match and pop colorful bubbles to clear the board.</p>
-                <div class="game-meta">
-                    <span class="difficulty">Easy</span>
-                    <div class="rating">★★★★★</div>
-                </div>
+            <a class="app-item" href="karate-fight.html" data-name="karate fight">
+                <div class="app-icon" style="background: linear-gradient(135deg, #ef4444, #ec4899);"><span>🥋</span></div>
+                <span class="app-label">Karate Fight</span>
             </a>
-
-            <div class="game-card coming-soon" aria-disabled="true">
-                <div class="game-icon">🥋</div>
-                <h3>Karate Fight</h3>
-                <p>Engage in an intense one-on-one karate fight.</p>
-                <div class="game-meta">
-                    <span class="difficulty">Hard</span>
-                    <div class="rating">★★★☆☆</div>
-                </div>
-                <span class="coming-soon-badge">Coming Soon</span>
-            </div>
-
-            <div class="game-card coming-soon" aria-disabled="true">
-                <div class="game-icon">🎾</div>
-                <h3>Tennis Game</h3>
-                <p>Serve and volley to win the match against your opponent.</p>
-                <div class="game-meta">
-                    <span class="difficulty">Medium</span>
-                    <div class="rating">★★★★☆</div>
-                </div>
-                <span class="coming-soon-badge">Coming Soon</span>
-            </div>
-
-            <a class="game-card" href="ludo.html">
-                <div class="game-icon">♟️</div>
-                <h3>Ludo</h3>
-                <p>Roll the dice and race your pawns to the finish line.</p>
-                <div class="game-meta">
-                    <span class="difficulty">Easy</span>
-                    <div class="rating">★★★★★</div>
-                </div>
+            <a class="app-item" href="ludo.html" data-name="ludo">
+                <div class="app-icon" style="background: linear-gradient(135deg, #ec4899, #3b82f6);"><span>🎲</span></div>
+                <span class="app-label">Ludo</span>
             </a>
-
-            <a class="game-card" href="guess-the-number.html">
-                <div class="game-icon">1️⃣</div>
-                <h3>Guess the Number game</h3>
-                <p>Test your luck and logic to guess the secret number in as few tries as possible.</p>
-                <div class="game-meta">
-                    <span class="difficulty">Medium</span>
-                    <div class="rating">★★★☆☆</div>
-                </div>
+            <a class="app-item" href="math-quiz.html" data-name="math quiz">
+                <div class="app-icon" style="background: linear-gradient(135deg, #8b5cf6, #3b82f6);"><span>➗</span></div>
+                <span class="app-label">Math Quiz</span>
             </a>
-
-            <a class="game-card" href="picture-puzzle.html">
-                <div class="game-icon">🖼️</div>
-                <h3>Picture Puzzle</h3>
-                <p>Rearrange the pieces to complete the picture puzzle.</p>
-                <div class="game-meta">
-                    <span class="difficulty">Easy</span>
-                    <div class="rating">★★★★★</div>
-                </div>
+            <a class="app-item" href="memory-match.html" data-name="memory match">
+                <div class="app-icon" style="background: linear-gradient(135deg, #14b8a6, #3b82f6);"><span>🃏</span></div>
+                <span class="app-label">Memory Match</span>
+            </a>
+            <a class="app-item" href="pac-man.html" data-name="pac-man">
+                <div class="app-icon" style="background: linear-gradient(135deg, #eab308, #f59e0b);"><span>👻</span></div>
+                <span class="app-label">PAC-MAN</span>
+            </a>
+            <a class="app-item" href="picture-puzzle.html" data-name="picture puzzle">
+                <div class="app-icon" style="background: linear-gradient(135deg, #ec4899, #10b981);"><span>🖼️</span></div>
+                <span class="app-label">Picture Puzzle</span>
+            </a>
+            <a class="app-item" href="pong.html" data-name="pong classic">
+                <div class="app-icon" style="background: linear-gradient(135deg, #3b82f6, #8b5cf6);"><span>🏓</span></div>
+                <span class="app-label">Pong Classic</span>
+            </a>
+            <a class="app-item" href="rock-paper-scissors.html" data-name="rps">
+                <div class="app-icon" style="background: linear-gradient(135deg, #f43f5e, #f59e0b);"><span>✊</span></div>
+                <span class="app-label">RPS</span>
+            </a>
+            <a class="app-item" href="snake-game.html" data-name="snake">
+                <div class="app-icon" style="background: linear-gradient(135deg, #10b981, #22c55e);"><span>🐍</span></div>
+                <span class="app-label">Snake</span>
+            </a>
+            <a class="app-item" href="sniper-gun.html" data-name="sniper target">
+                <div class="app-icon" style="background: linear-gradient(135deg, #6366f1, #ec4899);"><span>🎯</span></div>
+                <span class="app-label">Sniper Target</span>
+            </a>
+            <a class="app-item" href="solitaire.html" data-name="solitaire">
+                <div class="app-icon" style="background: linear-gradient(135deg, #1e293b, #475569);"><span>♠️</span></div>
+                <span class="app-label">Solitaire</span>
+            </a>
+            <a class="app-item" href="tennis-game.html" data-name="tennis">
+                <div class="app-icon" style="background: linear-gradient(135deg, #22c55e, #10b981);"><span>🎾</span></div>
+                <span class="app-label">Tennis</span>
+            </a>
+            <a class="app-item" href="tic-tac-toe.html" data-name="tic-tac-toe">
+                <div class="app-icon" style="background: linear-gradient(135deg, #ec4899, #3b82f6);"><span>❌</span></div>
+                <span class="app-label">Tic-Tac-Toe</span>
+            </a>
+            <a class="app-item" href="wall-dodge.html" data-name="wall dodge">
+                <div class="app-icon" style="background: linear-gradient(135deg, #f59e0b, #ef4444);"><span>⚡</span></div>
+                <span class="app-label">Wall Dodge</span>
+            </a>
+            <a class="app-item" href="word-search.html" data-name="word search">
+                <div class="app-icon" style="background: linear-gradient(135deg, #3b82f6, #10b981);"><span>🔤</span></div>
+                <span class="app-label">Word Search</span>
             </a>
         </div>
+        <p class="empty-msg" id="emptyMsg">No matching games found.</p>
     </main>
 
-    <!-- About Section -->
-    <section class="about">
-        <div class="container">
-            <div class="about-content">
-                <h2>About Mahsua Games</h2>
-                <p>Mahsua Games represents the future of digital entertainment - a dynamic and evolving platform dedicated to creating open-source, browser-friendly games that support fun, learning, and skill development. Built with accessibility, simplicity, and inclusivity at its core, we empower users by providing cutting-edge games that require no installations, work seamlessly across all modern devices, and are completely free to play.</p>
-            </div>
+    <nav class="dock-wrap" aria-label="Quick Launch Dock">
+        <div class="dock">
+            <a class="dock-item" href="snake-game.html" title="Snake">
+                <div class="dock-icon" style="background: linear-gradient(135deg, #10b981, #22c55e);"><span>🐍</span></div>
+            </a>
+            <a class="dock-item" href="2048-game.html" title="2048">
+                <div class="dock-icon" style="background: linear-gradient(135deg, #ec4899, #f472b6);"><span>🔢</span></div>
+            </a>
+            <a class="dock-item" href="car-racing.html" title="Car Racing">
+                <div class="dock-icon" style="background: linear-gradient(135deg, #ec4899, #8b5cf6);"><span>🏎️</span></div>
+            </a>
+            <a class="dock-item" href="ludo.html" title="Ludo">
+                <div class="dock-icon" style="background: linear-gradient(135deg, #ec4899, #3b82f6);"><span>🎲</span></div>
+            </a>
+            <a class="dock-item" href="word-search.html" title="Word Search">
+                <div class="dock-icon" style="background: linear-gradient(135deg, #3b82f6, #10b981);"><span>🔤</span></div>
+            </a>
+            <div class="dock-divider"></div>
+            <button class="shuffle-btn" id="randomBtn" type="button" title="Play Random Game">✨</button>
         </div>
-    </section>
-
-    <!-- Why Choose Section -->
-    <div class="why-choose-section">
-        <h2>Why Choose Mahsua Games?</h2>
-        <div class="features-grid">
-            <div class="feature-item">
-                <div class="feature-icon">⚡</div>
-                <h3>Instant Play</h3>
-                <p>No downloads or installations required. Click and play immediately!</p>
-            </div>
-            <div class="feature-item">
-                <div class="feature-icon">🌐</div>
-                <h3>Browser Based</h3>
-                <p>Works on any device with a web browser. Play anywhere, anytime!</p>
-            </div>
-            <div class="feature-item">
-                <div class="feature-icon">🆓</div>
-                <h3>Completely Free</h3>
-                <p>All games are free to play. No hidden costs or subscriptions!</p>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Footer -->
-    <footer>
-        <div class="footer-links">
-            <p>games.mahsua.com</p>
-        </div>
-        <div class="footer-copyright">
-            <p>Made With ❤️ INDIA ~ Designed by <a href="https://proshivamkushwaha.mahsua.com">PRO SHIVAM KUSHWAHA</a></p>
-            <p>© 2024 <a href="https://mahsua.com/">MAHSUA</a> | Mahsua Games Play instantly, no downloads required!</p>
-        </div>
-    </footer>
+    </nav>
 
     <script>
-        // Theme Toggle
-        function toggleTheme() {
-            const body = document.body;
-            const currentTheme = body.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            body.setAttribute('data-theme', newTheme);
-            
-            const themeToggle = document.querySelector('.theme-toggle');
-            if (newTheme === 'dark') {
-                themeToggle.innerHTML = '☀️ Light';
-            } else {
-                themeToggle.innerHTML = '🌙 Dark';
-            }
-            
-            localStorage.setItem('theme', newTheme);
-        }
+        const searchInput = document.getElementById('searchInput');
+        const appItems = Array.from(document.querySelectorAll('.app-item'));
+        const emptyMsg = document.getElementById('emptyMsg');
+        const themeToggle = document.getElementById('themeToggle');
+        const randomBtn = document.getElementById('randomBtn');
 
-        // Load saved theme
-        const savedTheme = localStorage.getItem('theme') || 'light';
-        document.body.setAttribute('data-theme', savedTheme);
-        const themeToggleBtn = document.querySelector('.theme-toggle');
-        if (savedTheme === 'dark') {
-            themeToggleBtn.innerHTML = '☀️ Light';
-        } else {
-            themeToggleBtn.innerHTML = '🌙 Dark';
-        }
-
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
+        searchInput.addEventListener('input', () => {
+            const q = searchInput.value.trim().toLowerCase();
+            let visible = 0;
+            appItems.forEach(item => {
+                const match = item.dataset.name.includes(q);
+                item.style.display = match ? 'flex' : 'none';
+                if (match) visible++;
             });
+            emptyMsg.style.display = visible === 0 ? 'block' : 'none';
+        });
+
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark');
+            themeToggle.textContent = document.body.classList.contains('dark') ? '☀️ Light' : '🌙 Dark';
+        });
+
+        randomBtn.addEventListener('click', () => {
+            const pick = appItems[Math.floor(Math.random() * appItems.length)];
+            if (pick) window.location.href = pick.getAttribute('href');
         });
     </script>
 </body>

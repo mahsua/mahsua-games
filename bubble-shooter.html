@@ -806,5 +806,86 @@ function nextLevel() {
 window.addEventListener('load', startGame);
 </script>
 
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97f06ecb85d5ff68',t:'MTc1Nzg1ODY1OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97f06ecb85d5ff68',t:'MTc1Nzg1ODY1OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
+<!-- Mahsua Floating Home & Fullscreen Bar -->
+<style>
+  #mahsua-nav-bar {
+    position: fixed;
+    bottom: 12px;
+    right: 12px;
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.88);
+    border: 1px solid rgba(236, 72, 153, 0.3);
+    box-shadow: 0 6px 20px rgba(15, 23, 42, 0.16);
+    backdrop-filter: blur(12px);
+    font-family: 'Outfit', system-ui, -apple-system, sans-serif;
+  }
+  body.dark #mahsua-nav-bar,
+  body.dark-mode #mahsua-nav-bar {
+    background: rgba(15, 23, 42, 0.88);
+    border-color: rgba(59, 130, 246, 0.35);
+  }
+  .mahsua-nav-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    border: none;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform 0.15s ease, opacity 0.15s ease;
+  }
+  .mahsua-nav-btn:active {
+    transform: scale(0.95);
+  }
+  .mahsua-home-btn {
+    background: linear-gradient(135deg, #ec4899, #3b82f6);
+    color: #ffffff;
+  }
+  .mahsua-fs-btn {
+    background: linear-gradient(135deg, #10b981, #3b82f6);
+    color: #ffffff;
+  }
+</style>
+<div id="mahsua-nav-bar">
+  <a href="https://games.mahsua.com/" class="mahsua-nav-btn mahsua-home-btn" title="Go to Mahsua Games Home">🏠 Home</a>
+  <button type="button" id="mahsuaFsBtn" class="mahsua-nav-btn mahsua-fs-btn" title="Toggle Full Screen">⛶ Full Screen</button>
+</div>
+<script>
+  (function() {
+    var fsBtn = document.getElementById('mahsuaFsBtn');
+    if (!fsBtn) return;
+    function isFull() {
+      return !!(document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement);
+    }
+    function updateFsLabel() {
+      fsBtn.textContent = isFull() ? '✕ Exit Full' : '⛶ Full Screen';
+    }
+    fsBtn.addEventListener('click', function() {
+      var el = document.documentElement;
+      if (!isFull()) {
+        if (el.requestFullscreen) el.requestFullscreen();
+        else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+        else if (el.msRequestFullscreen) el.msRequestFullscreen();
+      } else {
+        if (document.exitFullscreen) document.exitFullscreen();
+        else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+        else if (document.msExitFullscreen) document.msExitFullscreen();
+      }
+    });
+    document.addEventListener('fullscreenchange', updateFsLabel);
+    document.addEventListener('webkitfullscreenchange', updateFsLabel);
+  })();
+</script>
+
+</body>
 </html>

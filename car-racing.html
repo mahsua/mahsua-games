@@ -1773,5 +1773,86 @@
       };
     })();
   </script>
+
+<!-- Mahsua Floating Home & Fullscreen Bar -->
+<style>
+  #mahsua-nav-bar {
+    position: fixed;
+    bottom: 12px;
+    right: 12px;
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.88);
+    border: 1px solid rgba(236, 72, 153, 0.3);
+    box-shadow: 0 6px 20px rgba(15, 23, 42, 0.16);
+    backdrop-filter: blur(12px);
+    font-family: 'Outfit', system-ui, -apple-system, sans-serif;
+  }
+  body.dark #mahsua-nav-bar,
+  body.dark-mode #mahsua-nav-bar {
+    background: rgba(15, 23, 42, 0.88);
+    border-color: rgba(59, 130, 246, 0.35);
+  }
+  .mahsua-nav-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    border: none;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform 0.15s ease, opacity 0.15s ease;
+  }
+  .mahsua-nav-btn:active {
+    transform: scale(0.95);
+  }
+  .mahsua-home-btn {
+    background: linear-gradient(135deg, #ec4899, #3b82f6);
+    color: #ffffff;
+  }
+  .mahsua-fs-btn {
+    background: linear-gradient(135deg, #10b981, #3b82f6);
+    color: #ffffff;
+  }
+</style>
+<div id="mahsua-nav-bar">
+  <a href="https://games.mahsua.com/" class="mahsua-nav-btn mahsua-home-btn" title="Go to Mahsua Games Home">🏠 Home</a>
+  <button type="button" id="mahsuaFsBtn" class="mahsua-nav-btn mahsua-fs-btn" title="Toggle Full Screen">⛶ Full Screen</button>
+</div>
+<script>
+  (function() {
+    var fsBtn = document.getElementById('mahsuaFsBtn');
+    if (!fsBtn) return;
+    function isFull() {
+      return !!(document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement);
+    }
+    function updateFsLabel() {
+      fsBtn.textContent = isFull() ? '✕ Exit Full' : '⛶ Full Screen';
+    }
+    fsBtn.addEventListener('click', function() {
+      var el = document.documentElement;
+      if (!isFull()) {
+        if (el.requestFullscreen) el.requestFullscreen();
+        else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+        else if (el.msRequestFullscreen) el.msRequestFullscreen();
+      } else {
+        if (document.exitFullscreen) document.exitFullscreen();
+        else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+        else if (document.msExitFullscreen) document.msExitFullscreen();
+      }
+    });
+    document.addEventListener('fullscreenchange', updateFsLabel);
+    document.addEventListener('webkitfullscreenchange', updateFsLabel);
+  })();
+</script>
+
 </body>
 </html>

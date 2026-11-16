@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Karate Fight | Mahsua Games</title>
+    <link rel="icon" href="./favicon.png" type="image/png">
+    <meta name="description" content="Play Karate Fight online for free at Mahsua Games! Punch, kick, block, and defeat your dojo opponent.">
+    <meta name="keywords" content="karate fight, fighting game, martial arts game, mahsua games, free browser game">
+    <meta name="author" content="Mahsua Games">
+    <meta name="robots" content="index, follow">
+
+    <!-- Google Ads -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9351361840615541" crossorigin="anonymous"></script>
+    <meta name="google-adsense-account" content="ca-pub-9351361840615541">
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-095F8QMZ5S"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-095F8QMZ5S');
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-gradient: linear-gradient(135deg, #ffe6f0 0%, #e0f3ff 50%, #e6ffe6 100%);
+            --card-bg: rgba(255, 255, 255, 0.94);
+            --card-border: rgba(236, 72, 153, 0.2);
+            --text-color: #1e293b;
+            --text-secondary: #64748b;
+            --input-bg: #f8fafc;
+            --accent-pink: #ec4899;
+            --accent-blue: #3b82f6;
+            --accent-green: #10b981;
+            --shadow: 0 12px 32px rgba(15, 23, 42, 0.08);
+        }
+
+        body.dark {
+            --bg-gradient: linear-gradient(135deg, #1f1024 0%, #0f172a 50%, #0b221a 100%);
+            --card-bg: rgba(30, 41, 59, 0.92);
+            --card-border: rgba(236, 72, 153, 0.3);
+            --text-color: #f8fafc;
+            --text-secondary: #94a3b8;
+            --input-bg: #0f172a;
+            --shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 700px;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 1.2rem;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(16px);
+        }
+
+        .top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.85rem;
+            gap: 0.5rem;
+        }
+
+        .back-link {
+            text-decoration: none;
+            color: var(--accent-blue);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .top-actions {
+            display: flex;
+            gap: 0.45rem;
+        }
+
+        .pill-btn {
+            background: rgba(59, 130, 246, 0.12);
+            color: var(--text-color);
+            border: 1px solid var(--card-border);
+            border-radius: 999px;
+            padding: 0.35rem 0.75rem;
+            font-family: inherit;
+            font-size: 0.82rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-bottom: 0.85rem;
+        }
+
+        h1 {
+            font-size: 1.85rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent-pink), var(--accent-blue), var(--accent-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .controls-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 0.85rem;
+        }
+
+        select {
+            font-family: inherit;
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 0.42rem 0.75rem;
+            border-radius: 10px;
+            border: 1px solid var(--card-border);
+            background: var(--input-bg);
+            color: var(--text-color);
+            cursor: pointer;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 0.45rem;
+            align-items: center;
+        }
+
+        .wins-badge {
+            background: rgba(16, 185, 129, 0.15);
+            color: #059669;
+            border: 1px solid rgba(16, 185, 129, 0.35);
+            border-radius: 10px;
+            padding: 0.4rem 0.7rem;
+            font-size: 0.82rem;
+            font-weight: 700;
+        }
+
+        body.dark .wins-badge {
+            color: #34d399;
+        }
+
+        .btn {
+            border: none;
+            border-radius: 12px;
+            padding: 0.48rem 0.85rem;
+            font-family: inherit;
+            font-size: 0.84rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-pink), var(--accent-blue));
+            color: #fff;
+        }
+
+        .health-bars {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            gap: 0.65rem;
+            margin-bottom: 0.7rem;
+        }
+
+        .bar-wrap {
+            background: rgba(148, 163, 184, 0.25);
+            border-radius: 999px;
+            height: 16px;
+            overflow: hidden;
+            border: 1px solid var(--card-border);
+        }
+
+        .bar-fill {
+            height: 100%;
+            width: 100%;
+            transition: width 0.15s ease;
+        }
+
+        .bar-you {
+            background: linear-gradient(90deg, #ec4899, #f472b6);
+        }
+
+        .bar-ai {
+            background: linear-gradient(90deg, #3b82f6, #10b981);
+        }
+
+        .vs-tag {
+            font-weight: 800;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .canvas-wrap {
+            position: relative;
+            width: 100%;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 2px solid var(--card-border);
+            touch-action: none;
+        }
+
+        canvas {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        .overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.74);
+            backdrop-filter: blur(4px);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            color: #fff;
+            text-align: center;
+            padding: 1.5rem;
+        }
+
+        .overlay.active {
+            display: flex;
+        }
+
+        .overlay h2 {
+            font-size: 1.8rem;
+            font-weight: 800;
+        }
+
+        .touch-pad {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.85rem;
+        }
+
+        .pad-group {
+            display: flex;
+            gap: 0.45rem;
+        }
+
+        .pad-btn {
+            padding: 0.65rem 0.95rem;
+            border-radius: 12px;
+            border: 1px solid var(--card-border);
+            background: rgba(59, 130, 246, 0.14);
+            color: var(--text-color);
+            font-family: inherit;
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .pad-btn.attack {
+            background: rgba(236, 72, 153, 0.16);
+            color: #db2777;
+        }
+
+        body.dark .pad-btn.attack {
+            color: #f472b6;
+        }
+
+        .hint {
+            margin-top: 0.75rem;
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="top-bar">
+            <a href="./index.html" class="back-link">← All Games</a>
+            <div class="top-actions">
+                <button class="pill-btn" id="soundToggle" type="button">🔊 Sound</button>
+                <button class="pill-btn" id="themeToggle" type="button">🌙 Dark</button>
+            </div>
+        </div>
+
+        <div class="header">
+            <h1>🥋 Karate Fight</h1>
+            <div class="btn-group">
+                <span class="wins-badge">Wins: <span id="wins">0</span></span>
+                <button class="btn btn-primary" id="restartBtn" type="button">New Fight</button>
+            </div>
+        </div>
+
+        <div class="controls-row">
+            <label>
+                Opponent:
+                <select id="difficulty">
+                    <option value="easy">White Belt (Easy)</option>
+                    <option value="medium" selected>Blue Belt (Medium)</option>
+                    <option value="hard">Black Belt (Hard)</option>
+                </select>
+            </label>
+            <span style="font-size:0.84rem;color:var(--text-secondary);">Block reduces damage by 75%</span>
+        </div>
+
+        <div class="health-bars">
+            <div>
+                <div style="font-size:0.75rem;font-weight:700;margin-bottom:3px;color:var(--accent-pink);">YOU</div>
+                <div class="bar-wrap"><div class="bar-fill bar-you" id="youBar"></div></div>
+            </div>
+            <div class="vs-tag">VS</div>
+            <div>
+                <div style="font-size:0.75rem;font-weight:700;margin-bottom:3px;text-align:right;color:var(--accent-blue);">RIVAL</div>
+                <div class="bar-wrap"><div class="bar-fill bar-ai" id="aiBar"></div></div>
+            </div>
+        </div>
+
+        <div class="canvas-wrap">
+            <canvas id="fightCanvas" width="640" height="320"></canvas>
+            <div class="overlay active" id="overlay">
+                <h2 id="overlayTitle">Dojo Showdown</h2>
+                <p id="overlayMsg">Use Punch, Kick, and Block to defeat your rival!</p>
+                <button class="btn btn-primary" id="startBtn" type="button">Start Fight</button>
+            </div>
+        </div>
+
+        <div class="touch-pad">
+            <div class="pad-group">
+                <button class="pad-btn" id="leftBtn" type="button">◀ Left</button>
+                <button class="pad-btn" id="jumpBtn" type="button">▲ Jump</button>
+                <button class="pad-btn" id="rightBtn" type="button">Right ▶</button>
+            </div>
+            <div class="pad-group">
+                <button class="pad-btn attack" id="punchBtn" type="button">👊 Punch</button>
+                <button class="pad-btn attack" id="kickBtn" type="button">🦶 Kick</button>
+                <button class="pad-btn" id="blockBtn" type="button">🛡️ Block</button>
+            </div>
+        </div>
+
+        <p class="hint">Desktop: A/D or Arrows to move, W/Up to jump, J/Space to punch, K to kick, L/S to block.</p>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('fightCanvas');
+        const ctx = canvas.getContext('2d');
+        const youBar = document.getElementById('youBar');
+        const aiBar = document.getElementById('aiBar');
+        const winsEl = document.getElementById('wins');
+        const difficultyEl = document.getElementById('difficulty');
+        const restartBtn = document.getElementById('restartBtn');
+        const startBtn = document.getElementById('startBtn');
+        const overlay = document.getElementById('overlay');
+        const overlayTitle = document.getElementById('overlayTitle');
+        const overlayMsg = document.getElementById('overlayMsg');
+        const soundToggle = document.getElementById('soundToggle');
+        const themeToggle = document.getElementById('themeToggle');
+
+        const FLOOR_Y = 265;
+        let wins = parseInt(localStorage.getItem('mahsua_karate_wins') || '0', 10);
+        let soundOn = true;
+        let running = false;
+        let sparks = [];
+        let keys = { left: false, right: false, block: false };
+
+        winsEl.textContent = wins;
+
+        function makeFighter(x, facing, color, belt) {
+            return {
+                x, y: FLOOR_Y, vy: 0, hp: 100, facing,
+                color, belt, action: 'idle', timer: 0, cooldown: 0, blocking: false
+            };
+        }
+
+        let you = makeFighter(150, 1, '#ec4899', '#f43f5e');
+        let ai = makeFighter(490, -1, '#3b82f6', '#10b981');
+
+        let audioCtx = null;
+        function beep(freq, dur = 0.06, type = 'square') {
+            if (!soundOn) return;
+            try {
+                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = type;
+                osc.frequency.value = freq;
+                gain.gain.setValueAtTime(0.07, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + dur);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + dur);
+            } catch (_) {}
+        }
+
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark');
+            themeToggle.textContent = document.body.classList.contains('dark') ? '☀️ Light' : '🌙 Dark';
+        });
+
+        soundToggle.addEventListener('click', () => {
+            soundOn = !soundOn;
+            soundToggle.textContent = soundOn ? '🔊 Sound' : '🔇 Muted';
+        });
+
+        function startFight() {
+            you = makeFighter(150, 1, '#ec4899', '#f43f5e');
+            ai = makeFighter(490, -1, '#3b82f6', '#10b981');
+            sparks = [];
+            running = true;
+            updateBars();
+            overlay.classList.remove('active');
+        }
+
+        restartBtn.addEventListener('click', startFight);
+        startBtn.addEventListener('click', startFight);
+
+        function updateBars() {
+            youBar.style.width = Math.max(0, you.hp) + '%';
+            aiBar.style.width = Math.max(0, ai.hp) + '%';
+        }
+
+        function addSparks(x, y, color) {
+            for (let i = 0; i < 8; i++) {
+                const a = Math.random() * Math.PI * 2;
+                const s = 2 + Math.random() * 4;
+                sparks.push({ x, y, vx: Math.cos(a) * s, vy: Math.sin(a) * s, color, life: 16 });
+            }
+        }
+
+        function triggerAttack(attacker, defender, type) {
+            if (!running || attacker.cooldown > 0) return;
+            attacker.action = type;
+            attacker.timer = type === 'punch' ? 12 : 16;
+            attacker.cooldown = type === 'punch' ? 20 : 28;
+            const reach = type === 'punch' ? 76 : 92;
+            const dmg = type === 'punch' ? 10 : 15;
+
+            const dist = Math.abs(attacker.x - defender.x);
+            const yDiff = Math.abs(attacker.y - defender.y);
+            const facingTarget = (attacker.facing === 1 && defender.x >= attacker.x) || (attacker.facing === -1 && defender.x <= attacker.x);
+
+            if (facingTarget && dist <= reach && yDiff < 55) {
+                const actualDmg = defender.blocking ? Math.ceil(dmg * 0.25) : dmg;
+                defender.hp = Math.max(0, defender.hp - actualDmg);
+                defender.x += attacker.facing * (defender.blocking ? 10 : 22);
+                defender.x = Math.max(40, Math.min(canvas.width - 40, defender.x));
+                addSparks((attacker.x + defender.x) / 2, defender.y - 45, defender.blocking ? '#3b82f6' : '#facc15');
+                beep(defender.blocking ? 280 : 520, 0.08);
+                updateBars();
+                if (defender.hp <= 0) {
+                    running = false;
+                    const youWon = defender === ai;
+                    if (youWon) {
+                        wins++;
+                        localStorage.setItem('mahsua_karate_wins', String(wins));
+                        winsEl.textContent = wins;
+                    }
+                    overlayTitle.textContent = youWon ? '🏆 K.O. — You Win!' : '💥 K.O. — Rival Wins!';
+                    overlayMsg.textContent = youWon ? 'Great martial arts skills!' : 'Try blocking and counter-kicking!';
+                    startBtn.textContent = 'Fight Again';
+                    overlay.classList.add('active');
+                }
+            } else {
+                beep(190, 0.04, 'triangle');
+            }
+        }
+
+        function jump(f) {
+            if (running && f.y >= FLOOR_Y) {
+                f.vy = -12;
+                beep(360, 0.05, 'sine');
+            }
+        }
+
+        // Keyboard controls
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') keys.left = true;
+            if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') keys.right = true;
+            if (e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') { e.preventDefault(); jump(you); }
+            if (e.key === 'j' || e.key === 'J' || e.key === ' ') { e.preventDefault(); triggerAttack(you, ai, 'punch'); }
+            if (e.key === 'k' || e.key === 'K') triggerAttack(you, ai, 'kick');
+            if (e.key === 'l' || e.key === 'L' || e.key === 's' || e.key === 'S') keys.block = true;
+        });
+        window.addEventListener('keyup', (e) => {
+            if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') keys.left = false;
+            if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') keys.right = false;
+            if (e.key === 'l' || e.key === 'L' || e.key === 's' || e.key === 'S') keys.block = false;
+        });
+
+        // Touch / mouse pad controls
+        const bindHold = (id, key) => {
+            const el = document.getElementById(id);
+            el.addEventListener('touchstart', (e) => { e.preventDefault(); keys[key] = true; }, { passive: false });
+            el.addEventListener('touchend', () => keys[key] = false);
+            el.addEventListener('mousedown', () => keys[key] = true);
+            el.addEventListener('mouseup', () => keys[key] = false);
+            el.addEventListener('mouseleave', () => keys[key] = false);
+        };
+        bindHold('leftBtn', 'left');
+        bindHold('rightBtn', 'right');
+        bindHold('blockBtn', 'block');
+        document.getElementById('jumpBtn').addEventListener('click', () => jump(you));
+        document.getElementById('punchBtn').addEventListener('click', () => triggerAttack(you, ai, 'punch'));
+        document.getElementById('kickBtn').addEventListener('click', () => triggerAttack(you, ai, 'kick'));
+
+        function updateFighter(f) {
+            if (f.timer > 0) f.timer--;
+            else f.action = 'idle';
+            if (f.cooldown > 0) f.cooldown--;
+
+            f.y += f.vy;
+            f.vy += 0.65;
+            if (f.y >= FLOOR_Y) {
+                f.y = FLOOR_Y;
+                f.vy = 0;
+            }
+            f.x = Math.max(40, Math.min(canvas.width - 40, f.x));
+        }
+
+        function updateAI() {
+            const diff = difficultyEl.value;
+            const speed = diff === 'easy' ? 2.2 : diff === 'medium' ? 3.4 : 4.5;
+            const atkChance = diff === 'easy' ? 0.025 : diff === 'medium' ? 0.055 : 0.095;
+            const dist = Math.abs(ai.x - you.x);
+
+            ai.facing = you.x < ai.x ? -1 : 1;
+            ai.blocking = you.action !== 'idle' && dist < 95 && Math.random() < (diff === 'hard' ? 0.45 : 0.2);
+
+            if (!ai.blocking) {
+                if (dist > 68) {
+                    ai.x += ai.facing * speed;
+                } else if (ai.cooldown === 0 && Math.random() < atkChance) {
+                    triggerAttack(ai, you, Math.random() < 0.55 ? 'punch' : 'kick');
+                }
+            }
+        }
+
+        function update() {
+            if (!running) return;
+            you.facing = ai.x >= you.x ? 1 : -1;
+            you.blocking = keys.block;
+            if (!you.blocking) {
+                if (keys.left) you.x -= 4.5;
+                if (keys.right) you.x += 4.5;
+            }
+            updateAI();
+            updateFighter(you);
+            updateFighter(ai);
+
+            for (const s of sparks) {
+                s.x += s.vx;
+                s.y += s.vy;
+                s.life--;
+            }
+            sparks = sparks.filter(s => s.life > 0);
+        }
+
+        function drawFighter(f) {
+            ctx.save();
+            ctx.translate(f.x, f.y);
+            ctx.scale(f.facing, 1);
+
+            // Shadow
+            ctx.fillStyle = 'rgba(15, 23, 42, 0.2)';
+            ctx.beginPath();
+            ctx.ellipse(0, 4, 22, 6, 0, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Legs
+            ctx.strokeStyle = '#1e293b';
+            ctx.lineWidth = 8;
+            ctx.lineCap = 'round';
+            ctx.beginPath();
+            ctx.moveTo(-8, -28);
+            ctx.lineTo(-14, 0);
+            ctx.moveTo(8, -28);
+            if (f.action === 'kick') {
+                ctx.lineTo(48, -32);
+            } else {
+                ctx.lineTo(14, 0);
+            }
+            ctx.stroke();
+
+            // Gi / Torso
+            ctx.fillStyle = f.color;
+            ctx.beginPath();
+            ctx.roundRect(-16, -68, 32, 42, 8);
+            ctx.fill();
+
+            // Belt
+            ctx.fillStyle = f.belt;
+            ctx.fillRect(-16, -38, 32, 6);
+
+            // Head & Headband
+            ctx.fillStyle = '#fde68a';
+            ctx.beginPath();
+            ctx.arc(0, -82, 14, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = f.belt;
+            ctx.fillRect(-14, -89, 28, 5);
+
+            // Arm / Punch / Block
+            ctx.strokeStyle = '#fde68a';
+            ctx.lineWidth = 7;
+            ctx.beginPath();
+            if (f.blocking) {
+                ctx.moveTo(6, -60);
+                ctx.lineTo(18, -74);
+            } else if (f.action === 'punch') {
+                ctx.moveTo(8, -58);
+                ctx.lineTo(44, -58);
+            } else {
+                ctx.moveTo(8, -58);
+                ctx.lineTo(22, -46);
+            }
+            ctx.stroke();
+
+            ctx.restore();
+        }
+
+        function draw() {
+            const isDark = document.body.classList.contains('dark');
+            ctx.fillStyle = isDark ? '#0f172a' : '#fef3c7';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Dojo wall panels
+            ctx.strokeStyle = isDark ? 'rgba(148,163,184,0.18)' : 'rgba(180,83,9,0.15)';
+            ctx.lineWidth = 2;
+            for (let x = 80; x < canvas.width; x += 80) {
+                ctx.beginPath();
+                ctx.moveTo(x, 0);
+                ctx.lineTo(x, FLOOR_Y);
+                ctx.stroke();
+            }
+
+            // Dojo mat floor
+            ctx.fillStyle = isDark ? '#1e293b' : '#fde68a';
+            ctx.fillRect(0, FLOOR_Y, canvas.width, canvas.height - FLOOR_Y);
+            ctx.fillStyle = '#ec4899';
+            ctx.fillRect(0, FLOOR_Y, canvas.width, 4);
+
+            drawFighter(you);
+            drawFighter(ai);
+
+            for (const s of sparks) {
+                ctx.globalAlpha = s.life / 16;
+                ctx.fillStyle = s.color;
+                ctx.beginPath();
+                ctx.arc(s.x, s.y, 4, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            ctx.globalAlpha = 1;
+        }
+
+        function loop() {
+            update();
+            draw();
+            requestAnimationFrame(loop);
+        }
+
+        loop();
+    </script>
+
+<!-- Mahsua Floating Home & Fullscreen Bar -->
+<style>
+  #mahsua-nav-bar {
+    position: fixed;
+    bottom: 12px;
+    right: 12px;
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.88);
+    border: 1px solid rgba(236, 72, 153, 0.3);
+    box-shadow: 0 6px 20px rgba(15, 23, 42, 0.16);
+    backdrop-filter: blur(12px);
+    font-family: 'Outfit', system-ui, -apple-system, sans-serif;
+  }
+  body.dark #mahsua-nav-bar,
+  body.dark-mode #mahsua-nav-bar {
+    background: rgba(15, 23, 42, 0.88);
+    border-color: rgba(59, 130, 246, 0.35);
+  }
+  .mahsua-nav-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    border: none;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform 0.15s ease, opacity 0.15s ease;
+  }
+  .mahsua-nav-btn:active {
+    transform: scale(0.95);
+  }
+  .mahsua-home-btn {
+    background: linear-gradient(135deg, #ec4899, #3b82f6);
+    color: #ffffff;
+  }
+  .mahsua-fs-btn {
+    background: linear-gradient(135deg, #10b981, #3b82f6);
+    color: #ffffff;
+  }
+</style>
+<div id="mahsua-nav-bar">
+  <a href="https://games.mahsua.com/" class="mahsua-nav-btn mahsua-home-btn" title="Go to Mahsua Games Home">🏠 Home</a>
+  <button type="button" id="mahsuaFsBtn" class="mahsua-nav-btn mahsua-fs-btn" title="Toggle Full Screen">⛶ Full Screen</button>
+</div>
+<script>
+  (function() {
+    var fsBtn = document.getElementById('mahsuaFsBtn');
+    if (!fsBtn) return;
+    function isFull() {
+      return !!(document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement);
+    }
+    function updateFsLabel() {
+      fsBtn.textContent = isFull() ? '✕ Exit Full' : '⛶ Full Screen';
+    }
+    fsBtn.addEventListener('click', function() {
+      var el = document.documentElement;
+      if (!isFull()) {
+        if (el.requestFullscreen) el.requestFullscreen();
+        else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+        else if (el.msRequestFullscreen) el.msRequestFullscreen();
+      } else {
+        if (document.exitFullscreen) document.exitFullscreen();
+        else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+        else if (document.msExitFullscreen) document.msExitFullscreen();
+      }
+    });
+    document.addEventListener('fullscreenchange', updateFsLabel);
+    document.addEventListener('webkitfullscreenchange', updateFsLabel);
+  })();
+</script>
+
+</body>
+</html>
