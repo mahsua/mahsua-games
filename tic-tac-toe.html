@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Basic Meta Tags -->
+    <meta name="description" content="Play Tic-Tac-Toe online against an unbeatable AI or a friend. A classic game of strategy with a simple, clean design.">
+    <meta name="keywords" content="tic-tac-toe, tic tac toe game, play tic tac toe, tic tac toe online, AI game, play with friend">
+    <meta name="author" content="Mahsua Games">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph / Social Media Tags (for Facebook, LinkedIn, etc.) -->
+    <meta property="og:title" content="Tic-Tac-Toe - Play with AI or a Friend">
+    <meta property="og:description" content="Play Tic-Tac-Toe online against an unbeatable AI or a friend. A classic game of strategy with a simple, clean design.">
+    <meta property="og:image" content="[https://www.mahsua.com/images/tic-tac-toe.png](https://www.mahsua.com/images/tic-tac-toe.png)">
+    <meta property="og:url" content="[https://games.mahsua.com/tic-tac-toe/index.html](https://games.mahsua.com/tic-tac-toe/index.html)">
+    <meta property="og:type" content="website">
+
+    <!-- Twitter Card Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Tic-Tac-Toe - Play with AI or a Friend">
+    <meta name="twitter:description" content="Play Tic-Tac-Toe online against an unbeatable AI or a friend. A classic game of strategy with a simple, clean design.">
+    <meta name="twitter:image" content="[https://www.mahsua.com/images/tic-tac-toe.png](https://www.mahsua.com/images/tic-tac-toe.png)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic Tac Toe Game | ❤️ mahsua.com</title>
+    <link rel="icon" href="./favicon.png" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+:root {
+    --bg-color: #f0f2f5;
+    --primary-color: #ffffff;
+    --accent-color: #6a1b9a;
+    --gradient-1: #9b51e0;
+    --gradient-2: #4a2c7a;
+    --text-color: #1c1f30;
+    --cell-bg: #e2e4e8;
+    --cell-x: #e85d04;
+    --cell-o: #2a9d8f;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--bg-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    flex-direction: column;
+    color: var(--text-color);
+    overflow: hidden;
+}
+
+.container {
+    background-color: var(--primary-color);
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 90%;
+    max-width: 400px;
+    margin: 50px auto 80px;
+}
+
+h1 {
+    font-size: 2em;
+    font-weight: 700;
+    margin: 0 0 20px;
+    color: var(--accent-color);
+}
+
+.status {
+    font-size: 1.2em;
+    font-weight: 600;
+    margin-bottom: 20px;
+    min-height: 25px;
+    color: var(--text-color);
+}
+
+.game-board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 15px;
+    width: 100%;
+}
+
+.cell {
+    width: 100%;
+    height: 100px;
+    background-color: var(--cell-bg);
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3.5em;
+    font-weight: 700;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+.cell:hover {
+    transform: scale(1.05);
+}
+
+.cell.x {
+    color: var(--cell-x);
+}
+
+.cell.o {
+    color: var(--cell-o);
+}
+
+.button-container {
+    margin-top: 25px;
+}
+
+.button {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 50px;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    color: var(--primary-color);
+    background-image: linear-gradient(45deg, var(--gradient-1), var(--gradient-2));
+    margin: 5px;
+}
+
+.button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+.modal-content {
+    background-color: var(--primary-color);
+    padding: 30px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 350px;
+}
+
+.modal-content h2 {
+    margin: 0;
+    color: var(--accent-color);
+    font-size: 1.8em;
+}
+
+footer {
+    background-color: var(--bg-color);
+    text-align: center;
+    margin-top: auto;
+    width: 100%;
+    box-sizing: border-box;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 0;
+}
+
+.footer-links {
+    color: #555;
+    font-size: 0.8em;
+    margin-bottom: 10px;
+    display: flex;
+    gap: 20px;
+}
+
+.footer-links a {
+    color: #555;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: var(--accent-color);
+}
+
+.footer-copyright {
+    color: #777;
+    font-size: 0.7em;
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 20px;
+    }
+    .cell {
+        height: 80px;
+        font-size: 3em;
+    }
+    h1 {
+        font-size: 1.8em;
+    }
+}
+
+</style>
+        <!-- Google Ads -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9351361840615541" crossorigin="anonymous"></script>
+    <meta name="google-adsense-account" content="ca-pub-9351361840615541">
+        <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-095F8QMZ5S"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-095F8QMZ5S');
+    </script>
+</head>
+<body>
+    <div id="mode-selection" class="modal-overlay">
+        <div class="modal-content">
+            <h2>Select Game Mode</h2>
+            <div class="button-container">
+                <button class="button" id="play-with-ai-btn">Play with AI</button>
+                <button class="button" id="play-with-friend-btn">Play with a Friend</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" id="game-container" style="display: none;">
+        <h1>Tic-Tac-Toe</h1>
+        <div class="status" id="status-message"></div>
+        <div class="game-board" id="game-board">
+            <div class="cell" data-index="0"></div>
+            <div class="cell" data-index="1"></div>
+            <div class="cell" data-index="2"></div>
+            <div class="cell" data-index="3"></div>
+            <div class="cell" data-index="4"></div>
+            <div class="cell" data-index="5"></div>
+            <div class="cell" data-index="6"></div>
+            <div class="cell" data-index="7"></div>
+            <div class="cell" data-index="8"></div>
+        </div>
+        <div class="button-container">
+            <button class="button" id="play-again-btn">Play Again</button>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-links">
+            <a href="./index.html">Games</a>
+            <a href="#">About</a>
+            <a href="#">Contact</a>
+        </div>
+        <div class="footer-copyright">
+            <p>© 2024 Mahsua Games. Play instantly, no downloads required!</p>
+        </div>
+    </footer>
+
+    <script>
+document.addEventListener('DOMContentLoaded', () => {
+    const modeSelectionScreen = document.getElementById('mode-selection');
+    const gameContainer = document.getElementById('game-container');
+    const playWithAiBtn = document.getElementById('play-with-ai-btn');
+    const playWithFriendBtn = document.getElementById('play-with-friend-btn');
+    const board = document.getElementById('game-board');
+    const cells = document.querySelectorAll('.cell');
+    const statusMessage = document.getElementById('status-message');
+    const playAgainBtn = document.getElementById('play-again-btn');
+
+    let gameMode = '';
+    let currentPlayer = 'X';
+    let gameBoard = ['', '', '', '', '', '', '', '', ''];
+    let gameActive = true;
+
+    const winningConditions = [
+        [0, 1, 2], [3, 4, 5], [6, 7, 8],
+        [0, 3, 6], [1, 4, 7], [2, 5, 8],
+        [0, 4, 8], [2, 4, 6]
+    ];
+
+    const handleResultValidation = () => {
+        let roundWon = false;
+        for (let i = 0; i < winningConditions.length; i++) {
+            const winCondition = winningConditions[i];
+            const a = gameBoard[winCondition[0]];
+            const b = gameBoard[winCondition[1]];
+            const c = gameBoard[winCondition[2]];
+            if (a === '' || b === '' || c === '') {
+                continue;
+            }
+            if (a === b && b === c) {
+                roundWon = true;
+                break;
+            }
+        }
+
+        if (roundWon) {
+            if (gameMode === 'ai') {
+                if (currentPlayer === 'O') {
+                    statusMessage.textContent = "AI has won!";
+                } else {
+                    statusMessage.textContent = "You Win!";
+                }
+            } else {
+                statusMessage.textContent = `${currentPlayer} has won!`;
+            }
+            gameActive = false;
+            return true;
+        }
+
+        if (!gameBoard.includes('')) {
+            statusMessage.textContent = `It's a draw!`;
+            gameActive = false;
+            return true;
+        }
+
+        return false;
+    };
+
+    const handlePlayerChange = () => {
+        if (gameActive) {
+            currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+            statusMessage.textContent = `It's ${currentPlayer}'s turn`;
+            if (gameMode === 'ai' && currentPlayer === 'O') {
+                setTimeout(handleAiTurn, 500);
+            }
+        }
+    };
+
+    const handleCellClick = (event) => {
+        const clickedCell = event.target;
+        const clickedCellIndex = parseInt(clickedCell.getAttribute('data-index'));
+
+        if (gameBoard[clickedCellIndex] !== '' || !gameActive) {
+            return;
+        }
+
+        gameBoard[clickedCellIndex] = currentPlayer;
+        clickedCell.textContent = currentPlayer;
+        clickedCell.classList.add(currentPlayer.toLowerCase());
+
+        const gameEnded = handleResultValidation();
+        if (!gameEnded) {
+            handlePlayerChange();
+        }
+    };
+
+    const handleAiTurn = () => {
+        if (!gameActive) return;
+
+        const bestMove = findBestMove(gameBoard);
+
+        if (bestMove !== null) {
+            gameBoard[bestMove] = 'O';
+            cells[bestMove].textContent = 'O';
+            cells[bestMove].classList.add('o');
+            const gameEnded = handleResultValidation();
+            if (!gameEnded) {
+                handlePlayerChange();
+            }
+        }
+    };
+
+    const findBestMove = (board) => {
+        let bestScore = -Infinity;
+        let move = null;
+        for (let i = 0; i < board.length; i++) {
+            if (board[i] === '') {
+                board[i] = 'O';
+                let score = minimax(board, false);
+                board[i] = '';
+                if (score > bestScore) {
+                    bestScore = score;
+                    move = i;
+                }
+            }
+        }
+        return move;
+    };
+
+    const minimax = (board, isMaximizingPlayer) => {
+        const scores = {
+            'X': -1,
+            'O': 1,
+            'draw': 0
+        };
+
+        const checkWinner = (currentBoard) => {
+            for (let i = 0; i < winningConditions.length; i++) {
+                const winCondition = winningConditions[i];
+                const a = currentBoard[winCondition[0]];
+                const b = currentBoard[winCondition[1]];
+                const c = currentBoard[winCondition[2]];
+                if (a === '' || b === '' || c === '') {
+                    continue;
+                }
+                if (a === b && b === c) {
+                    return a;
+                }
+            }
+            if (!currentBoard.includes('')) {
+                return 'draw';
+            }
+            return null;
+        };
+
+        const result = checkWinner(board);
+        if (result !== null) {
+            return scores[result];
+        }
+
+        if (isMaximizingPlayer) {
+            let bestScore = -Infinity;
+            for (let i = 0; i < board.length; i++) {
+                if (board[i] === '') {
+                    board[i] = 'O';
+                    let score = minimax(board, false);
+                    board[i] = '';
+                    bestScore = Math.max(score, bestScore);
+                }
+            }
+            return bestScore;
+        } else {
+            let bestScore = Infinity;
+            for (let i = 0; i < board.length; i++) {
+                if (board[i] === '') {
+                    board[i] = 'X';
+                    let score = minimax(board, true);
+                    board[i] = '';
+                    bestScore = Math.min(score, bestScore);
+                }
+            }
+            return bestScore;
+        }
+    };
+
+    const resetGame = () => {
+        gameActive = true;
+        currentPlayer = 'X';
+        gameBoard = ['', '', '', '', '', '', '', '', ''];
+        statusMessage.textContent = `It's ${currentPlayer}'s turn`;
+        cells.forEach(cell => {
+            cell.textContent = '';
+            cell.classList.remove('x', 'o');
+        });
+        if (gameMode === 'ai' && currentPlayer === 'O') {
+            setTimeout(handleAiTurn, 500);
+        }
+    };
+
+    const startGame = () => {
+        modeSelectionScreen.style.display = 'none';
+        gameContainer.style.display = 'block';
+        statusMessage.textContent = `It's X's turn`;
+    };
+
+    playWithAiBtn.addEventListener('click', () => {
+        gameMode = 'ai';
+        startGame();
+    });
+
+    playWithFriendBtn.addEventListener('click', () => {
+        gameMode = 'friend';
+        startGame();
+    });
+
+    board.addEventListener('click', handleCellClick);
+    playAgainBtn.addEventListener('click', resetGame);
+});
+
+</script>
+</body>
+</html>

@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Ads -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9351361840615541" crossorigin="anonymous"></script>
+    <meta name="google-adsense-account" content="ca-pub-9351361840615541">
+    <meta charset="UTF-8">
+     <meta name="description" content="Unblock the Key - a challenging puzzle game where you slide blocks to free the main key and win the level. Play now for free!">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free the Key Game | ❤️ mahsua.com</title>
+    <link rel="icon" href="./favicon.png" type="image/svg+xml">
+    <style>
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f0f4f8; /* Light background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    flex-direction: column;
+    padding: 1rem;
+}
+
+.game-wrapper {
+    background-color: #ffffff; /* White card background */
+    padding: 2rem;
+    border-radius: 1.5rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.game-container {
+    position: relative;
+    background-color: #d1d9e6; /* Light gray inner board color */
+    border: 8px solid #a8b0c4; /* Soft blue-gray border */
+    border-radius: 0.5rem;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.block {
+    position: absolute;
+    cursor: grab;
+    transition: transform 0.1s ease-out;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    touch-action: none;
+    border-radius: 4px;
+}
+.block.is-dragging {
+    cursor: grabbing;
+}
+.key-block {
+    background-color: #ffb703; /* Bright golden key */
+    z-index: 10;
+}
+.key-block .key-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70%;
+    height: 70%;
+    fill: #023047; /* Dark blue fill for key icon */
+}
+.obstacle-block {
+    background-color: #6c757d; /* Soft gray-blue */
+}
+
+.exit-marker {
+    position: absolute;
+    right: -8px; 
+    top: 50%;
+    transform: translateY(-50%);
+    width: 8px;
+    height: 60px; 
+    background-color: #ffb703;
+    z-index: 5;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+    border-right: 2px solid #e29578;
+}
+
+/* Modal Popup */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 20;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    justify-content: center;
+    align-items: center;
+}
+.modal-content {
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 1rem;
+    text-align: center;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.3s ease-in-out;
+    transform: scale(0.9);
+}
+.modal-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #023047;
+    margin-bottom: 1rem;
+}
+.modal-text {
+    font-size: 1.25rem;
+    color: #4a5568;
+    margin-bottom: 1.5rem;
+}
+
+footer {
+    background-color: white;
+    text-align: center;
+    margin-top: auto;
+    width: 100%;
+    box-sizing: border-box;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 0;
+}
+
+.footer-links {
+    color: #555;
+    font-size: 0.8em;
+    margin-bottom: 10px;
+    display: flex;
+    gap: 20px;
+}
+
+.footer-links a {
+    color: #555;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: var(--accent-color);
+}
+
+.footer-copyright {
+    color: #777;
+    font-size: 0.7em;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.8); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+</style>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="p-4">
+    <div class="game-wrapper">
+        <div class="text-center mb-8">
+            <h1 class="text-1xl sm:text-2xl font-extrabold text-gray-800 mb-2">Free the Key</h1>
+            <p class="text-gray-600 font-medium max-w-lg mx-auto">Slide the blocks to free the key and let it exit the board.</p>
+        </div>
+        <div class="game-container relative" id="game-container">
+            <div class="exit-marker"></div>
+        </div>
+    </div>
+    
+    <!-- Win Modal -->
+    <div id="win-modal" class="modal">
+        <div class="modal-content">
+            <div id="modal-title" class="modal-title"></div>
+            <p id="modal-text" class="modal-text"></p>
+            <button id="modal-action-button" class="bg-blue-600 text-white font-bold py-3 px-8 rounded-full shadow-lg hover:bg-blue-700 transition duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-500">
+            </button>
+        </div>
+    </div>
+
+    <div class="mt-8 flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+        <button id="reset-button" class="bg-gray-200 text-gray-800 font-bold py-3 px-8 rounded-full shadow-lg hover:bg-gray-300 transition duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-gray-400">
+            Reset
+        </button>
+    </div>
+    <footer>
+        <div class="footer-links">
+            <a href="./index.html">Games</a>
+            <a href="#">About</a>
+            <a href="#">Contact</a>
+        </div>
+        <div class="footer-copyright">
+            <p>© 2024 Mahsua Games. Play instantly, no downloads required!</p>
+        </div>
+    </footer>
+    <script>
+document.addEventListener('DOMContentLoaded', () => {
+    const gameContainer = document.getElementById('game-container');
+    const resetButton = document.getElementById('reset-button');
+    const winModal = document.getElementById('win-modal');
+    const modalTitle = document.getElementById('modal-title');
+    const modalText = document.getElementById('modal-text');
+    const modalActionButton = document.getElementById('modal-action-button');
+
+    const CELL_SIZE = 60;
+    const PADDING = 10;
+    const GRID_WIDTH = 6;
+    const GRID_HEIGHT = 6;
+
+    let isDragging = false;
+    let currentBlock = null;
+    let initialMousePos = { x: 0, y: 0 };
+    let initialBlockPos = { x: 0, y: 0 };
+    let grid = [];
+    let keyBlock = null;
+    let currentLevel = 0;
+    const levels = [
+        // Level 1
+        {
+            key: { x: 0, y: 2, width: 2, height: 1, type: 'h' },
+            obstacles: [
+                { x: 2, y: 0, width: 1, height: 2, type: 'v' },
+                { x: 3, y: 0, width: 2, height: 1, type: 'h' },
+                { x: 2, y: 2, width: 1, height: 2, type: 'v' },
+                { x: 5, y: 1, width: 1, height: 2, type: 'v' },
+                { x: 4, y: 2, width: 2, height: 1, type: 'h' },
+                { x: 0, y: 3, width: 2, height: 1, type: 'h' },
+                { x: 3, y: 3, width: 1, height: 2, type: 'v' },
+                { x: 2, y: 4, width: 2, height: 1, type: 'h' },
+                { x: 4, y: 4, width: 2, height: 1, type: 'h' },
+                { x: 0, y: 5, width: 2, height: 1, type: 'h' },
+            ]
+        },
+        // Level 2
+        {
+            key: { x: 0, y: 2, width: 2, height: 1, type: 'h' },
+            obstacles: [
+                { x: 0, y: 0, width: 2, height: 1, type: 'h' },
+                { x: 2, y: 0, width: 1, height: 2, type: 'v' },
+                { x: 3, y: 0, width: 2, height: 1, type: 'h' },
+                { x: 4, y: 1, width: 1, height: 2, type: 'v' },
+                { x: 5, y: 0, width: 1, height: 2, type: 'v' },
+                { x: 1, y: 1, width: 1, height: 2, type: 'v' },
+                { x: 2, y: 3, width: 1, height: 2, type: 'v' },
+                { x: 3, y: 3, width: 2, height: 1, type: 'h' },
+                { x: 5, y: 3, width: 1, height: 2, type: 'v' },
+                { x: 0, y: 4, width: 2, height: 1, type: 'h' },
+                { x: 0, y: 5, width: 2, height: 1, type: 'h' },
+            ]
+        },
+        // Level 3 (Increased Difficulty)
+        {
+            key: { x: 0, y: 2, width: 2, height: 1, type: 'h' },
+            obstacles: [
+                { x: 2, y: 0, width: 1, height: 2, type: 'v' },
+                { x: 3, y: 0, width: 1, height: 3, type: 'v' },
+                { x: 4, y: 0, width: 1, height: 2, type: 'v' },
+                { x: 0, y: 1, width: 2, height: 1, type: 'h' },
+                { x: 2, y: 2, width: 1, height: 2, type: 'v' },
+                { x: 5, y: 1, width: 1, height: 2, type: 'v' },
+                { x: 0, y: 3, width: 2, height: 1, type: 'h' },
+                { x: 4, y: 3, width: 2, height: 1, type: 'h' },
+                { x: 0, y: 4, width: 1, height: 2, type: 'v' },
+                { x: 1, y: 4, width: 2, height: 1, type: 'h' },
+                { x: 3, y: 4, width: 2, height: 1, type: 'h' },
+                { x: 2, y: 5, width: 2, height: 1, type: 'h' },
+                { x: 5, y: 5, width: 1, height: 1, type: 'h' },
+            ]
+        }
+    ];
+
+    function initializeGame(levelData) {
+        gameContainer.innerHTML = `<div class="exit-marker"></div>`;
+        gameContainer.style.width = `${GRID_WIDTH * CELL_SIZE + PADDING * 2}px`;
+        gameContainer.style.height = `${GRID_HEIGHT * CELL_SIZE + PADDING * 2}px`;
+        winModal.style.display = 'none';
+        grid = Array(GRID_HEIGHT).fill(null).map(() => Array(GRID_WIDTH).fill(null));
+
+        const allBlocks = [levelData.key, ...levelData.obstacles];
+
+        allBlocks.forEach((blockData, index) => {
+            const blockElement = document.createElement('div');
+            blockElement.classList.add('block');
+            if (index === 0) {
+                blockElement.classList.add('key-block');
+                keyBlock = blockElement;
+                blockElement.innerHTML = `
+                    <svg class="key-icon" viewBox="0 0 24 24">
+                        <path d="M14.5,10.5C14.5,11.88 15.62,13 17,13C18.38,13 19.5,11.88 19.5,10.5C19.5,9.12 18.38,8 17,8C15.62,8 14.5,9.12 14.5,10.5M21,15H20V16H18V15H17V14H15V15H14V17H13V18H12V16H11V15H9.5C9.22,15 9,14.78 9,14.5V14H6.5V13H5.5V12H4.5V11H3.5V10H2.5V9H2V8H3.5V7H4.5V6H5.5V5H6.5V4H9V5H10V6H11V7H12V8H13V9H14V10H15V11H17V12H18V13H20V14H21V15Z" />
+                    </svg>
+                `;
+            } else {
+                blockElement.classList.add('obstacle-block');
+            }
+            blockElement.style.width = `${blockData.width * CELL_SIZE}px`;
+            blockElement.style.height = `${blockData.height * CELL_SIZE}px`;
+            blockElement.style.left = `${blockData.x * CELL_SIZE + PADDING}px`;
+            blockElement.style.top = `${blockData.y * CELL_SIZE + PADDING}px`;
+            blockElement.dataset.x = blockData.x;
+            blockElement.dataset.y = blockData.y;
+            blockElement.dataset.width = blockData.width;
+            blockElement.dataset.height = blockData.height;
+            blockElement.dataset.type = blockData.type;
+            gameContainer.appendChild(blockElement);
+
+            for (let i = blockData.y; i < blockData.y + blockData.height; i++) {
+                for (let j = blockData.x; j < blockData.x + blockData.width; j++) {
+                    if (i >= 0 && i < GRID_HEIGHT && j >= 0 && j < GRID_WIDTH) {
+                        grid[i][j] = blockElement;
+                    }
+                }
+            }
+        });
+
+        attachEventListeners();
+    }
+
+    function attachEventListeners() {
+        gameContainer.addEventListener('mousedown', startDrag);
+        gameContainer.addEventListener('touchstart', startDrag);
+        gameContainer.addEventListener('mousemove', drag);
+        gameContainer.addEventListener('touchmove', drag);
+        gameContainer.addEventListener('mouseup', endDrag);
+        gameContainer.addEventListener('touchend', endDrag);
+    }
+
+    function startDrag(e) {
+        const target = e.target.closest('.block');
+        if (target) {
+            isDragging = true;
+            currentBlock = target;
+            currentBlock.classList.add('is-dragging');
+            e.preventDefault();
+
+            const event = e.touches ? e.touches[0] : e;
+            initialMousePos.x = event.clientX;
+            initialMousePos.y = event.clientY;
+            initialBlockPos.x = parseInt(currentBlock.style.left);
+            initialBlockPos.y = parseInt(currentBlock.style.top);
+        }
+    }
+
+    function drag(e) {
+        if (!isDragging || !currentBlock) return;
+        e.preventDefault();
+        const event = e.touches ? e.touches[0] : e;
+        const dx = event.clientX - initialMousePos.x;
+        const dy = event.clientY - initialMousePos.y;
+
+        if (currentBlock.dataset.type === 'h') {
+            currentBlock.style.left = `${initialBlockPos.x + dx}px`;
+        } else if (currentBlock.dataset.type === 'v') {
+            currentBlock.style.top = `${initialBlockPos.y + dy}px`;
+        }
+    }
+
+    function endDrag(e) {
+        if (!isDragging || !currentBlock) return;
+        isDragging = false;
+        currentBlock.classList.remove('is-dragging');
+
+        const event = e.changedTouches ? e.changedTouches[0] : e;
+        const finalPos = {
+            x: parseInt(currentBlock.style.left) - PADDING,
+            y: parseInt(currentBlock.style.top) - PADDING
+        };
+
+        const blockData = {
+            x: parseInt(currentBlock.dataset.x),
+            y: parseInt(currentBlock.dataset.y),
+            width: parseInt(currentBlock.dataset.width),
+            height: parseInt(currentBlock.dataset.height),
+            type: currentBlock.dataset.type
+        };
+
+        let newX, newY;
+        if (blockData.type === 'h') {
+            newX = Math.round(finalPos.x / CELL_SIZE);
+            newY = blockData.y;
+        } else {
+            newX = blockData.x;
+            newY = Math.round(finalPos.y / CELL_SIZE);
+        }
+
+        if (isValidMove(blockData, newX, newY, currentBlock)) {
+            updateGrid(currentBlock, blockData, newX, newY);
+            currentBlock.dataset.x = newX;
+            currentBlock.dataset.y = newY;
+            currentBlock.style.left = `${newX * CELL_SIZE + PADDING}px`;
+            currentBlock.style.top = `${newY * CELL_SIZE + PADDING}px`;
+            checkWinCondition();
+        } else {
+            currentBlock.style.left = `${blockData.x * CELL_SIZE + PADDING}px`;
+            currentBlock.style.top = `${blockData.y * CELL_SIZE + PADDING}px`;
+        }
+        currentBlock = null;
+    }
+
+    function isValidMove(blockData, newX, newY, blockElement) {
+        if (newX < 0 || newY < 0 || newX + blockData.width > GRID_WIDTH || newY + blockData.height > GRID_HEIGHT) {
+            return false;
+        }
+
+        for (let i = newY; i < newY + blockData.height; i++) {
+            for (let j = newX; j < newX + blockData.width; j++) {
+                if (grid[i] && grid[i][j] && grid[i][j] !== blockElement) {
+                    if (blockElement.classList.contains('key-block') && newX + blockData.width >= GRID_WIDTH) {
+                        return true;
+                    }
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    
+    function updateGrid(blockElement, oldData, newX, newY) {
+        for (let i = oldData.y; i < oldData.y + oldData.height; i++) {
+            for (let j = oldData.x; j < oldData.x + oldData.width; j++) {
+                 if (i >= 0 && i < GRID_HEIGHT && j >= 0 && j < GRID_WIDTH) {
+                   grid[i][j] = null;
+                }
+            }
+        }
+        for (let i = newY; i < newY + oldData.height; i++) {
+            for (let j = newX; j < newX + oldData.width; j++) {
+                if (i >= 0 && i < GRID_HEIGHT && j >= 0 && j < GRID_WIDTH) {
+                    grid[i][j] = blockElement;
+                }
+            }
+        }
+    }
+
+    function checkWinCondition() {
+        const keyBlockX = parseInt(keyBlock.dataset.x);
+        const keyBlockWidth = parseInt(keyBlock.dataset.width);
+
+        if (keyBlockX + keyBlockWidth >= GRID_WIDTH) {
+            if (currentLevel < levels.length - 1) {
+                modalTitle.textContent = "You did it!";
+                modalText.textContent = "You have freed the key.";
+                modalActionButton.textContent = "Next Level";
+                modalActionButton.onclick = () => {
+                    currentLevel++;
+                    initializeGame(levels[currentLevel]);
+                };
+            } else {
+                modalTitle.textContent = "Congratulations!";
+                modalText.textContent = "You have completed all levels!";
+                modalActionButton.textContent = "Play Again";
+                modalActionButton.onclick = () => {
+                    currentLevel = 0;
+                    initializeGame(levels[currentLevel]);
+                };
+            }
+            winModal.style.display = 'flex';
+            gameContainer.removeEventListener('mousedown', startDrag);
+            gameContainer.removeEventListener('touchstart', startDrag);
+        }
+    }
+
+    resetButton.addEventListener('click', () => {
+        initializeGame(levels[currentLevel]);
+    });
+
+    initializeGame(levels[currentLevel]);
+});
+
+</script>
+</body>
+</html>

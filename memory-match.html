@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Memory Match by Mahsua Apps — Free Online Card Matching Brain Game</title>
+  <meta name="description" content="Play Memory Match by Mahsua Apps free online! Train your brain across 30 levels each in Easy, Medium, and Hard modes with 3D card flips, combos, themes, and dark mode." />
+  <meta name="keywords" content="Memory Match, Memory Game, Memory Match by Mahsua Apps, Mahsua Apps, card matching game, brain training game, concentration game" />
+  <meta name="author" content="Shivam Kushwaha - Mahsua Apps" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#2563eb" />
+  <link rel="canonical" href="https://apps.mahsua.com/memory-match/" />
+  <link rel="icon" href="./favicon.png" type="image/svg+xml">
+
+
+  <!-- Open Graph / Social SEO -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Mahsua Apps" />
+  <meta property="og:title" content="Memory Match by Mahsua Apps — 90 Levels Free Online" />
+  <meta property="og:description" content="Flip cards, match pairs, and build combo streaks across 30 levels each in Easy, Medium, and Hard modes. Free on mobile, tablet, and desktop." />
+  <meta property="og:url" content="https://apps.mahsua.com/memory-match/" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Memory Match by Mahsua Apps" />
+  <meta name="twitter:description" content="Free online Memory Match card game with 90 levels, 3D card flips, and combo streaks." />
+
+  <!-- Structured Data (JSON-LD: VideoGame + FAQPage) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "VideoGame",
+        "name": "Memory Match by Mahsua Apps",
+        "url": "https://apps.mahsua.com/memory-match/",
+        "description": "A free browser-based Memory Match card puzzle game by Mahsua Apps featuring 30 levels each in Easy, Medium, and Hard difficulties with multiple themes and 3D flip animations.",
+        "genre": ["Puzzle", "Memory", "Brain Training"],
+        "gamePlatform": ["Web Browser", "Mobile Web", "Desktop"],
+        "applicationCategory": "GameApplication",
+        "operatingSystem": "Any",
+        "inLanguage": "en",
+        "author": {
+          "@type": "Organization",
+          "name": "Mahsua Apps",
+          "url": "https://apps.mahsua.com/"
+        },
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How do you play Memory Match by Mahsua Apps?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Tap or click any two face-down cards to flip them over. If the icons match, the pair stays face-up and builds your combo streak. Match every pair on the board to complete the level."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How many levels are included in Memory Match?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Memory Match includes 90 handcrafted levels: 30 levels in Easy (3x4), 30 levels in Medium (4x4), and 30 levels in Hard (4x5 / 4x6)."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9351361840615541" crossorigin="anonymous"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    }
+
+    /* 3D Card Flip Perspective */
+    .card-scene {
+      perspective: 900px;
+      touch-action: manipulation;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    .card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      transition: transform 0.36s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .card-scene.flipped .card-inner,
+    .card-scene.matched .card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .card-face {
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      border-radius: 0.85rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card-front {
+      transform: rotateY(180deg);
+    }
+
+    @keyframes matchPop {
+      0% { transform: rotateY(180deg) scale(1); }
+      45% { transform: rotateY(180deg) scale(1.08); }
+      100% { transform: rotateY(180deg) scale(1); }
+    }
+
+    .card-scene.matched .card-inner {
+      animation: matchPop 0.38s ease;
+    }
+
+    @keyframes shakeWrong {
+      0%, 100% { transform: rotateY(180deg) translateX(0); }
+      25% { transform: rotateY(180deg) translateX(-4px); }
+      75% { transform: rotateY(180deg) translateX(4px); }
+    }
+
+    .card-scene.mismatch .card-inner {
+      animation: shakeWrong 0.28s ease;
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 transition-colors duration-200 flex flex-col">
+  <div class="max-w-6xl w-full mx-auto px-3 sm:px-6 py-4 sm:py-6 flex flex-col gap-4 sm:gap-5 flex-1">
+    <!-- Top Header & Controls -->
+    <header class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-sm p-3.5 sm:p-4 flex flex-col xl:flex-row xl:items-center xl:justify-between gap-3">
+      <div class="flex items-center justify-between gap-3">
+        <div class="flex items-center gap-2.5">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-pink-500 via-blue-500 to-emerald-500 flex items-center justify-center text-white font-extrabold text-lg shadow-sm shrink-0">
+            M
+          </div>
+          <div>
+            <h1 class="text-base sm:text-xl font-bold tracking-tight text-slate-900 dark:text-white leading-tight">
+              Memory Match <span class="text-blue-600 dark:text-blue-400 font-semibold text-sm sm:text-base">by Mahsua Apps</span>
+            </h1>
+            <p class="text-xs text-slate-500 dark:text-slate-400">90 Levels • Flip &amp; match pairs with combo streaks</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-1.5 xl:hidden">
+          <button id="btn-sound-mobile" type="button" aria-label="Toggle sound" class="p-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 transition">
+            <span class="sound-icon text-sm font-semibold">🔊</span>
+          </button>
+          <button id="btn-theme-mobile" type="button" aria-label="Toggle dark mode" class="p-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 transition">
+            <span class="theme-icon text-sm font-semibold">🌙</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-2">
+        <label class="sr-only" for="select-theme">Card Theme</label>
+        <select id="select-theme" class="px-3 py-2 rounded-xl text-sm font-medium bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <option value="animals">Animals</option>
+          <option value="fruits">Fruits &amp; Food</option>
+          <option value="space">Space &amp; Science</option>
+          <option value="travel">Travel &amp; Places</option>
+          <option value="sports">Sports &amp; Fun</option>
+        </select>
+
+        <label class="sr-only" for="select-difficulty">Difficulty</label>
+        <select id="select-difficulty" class="px-3 py-2 rounded-xl text-sm font-medium bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <option value="easy">Easy (12 Cards)</option>
+          <option value="medium" selected>Medium (16 Cards)</option>
+          <option value="hard">Hard (20 Cards)</option>
+        </select>
+
+        <label class="sr-only" for="select-level">Level</label>
+        <select id="select-level" class="px-3 py-2 rounded-xl text-sm font-medium bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <!-- Levels 1-30 populated by JS -->
+        </select>
+
+        <button id="btn-peek" type="button" class="px-3 py-2 rounded-xl text-sm font-semibold bg-pink-50 dark:bg-pink-950/50 text-pink-600 dark:text-pink-300 border border-pink-200 dark:border-pink-800/60 hover:bg-pink-100 dark:hover:bg-pink-900/50 transition">
+          Peek Hint
+        </button>
+
+        <button id="btn-restart" type="button" class="px-3.5 py-2 rounded-xl text-sm font-semibold bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition">
+          Restart
+        </button>
+
+        <button id="btn-sound" type="button" aria-label="Toggle sound" class="hidden xl:inline-flex items-center justify-center px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 text-sm font-medium transition">
+          <span class="sound-icon mr-1.5">🔊</span><span class="sound-label">Sound</span>
+        </button>
+
+        <button id="btn-theme" type="button" aria-label="Toggle dark mode" class="hidden xl:inline-flex items-center justify-center px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 text-sm font-medium transition">
+          <span class="theme-icon mr-1.5">🌙</span><span class="theme-label">Dark</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Game Area -->
+    <main class="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-5 items-start">
+      <!-- Card Board Column -->
+      <section class="lg:col-span-7 xl:col-span-8 flex flex-col gap-4">
+        <div id="game-stage" class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-sm p-3.5 sm:p-5 flex flex-col items-center gap-3.5">
+          <!-- Stage Top Bar -->
+          <div class="w-full flex flex-wrap items-center justify-between gap-2">
+            <div class="flex items-center gap-2">
+              <span id="level-badge" class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/60">
+                Level 1 / 30
+              </span>
+              <span id="combo-badge" class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+                Streak: 0x
+              </span>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <div id="status-toast" class="text-xs sm:text-sm font-semibold text-emerald-600 dark:text-emerald-400 opacity-0 transition-opacity duration-200">
+                Match!
+              </div>
+            </div>
+          </div>
+
+          <!-- Responsive Card Grid -->
+          <div id="card-grid" class="w-full max-w-[560px] grid gap-2 sm:gap-3 my-auto">
+            <!-- Cards injected by JS -->
+          </div>
+        </div>
+
+        <!-- Leaderboard Ad Slot -->
+        <aside aria-label="Advertisement" class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-sm p-3 flex flex-col items-center justify-center min-h-[106px]">
+          <span class="text-[10px] uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-1">Advertisement</span>
+          <div class="w-full flex items-center justify-center min-h-[72px] rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-dashed border-slate-200 dark:border-slate-700/70 overflow-hidden">
+            <ins class="adsbygoogle block w-full text-center"
+                 style="display:block"
+                 data-ad-client="ca-pub-9351361840615541"
+                 data-ad-slot="auto"
+                 data-ad-format="horizontal"
+                 data-full-width-responsive="true"></ins>
+          </div>
+        </aside>
+      </section>
+
+      <!-- Sidebar: Stats + Star Rating Targets + Ad Slot -->
+      <aside class="lg:col-span-5 xl:col-span-4 flex flex-col gap-4">
+        <!-- Stats Card -->
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-sm p-4 grid grid-cols-3 gap-2 text-center">
+          <div class="p-2 rounded-xl bg-blue-50/70 dark:bg-blue-950/30 border border-blue-100 dark:border-blue-900/40">
+            <div class="text-[11px] uppercase tracking-wider font-semibold text-blue-600 dark:text-blue-400">Matched</div>
+            <div id="stat-matched" class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white mt-0.5">0 / 0</div>
+          </div>
+          <div class="p-2 rounded-xl bg-pink-50/70 dark:bg-pink-950/30 border border-pink-100 dark:border-pink-900/40">
+            <div class="text-[11px] uppercase tracking-wider font-semibold text-pink-600 dark:text-pink-400">Moves</div>
+            <div id="stat-moves" class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white mt-0.5">0</div>
+          </div>
+          <div class="p-2 rounded-xl bg-emerald-50/70 dark:bg-emerald-950/30 border border-emerald-100 dark:border-emerald-900/40">
+            <div class="text-[11px] uppercase tracking-wider font-semibold text-emerald-600 dark:text-emerald-400">Time</div>
+            <div id="stat-time" class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white mt-0.5 tabular-nums">00:00</div>
+          </div>
+        </div>
+
+        <!-- Score & Star Target Card -->
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-sm p-4 flex flex-col gap-3">
+          <div class="flex items-center justify-between">
+            <h2 class="text-sm font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">Level Goal</h2>
+            <span id="score-badge" class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300">
+              Score: 0
+            </span>
+          </div>
+          <div class="grid grid-cols-3 gap-2 text-center text-xs">
+            <div class="p-2 rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200/70 dark:border-slate-700/60">
+              <div class="text-amber-500 font-bold text-sm">★★★</div>
+              <div id="star-3-target" class="text-slate-600 dark:text-slate-300 font-semibold mt-0.5">≤ 14 Moves</div>
+            </div>
+            <div class="p-2 rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200/70 dark:border-slate-700/60">
+              <div class="text-amber-500 font-bold text-sm">★★☆</div>
+              <div id="star-2-target" class="text-slate-600 dark:text-slate-300 font-semibold mt-0.5">≤ 20 Moves</div>
+            </div>
+            <div class="p-2 rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200/70 dark:border-slate-700/60">
+              <div class="text-amber-500 font-bold text-sm">★☆☆</div>
+              <div class="text-slate-600 dark:text-slate-300 font-semibold mt-0.5">Clear Board</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sidebar Rectangle Ad Slot -->
+        <div aria-label="Advertisement" class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-sm p-3 flex flex-col items-center justify-center min-h-[270px]">
+          <span class="text-[10px] uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-1.5">Advertisement</span>
+          <div class="w-full flex-1 flex items-center justify-center min-h-[230px] rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-dashed border-slate-200 dark:border-slate-700/70 overflow-hidden">
+            <ins class="adsbygoogle block w-full text-center"
+                 style="display:block"
+                 data-ad-client="ca-pub-9351361840615541"
+                 data-ad-slot="auto"
+                 data-ad-format="rectangle"
+                 data-full-width-responsive="true"></ins>
+          </div>
+        </div>
+      </aside>
+    </main>
+
+    <!-- SEO Info & How to Play -->
+    <section class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-sm p-4 sm:p-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5 text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+        <div>
+          <h2 class="text-base font-bold text-slate-900 dark:text-white mb-2">About Memory Match by Mahsua Apps</h2>
+          <p>
+            Memory Match by <a href="https://apps.mahsua.com/" target="_blank" rel="noopener noreferrer" class="text-blue-600 dark:text-blue-400 font-semibold hover:underline">Mahsua Apps</a> is a free, lightweight concentration and visual recall game built for mobile, tablet, and desktop browsers. Progress through 30 levels each across Easy (12 cards), Medium (16 cards), and Hard (20 cards) with five vibrant icon themes.
+          </p>
+        </div>
+        <div>
+          <h2 class="text-base font-bold text-slate-900 dark:text-white mb-2">How to Play</h2>
+          <p>
+            Tap any two cards to flip them face-up and find matching pairs. Consecutive matches trigger combo streak multipliers for higher scores and 3-star ratings. Need a quick boost? Use <strong>Peek Hint</strong> to briefly reveal unmatched cards, or unlock levels directly from the level selector.
+          </p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Branded Footer -->
+  <footer class="border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 mt-auto">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-500 dark:text-slate-400">
+      <div>
+        Made With ❤️ INDIA ~ Designed by <strong class="text-slate-700 dark:text-slate-200">SHIVAM KUSHWAHA</strong>
+      </div>
+      <div class="flex flex-wrap items-center gap-3">
+        <a href="https://apps.mahsua.com/" target="_blank" rel="noopener noreferrer" class="hover:text-blue-600 dark:hover:text-blue-400 font-medium transition">Mahsua Apps</a>
+        <span>•</span>
+        <a href="mailto:games@mahsua.com" class="hover:text-blue-600 dark:hover:text-blue-400 transition">games@mahsua.com</a>
+        <span>•</span>
+        <a href="https://api.whatsapp.com/send/?phone=919752107808" target="_blank" rel="noopener noreferrer" class="hover:text-emerald-600 dark:hover:text-emerald-400 transition">WhatsApp Support</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Victory Modal -->
+  <div id="victory-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-900/55 backdrop-blur-sm p-4">
+    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl max-w-sm w-full p-6 text-center">
+      <div id="modal-stars" class="text-3xl tracking-widest text-amber-400 mb-2">★★★</div>
+      <h2 id="modal-title" class="text-2xl font-extrabold text-slate-900 dark:text-white">Level 1 Complete!</h2>
+      <p id="modal-subtitle" class="text-sm text-slate-500 dark:text-slate-400 mt-1">All pairs matched!</p>
+
+      <div class="grid grid-cols-3 gap-2 my-5">
+        <div class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800">
+          <div class="text-[11px] font-semibold uppercase text-slate-400">Time</div>
+          <div id="modal-time" class="text-base font-bold text-slate-900 dark:text-white mt-0.5">00:00</div>
+        </div>
+        <div class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800">
+          <div class="text-[11px] font-semibold uppercase text-slate-400">Moves</div>
+          <div id="modal-moves" class="text-base font-bold text-slate-900 dark:text-white mt-0.5">0</div>
+        </div>
+        <div class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800">
+          <div class="text-[11px] font-semibold uppercase text-slate-400">Score</div>
+          <div id="modal-score" class="text-base font-bold text-slate-900 dark:text-white mt-0.5">0</div>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-2">
+        <button id="btn-next-level" type="button" class="w-full py-2.5 rounded-xl text-sm font-semibold bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm transition">
+          Next Level →
+        </button>
+        <div class="flex gap-2">
+          <button id="btn-modal-close" type="button" class="flex-1 py-2.5 rounded-xl text-sm font-semibold border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 transition">
+            View Board
+          </button>
+          <button id="btn-play-again" type="button" class="flex-1 py-2.5 rounded-xl text-sm font-semibold bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition">
+            Replay Level
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 15-Second Level Skip Ad Modal -->
+  <div id="level-ad-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-900/75 backdrop-blur-sm p-4">
+    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl max-w-md w-full p-5 sm:p-6 text-center">
+      <div class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-wider bg-amber-100 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 mb-2">
+        Sponsored • Level Skip
+      </div>
+      <h2 id="level-ad-title" class="text-xl font-extrabold text-slate-900 dark:text-white">Unlocking Level 2</h2>
+      <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
+        Complete the current level to switch freely, or watch this 15-second ad to jump right in.
+      </p>
+
+      <!-- Embedded AdSense Banner inside Ad Modal -->
+      <div class="my-4 p-2 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-dashed border-slate-200 dark:border-slate-700 min-h-[110px] flex flex-col items-center justify-center overflow-hidden">
+        <span class="text-[10px] uppercase tracking-widest text-slate-400 mb-1">Advertisement</span>
+        <ins class="adsbygoogle block w-full text-center"
+             style="display:block"
+             data-ad-client="ca-pub-9351361840615541"
+             data-ad-slot="auto"
+             data-ad-format="rectangle"
+             data-full-width-responsive="true"></ins>
+      </div>
+
+      <div class="text-xs font-semibold text-slate-600 dark:text-slate-300 mb-2">
+        Skip available in <span id="level-ad-countdown" class="text-blue-600 dark:text-blue-400 font-extrabold">15</span>s
+      </div>
+      <div class="w-full h-2 rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden mb-4">
+        <div id="level-ad-bar" class="h-full bg-gradient-to-r from-pink-500 via-blue-500 to-emerald-500 transition-all duration-1000" style="width: 0%"></div>
+      </div>
+
+      <div class="flex gap-2">
+        <button id="btn-level-ad-cancel" type="button" class="flex-1 py-2.5 rounded-xl text-sm font-semibold border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 transition">
+          Stay on Level
+        </button>
+        <button id="btn-level-ad-continue" type="button" disabled class="flex-1 py-2.5 rounded-xl text-sm font-semibold bg-emerald-600 hover:bg-emerald-700 disabled:opacity-40 disabled:cursor-not-allowed text-white shadow-sm transition">
+          Continue (15s)
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const MAX_LEVELS = 30;
+
+      const THEMES = {
+        animals: ['🦊', '🐼', '🦁', '🐯', '🐸', '🐨', '🦉', '🦄', '🐙', '🐬', '🦋', '🐢'],
+        fruits: ['🍎', '🍉', '🍇', '🍓', '🍍', '🥭', '🍒', '🍑', '🥝', '🍋', '🥑', '🥥'],
+        space: ['🚀', '🪐', '🌙', '⭐', '☄️', '🛸', '🌍', '🌞', '🔭', '👾', '🌌', '🛰️'],
+        travel: ['🏔️', '🏝️', '🗼', '🗽', '🏰', '🎡', '🚂', '✈️', '⛵', '⛺', '🌋', '🏜️'],
+        sports: ['⚽', '🏀', '🏏', '🎾', '🏐', '🎯', '🏆', '♟️', '🎳', '🏓', '🏸', '🥊']
+      };
+
+      const DIFFICULTY_CONFIG = {
+        easy: { label: 'Easy', pairs: 6, colsClass: 'grid-cols-3 sm:grid-cols-4', star3: 10, star2: 15 },
+        medium: { label: 'Medium', pairs: 8, colsClass: 'grid-cols-4', star3: 14, star2: 21 },
+        hard: { label: 'Hard', pairs: 10, colsClass: 'grid-cols-4 sm:grid-cols-5', star3: 18, star2: 27 }
+      };
+
+      const state = {
+        theme: 'animals',
+        difficulty: 'medium',
+        level: 1,
+        completedLevels: { easy: [], medium: [], hard: [] },
+        cards: [], // { id, icon, matched }
+        flippedIndices: [],
+        lockBoard: false,
+        moves: 0,
+        matches: 0,
+        combo: 0,
+        score: 0,
+        peeksUsed: 0,
+        seconds: 0,
+        timerId: null,
+        gameOver: false,
+        soundEnabled: true,
+        darkMode: false
+      };
+
+      let audioCtx = null;
+
+      function createSeededRng(seedStr) {
+        let h = 2166136261 >>> 0;
+        for (let i = 0; i < seedStr.length; i++) {
+          h ^= seedStr.charCodeAt(i);
+          h = Math.imul(h, 16777619);
+        }
+        return function () {
+          h += 0x6D2B79F5;
+          let t = Math.imul(h ^ (h >>> 15), 1 | h);
+          t ^= t + Math.imul(t ^ (t >>> 7), 61 | t);
+          return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+        };
+      }
+
+      function shuffleArray(arr, rng) {
+        const copy = arr.slice();
+        for (let i = copy.length - 1; i > 0; i--) {
+          const j = Math.floor(rng() * (i + 1));
+          [copy[i], copy[j]] = [copy[j], copy[i]];
+        }
+        return copy;
+      }
+
+      function ensureAudio() {
+        if (!state.soundEnabled) return null;
+        if (!audioCtx) {
+          const AC = window.AudioContext || window.webkitAudioContext;
+          if (AC) audioCtx = new AC();
+        }
+        if (audioCtx && audioCtx.state === 'suspended') {
+          audioCtx.resume().catch(() => {});
+        }
+        return audioCtx;
+      }
+
+      function playTone(freq, duration, type = 'sine', gainVal = 0.05, delay = 0) {
+        const ctx = ensureAudio();
+        if (!ctx) return;
+        const now = ctx.currentTime + delay;
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, now);
+        gain.gain.setValueAtTime(gainVal, now);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(now);
+        osc.stop(now + duration);
+      }
+
+      function playSound(kind) {
+        if (!state.soundEnabled) return;
+        if (kind === 'flip') playTone(480, 0.05, 'triangle', 0.03);
+        else if (kind === 'match') {
+          playTone(587.33, 0.11, 'sine', 0.07, 0);
+          playTone(783.99, 0.16, 'sine', 0.07, 0.07);
+        } else if (kind === 'miss') {
+          playTone(250, 0.09, 'sine', 0.035);
+        } else if (kind === 'peek') {
+          playTone(660, 0.12, 'sine', 0.05, 0);
+          playTone(880, 0.15, 'sine', 0.04, 0.08);
+        } else if (kind === 'win') {
+          [523.25, 659.25, 783.99, 1046.5].forEach((f, idx) => {
+            playTone(f, 0.24, 'triangle', 0.08, idx * 0.09);
+          });
+        }
+      }
+
+      // DOM refs
+      const gameStage = document.getElementById('game-stage');
+      const cardGrid = document.getElementById('card-grid');
+      const selectTheme = document.getElementById('select-theme');
+      const selectDifficulty = document.getElementById('select-difficulty');
+      const selectLevel = document.getElementById('select-level');
+      const levelBadge = document.getElementById('level-badge');
+      const comboBadge = document.getElementById('combo-badge');
+      const scoreBadge = document.getElementById('score-badge');
+      const statusToast = document.getElementById('status-toast');
+      const statMatched = document.getElementById('stat-matched');
+      const statMoves = document.getElementById('stat-moves');
+      const statTime = document.getElementById('stat-time');
+      const star3Target = document.getElementById('star-3-target');
+      const star2Target = document.getElementById('star-2-target');
+
+      const btnPeek = document.getElementById('btn-peek');
+      const btnRestart = document.getElementById('btn-restart');
+      const btnSound = document.getElementById('btn-sound');
+      const btnSoundMobile = document.getElementById('btn-sound-mobile');
+      const btnTheme = document.getElementById('btn-theme');
+      const btnThemeMobile = document.getElementById('btn-theme-mobile');
+
+      const levelAdModal = document.getElementById('level-ad-modal');
+      const levelAdTitle = document.getElementById('level-ad-title');
+      const levelAdCountdown = document.getElementById('level-ad-countdown');
+      const levelAdBar = document.getElementById('level-ad-bar');
+      const btnLevelAdCancel = document.getElementById('btn-level-ad-cancel');
+      const btnLevelAdContinue = document.getElementById('btn-level-ad-continue');
+
+      const victoryModal = document.getElementById('victory-modal');
+      const modalStars = document.getElementById('modal-stars');
+      const modalTitle = document.getElementById('modal-title');
+      const modalSubtitle = document.getElementById('modal-subtitle');
+      const modalTime = document.getElementById('modal-time');
+      const modalMoves = document.getElementById('modal-moves');
+      const modalScore = document.getElementById('modal-score');
+      const btnNextLevel = document.getElementById('btn-next-level');
+      const btnModalClose = document.getElementById('btn-modal-close');
+      const btnPlayAgain = document.getElementById('btn-play-again');
+
+      let toastTimer = null;
+
+      function showToast(msg, isGood = true) {
+        statusToast.textContent = msg;
+        statusToast.className = `text-xs sm:text-sm font-semibold transition-opacity duration-200 ${
+          isGood ? 'text-emerald-600 dark:text-emerald-400' : 'text-pink-600 dark:text-pink-400'
+        } opacity-100`;
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => {
+          statusToast.classList.remove('opacity-100');
+          statusToast.classList.add('opacity-0');
+        }, 1200);
+      }
+
+      function formatTime(sec) {
+        const m = String(Math.floor(sec / 60)).padStart(2, '0');
+        const s = String(sec % 60).padStart(2, '0');
+        return `${m}:${s}`;
+      }
+
+      function startTimer() {
+        clearInterval(state.timerId);
+        state.seconds = 0;
+        updateStats();
+        state.timerId = setInterval(() => {
+          if (!state.gameOver) {
+            state.seconds += 1;
+            statTime.textContent = formatTime(state.seconds);
+          }
+        }, 1000);
+      }
+
+      function loadProgress() {
+        try {
+          const raw = localStorage.getItem('mahsua_memory_progress');
+          if (raw) {
+            const parsed = JSON.parse(raw);
+            if (parsed && typeof parsed === 'object') {
+              ['easy', 'medium', 'hard'].forEach((d) => {
+                if (Array.isArray(parsed[d])) state.completedLevels[d] = parsed[d];
+              });
+            }
+          }
+        } catch (_) {}
+      }
+
+      function saveProgress() {
+        try {
+          localStorage.setItem('mahsua_memory_progress', JSON.stringify(state.completedLevels));
+        } catch (_) {}
+      }
+
+      function renderLevelOptions() {
+        const done = new Set(state.completedLevels[state.difficulty] || []);
+        selectLevel.innerHTML = '';
+        for (let i = 1; i <= MAX_LEVELS; i++) {
+          const opt = document.createElement('option');
+          opt.value = String(i);
+          opt.textContent = done.has(i) ? `Level ${i} ✓` : `Level ${i}`;
+          if (i === state.level) opt.selected = true;
+          selectLevel.appendChild(opt);
+        }
+        levelBadge.textContent = `Level ${state.level} / ${MAX_LEVELS}`;
+      }
+
+      function updateStats() {
+        const cfg = DIFFICULTY_CONFIG[state.difficulty];
+        statMatched.textContent = `${state.matches} / ${cfg.pairs}`;
+        statMoves.textContent = String(state.moves);
+        statTime.textContent = formatTime(state.seconds);
+        scoreBadge.textContent = `Score: ${state.score}`;
+        comboBadge.textContent = `Streak: ${state.combo}x`;
+        comboBadge.className = state.combo >= 2
+          ? 'inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-pink-100 dark:bg-pink-950/60 text-pink-700 dark:text-pink-300 border border-pink-200 dark:border-pink-800/60'
+          : 'inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300';
+      }
+
+      function buildDeck() {
+        const cfg = DIFFICULTY_CONFIG[state.difficulty];
+        const rng = createSeededRng(`mem-${state.difficulty}-${state.level}-${state.theme}`);
+        const pool = shuffleArray(THEMES[state.theme], rng).slice(0, cfg.pairs);
+        const doubled = shuffleArray([...pool, ...pool], rng);
+
+        state.cards = doubled.map((icon, idx) => ({
+          id: idx,
+          icon,
+          matched: false
+        }));
+        state.flippedIndices = [];
+        state.lockBoard = false;
+        state.moves = 0;
+        state.matches = 0;
+        state.combo = 0;
+        state.score = 0;
+        state.peeksUsed = 0;
+        state.gameOver = false;
+
+        star3Target.textContent = `≤ ${cfg.star3} Moves`;
+        star2Target.textContent = `≤ ${cfg.star2} Moves`;
+      }
+
+      function renderBoard() {
+        const cfg = DIFFICULTY_CONFIG[state.difficulty];
+        cardGrid.className = `w-full max-w-[560px] grid ${cfg.colsClass} gap-2 sm:gap-3 my-auto`;
+        cardGrid.innerHTML = '';
+
+        state.cards.forEach((card, idx) => {
+          const scene = document.createElement('button');
+          scene.type = 'button';
+          scene.dataset.idx = String(idx);
+          scene.setAttribute('aria-label', 'Memory card');
+          scene.className = 'card-scene aspect-square w-full focus:outline-none cursor-pointer';
+
+          scene.innerHTML = `
+            <div class="card-inner">
+              <div class="card-face card-back bg-gradient-to-br from-blue-600 via-blue-500 to-indigo-600 dark:from-blue-700 dark:to-slate-800 border border-blue-400/40 dark:border-slate-700 shadow-sm hover:brightness-105 transition">
+                <span class="w-7 h-7 sm:w-9 sm:h-9 rounded-xl bg-white/15 flex items-center justify-center text-white/90 font-extrabold text-sm sm:text-base">?</span>
+              </div>
+              <div class="card-face card-front bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 shadow-sm text-3xl sm:text-4xl">
+                ${card.icon}
+              </div>
+            </div>
+          `;
+
+          scene.addEventListener('click', () => handleCardTap(idx));
+          cardGrid.appendChild(scene);
+        });
+
+        updateStats();
+      }
+
+      function handleCardTap(idx) {
+        if (state.lockBoard || state.gameOver) return;
+        const card = state.cards[idx];
+        if (!card || card.matched || state.flippedIndices.includes(idx)) return;
+
+        ensureAudio();
+        playSound('flip');
+
+        state.flippedIndices.push(idx);
+        const el = cardGrid.children[idx];
+        if (el) el.classList.add('flipped');
+
+        if (state.flippedIndices.length === 2) {
+          state.moves += 1;
+          const [i1, i2] = state.flippedIndices;
+          const c1 = state.cards[i1];
+          const c2 = state.cards[i2];
+
+          if (c1.icon === c2.icon) {
+            c1.matched = true;
+            c2.matched = true;
+            state.matches += 1;
+            state.combo += 1;
+            const gained = 100 * state.combo;
+            state.score += gained;
+            state.flippedIndices = [];
+
+            const el1 = cardGrid.children[i1];
+            const el2 = cardGrid.children[i2];
+            if (el1) {
+              el1.classList.add('matched');
+              el1.querySelector('.card-front').classList.add('border-emerald-400', 'dark:border-emerald-500', 'bg-emerald-50/70', 'dark:bg-emerald-950/40');
+            }
+            if (el2) {
+              el2.classList.add('matched');
+              el2.querySelector('.card-front').classList.add('border-emerald-400', 'dark:border-emerald-500', 'bg-emerald-50/70', 'dark:bg-emerald-950/40');
+            }
+
+            playSound('match');
+            showToast(state.combo > 1 ? `Combo ${state.combo}x! +${gained}` : `Matched! +${gained}`, true);
+            updateStats();
+
+            if (state.matches === DIFFICULTY_CONFIG[state.difficulty].pairs) {
+              handleLevelComplete();
+            }
+          } else {
+            state.combo = 0;
+            state.lockBoard = true;
+            updateStats();
+
+            const el1 = cardGrid.children[i1];
+            const el2 = cardGrid.children[i2];
+            setTimeout(() => {
+              if (el1) el1.classList.add('mismatch');
+              if (el2) el2.classList.add('mismatch');
+              playSound('miss');
+            }, 220);
+
+            setTimeout(() => {
+              if (el1) el1.classList.remove('flipped', 'mismatch');
+              if (el2) el2.classList.remove('flipped', 'mismatch');
+              state.flippedIndices = [];
+              state.lockBoard = false;
+            }, 720);
+          }
+        } else {
+          updateStats();
+        }
+      }
+
+      function handleLevelComplete() {
+        state.gameOver = true;
+        clearInterval(state.timerId);
+        playSound('win');
+
+        if (!state.completedLevels[state.difficulty].includes(state.level)) {
+          state.completedLevels[state.difficulty].push(state.level);
+          saveProgress();
+          renderLevelOptions();
+        }
+
+        const cfg = DIFFICULTY_CONFIG[state.difficulty];
+        const stars = state.moves <= cfg.star3 ? '★★★' : state.moves <= cfg.star2 ? '★★☆' : '★☆☆';
+        modalStars.textContent = stars;
+        modalTime.textContent = formatTime(state.seconds);
+        modalMoves.textContent = String(state.moves);
+        modalScore.textContent = String(state.score);
+
+        if (state.level < MAX_LEVELS) {
+          modalTitle.textContent = `Level ${state.level} Complete!`;
+          modalSubtitle.textContent = `${cfg.label} Mode • Ready for Level ${state.level + 1}?`;
+          btnNextLevel.textContent = `Next Level (${state.level + 1}) →`;
+        } else {
+          modalTitle.textContent = `${cfg.label} Mastered!`;
+          modalSubtitle.textContent = `You cleared all ${MAX_LEVELS} levels in ${cfg.label} mode!`;
+          btnNextLevel.textContent = state.difficulty === 'hard' ? 'Back to Level 1' : 'Try Next Difficulty →';
+        }
+
+        setTimeout(() => {
+          victoryModal.classList.remove('hidden');
+          victoryModal.classList.add('flex');
+        }, 420);
+      }
+
+      function usePeekHint() {
+        if (state.lockBoard || state.gameOver) return;
+        state.lockBoard = true;
+        state.peeksUsed += 1;
+        state.score = Math.max(0, state.score - 40);
+        updateStats();
+        playSound('peek');
+        showToast('Peeking cards...', true);
+
+        state.cards.forEach((c, idx) => {
+          if (!c.matched) {
+            cardGrid.children[idx]?.classList.add('flipped');
+          }
+        });
+
+        setTimeout(() => {
+          state.cards.forEach((c, idx) => {
+            if (!c.matched && !state.flippedIndices.includes(idx)) {
+              cardGrid.children[idx]?.classList.remove('flipped');
+            }
+          });
+          state.lockBoard = false;
+        }, 950);
+      }
+
+      // 15-Second Rewarded Ad Gate when switching levels before completing the current level
+      let levelAdTimer = null;
+      let pendingTargetLevel = null;
+
+      function closeLevelAdModal() {
+        clearInterval(levelAdTimer);
+        levelAdModal.classList.add('hidden');
+        levelAdModal.classList.remove('flex');
+        selectLevel.value = String(state.level);
+        pendingTargetLevel = null;
+      }
+
+      function openLevelSkipAd(targetLevel) {
+        pendingTargetLevel = targetLevel;
+        levelAdTitle.textContent = `Skip to Level ${targetLevel}`;
+        btnLevelAdContinue.disabled = true;
+
+        let remaining = 15;
+        levelAdCountdown.textContent = String(remaining);
+        levelAdBar.style.width = '0%';
+        btnLevelAdContinue.textContent = `Continue (${remaining}s)`;
+
+        levelAdModal.classList.remove('hidden');
+        levelAdModal.classList.add('flex');
+
+        try {
+          (window.adsbygoogle = window.adsbygoogle || []).push({});
+        } catch (_) {}
+
+        clearInterval(levelAdTimer);
+        levelAdTimer = setInterval(() => {
+          remaining -= 1;
+          const clamped = Math.max(0, remaining);
+          levelAdCountdown.textContent = String(clamped);
+          levelAdBar.style.width = `${((15 - clamped) / 15) * 100}%`;
+
+          if (clamped > 0) {
+            btnLevelAdContinue.textContent = `Continue (${clamped}s)`;
+          } else {
+            clearInterval(levelAdTimer);
+            btnLevelAdContinue.disabled = false;
+            btnLevelAdContinue.textContent = `Play Level ${targetLevel} →`;
+          }
+        }, 1000);
+      }
+
+      btnLevelAdCancel.addEventListener('click', closeLevelAdModal);
+
+      btnLevelAdContinue.addEventListener('click', () => {
+        if (pendingTargetLevel === null) return;
+        const nextLvl = pendingTargetLevel;
+        clearInterval(levelAdTimer);
+        levelAdModal.classList.add('hidden');
+        levelAdModal.classList.remove('flex');
+        pendingTargetLevel = null;
+        state.level = nextLvl;
+        startNewGame();
+      });
+
+      function syncThemeUI() {
+        document.documentElement.classList.toggle('dark', state.darkMode);
+        document.querySelectorAll('.theme-icon').forEach((el) => {
+          el.textContent = state.darkMode ? '☀️' : '🌙';
+        });
+        document.querySelectorAll('.theme-label').forEach((el) => {
+          el.textContent = state.darkMode ? 'Light' : 'Dark';
+        });
+      }
+
+      function syncSoundUI() {
+        document.querySelectorAll('.sound-icon').forEach((el) => {
+          el.textContent = state.soundEnabled ? '🔊' : '🔇';
+        });
+        document.querySelectorAll('.sound-label').forEach((el) => {
+          el.textContent = state.soundEnabled ? 'Sound' : 'Muted';
+        });
+      }
+
+      function toggleTheme() {
+        state.darkMode = !state.darkMode;
+        syncThemeUI();
+        try {
+          localStorage.setItem('mahsua_memory_theme', state.darkMode ? 'dark' : 'light');
+        } catch (_) {}
+      }
+
+      function toggleSound() {
+        state.soundEnabled = !state.soundEnabled;
+        syncSoundUI();
+        if (state.soundEnabled) playSound('flip');
+      }
+
+      function startNewGame() {
+        victoryModal.classList.add('hidden');
+        victoryModal.classList.remove('flex');
+        renderLevelOptions();
+        buildDeck();
+        renderBoard();
+        startTimer();
+      }
+
+      function goToNextLevel() {
+        if (state.level < MAX_LEVELS) {
+          state.level += 1;
+        } else if (state.difficulty === 'easy') {
+          state.difficulty = 'medium';
+          selectDifficulty.value = 'medium';
+          state.level = 1;
+        } else if (state.difficulty === 'medium') {
+          state.difficulty = 'hard';
+          selectDifficulty.value = 'hard';
+          state.level = 1;
+        } else {
+          state.level = 1;
+        }
+        startNewGame();
+      }
+
+      selectTheme.addEventListener('change', (e) => {
+        state.theme = e.target.value;
+        startNewGame();
+      });
+
+      selectDifficulty.addEventListener('change', (e) => {
+        state.difficulty = e.target.value;
+        state.level = 1;
+        startNewGame();
+      });
+
+      selectLevel.addEventListener('change', (e) => {
+        const chosenLevel = Number(e.target.value) || 1;
+        if (chosenLevel === state.level) return;
+
+        const currentCompleted =
+          state.gameOver ||
+          (state.completedLevels[state.difficulty] || []).includes(state.level);
+
+        if (currentCompleted) {
+          state.level = chosenLevel;
+          startNewGame();
+        } else {
+          // Revert dropdown visually until the 15s ad finishes
+          selectLevel.value = String(state.level);
+          openLevelSkipAd(chosenLevel);
+        }
+      });
+
+      btnPeek.addEventListener('click', usePeekHint);
+      btnRestart.addEventListener('click', startNewGame);
+      btnSound.addEventListener('click', toggleSound);
+      btnSoundMobile.addEventListener('click', toggleSound);
+      btnTheme.addEventListener('click', toggleTheme);
+      btnThemeMobile.addEventListener('click', toggleTheme);
+
+      btnNextLevel.addEventListener('click', goToNextLevel);
+      btnModalClose.addEventListener('click', () => {
+        victoryModal.classList.add('hidden');
+        victoryModal.classList.remove('flex');
+      });
+      btnPlayAgain.addEventListener('click', startNewGame);
+
+      window.onload = function () {
+        loadProgress();
+        try {
+          if (localStorage.getItem('mahsua_memory_theme') === 'dark') state.darkMode = true;
+        } catch (_) {}
+        syncThemeUI();
+        syncSoundUI();
+        startNewGame();
+
+        try {
+          document.querySelectorAll('.adsbygoogle').forEach(() => {
+            (window.adsbygoogle = window.adsbygoogle || []).push({});
+          });
+        } catch (_) {}
+      };
+    })();
+  </script>
+</body>
+</html>

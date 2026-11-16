@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Word Search by Mahsua Apps — Free Online Word Puzzle Game</title>
+  <meta name="description" content="Play Word Search by Mahsua Apps free online! Enjoy 30 levels each across Easy, Medium, and Hard difficulties with multiple word categories, hints, and dark mode." />
+  <meta name="keywords" content="Word Search, Word Search by Mahsua Apps, Mahsua Apps, free word puzzle game, online word search, brain games, vocabulary game" />
+  <meta name="author" content="Shivam Kushwaha - Mahsua Apps" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://apps.mahsua.com/" />
+  <link rel="icon" href="./favicon.png" type="image/svg+xml">
+
+
+  <!-- Open Graph / Social SEO -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Mahsua Apps" />
+  <meta property="og:title" content="Word Search by Mahsua Apps — 90 Levels Free Online" />
+  <meta property="og:description" content="Challenge your mind with 30 levels each in Easy, Medium, and Hard modes. Play Word Search by Mahsua Apps on mobile or desktop with zero installation." />
+  <meta property="og:url" content="https://apps.mahsua.com/" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Word Search by Mahsua Apps" />
+  <meta name="twitter:description" content="Free online Word Search puzzle game with 30 levels in Easy, Medium, and Hard modes." />
+
+  <!-- Structured Data (JSON-LD) for Search Engines -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "VideoGame",
+    "name": "Word Search by Mahsua Apps",
+    "url": "https://apps.mahsua.com/",
+    "description": "A free browser-based Word Search puzzle game by Mahsua Apps featuring 30 levels each in Easy, Medium, and Hard difficulties across multiple categories.",
+    "genre": ["Puzzle", "Word Game", "Educational"],
+    "gamePlatform": "Web Browser",
+    "applicationCategory": "GameApplication",
+    "operatingSystem": "Any",
+    "inLanguage": "en",
+    "author": {
+      "@type": "Organization",
+      "name": "Mahsua Apps",
+      "url": "https://apps.mahsua.com/"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9351361840615541" crossorigin="anonymous"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    }
+
+    #grid-board {
+      touch-action: none;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    .grid-cell {
+      transition: transform 0.1s ease, background-color 0.15s ease, color 0.15s ease;
+    }
+
+    .grid-cell.selecting {
+      transform: scale(0.93);
+    }
+
+    @keyframes hintPulse {
+      0%, 100% {
+        box-shadow: 0 0 0 0 rgba(236, 72, 153, 0.55);
+      }
+      50% {
+        box-shadow: 0 0 0 6px rgba(236, 72, 153, 0);
+      }
+    }
+
+    .hint-pulse {
+      animation: hintPulse 1.1s ease-in-out 3;
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 transition-colors duration-200 flex flex-col">
+  <div class="max-w-6xl w-full mx-auto px-3 sm:px-6 py-4 sm:py-6 flex flex-col gap-4 sm:gap-5 flex-1">
+    <!-- Top Header & Controls -->
+    <header class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-sm p-3.5 sm:p-4 flex flex-col xl:flex-row xl:items-center xl:justify-between gap-3">
+      <div class="flex items-center justify-between gap-3">
+        <div class="flex items-center gap-2.5">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-pink-500 via-blue-500 to-emerald-500 flex items-center justify-center text-white font-extrabold text-lg shadow-sm shrink-0">
+            W
+          </div>
+          <div>
+            <h1 class="text-base sm:text-xl font-bold tracking-tight text-slate-900 dark:text-white leading-tight">
+              Word Search <span class="text-blue-600 dark:text-blue-400 font-semibold text-sm sm:text-base">by Mahsua Apps</span>
+            </h1>
+            <p class="text-xs text-slate-500 dark:text-slate-400">90 Levels • Drag across letters or tap start &amp; end</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-1.5 xl:hidden">
+          <button id="btn-sound-mobile" type="button" aria-label="Toggle sound" class="p-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 transition">
+            <span class="sound-icon text-sm font-semibold">🔊</span>
+          </button>
+          <button id="btn-theme-mobile" type="button" aria-label="Toggle dark mode" class="p-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 transition">
+            <span class="theme-icon text-sm font-semibold">🌙</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-2">
+        <label class="sr-only" for="select-category">Category</label>
+        <select id="select-category" class="px-3 py-2 rounded-xl text-sm font-medium bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <option value="technology">Technology</option>
+          <option value="nature">Nature</option>
+          <option value="space">Space</option>
+          <option value="food">Food &amp; Drinks</option>
+          <option value="everyday">Everyday</option>
+        </select>
+
+        <label class="sr-only" for="select-difficulty">Difficulty</label>
+        <select id="select-difficulty" class="px-3 py-2 rounded-xl text-sm font-medium bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <option value="easy">Easy (8×8)</option>
+          <option value="medium" selected>Medium (10×10)</option>
+          <option value="hard">Hard (12×12)</option>
+        </select>
+
+        <label class="sr-only" for="select-level">Level</label>
+        <select id="select-level" class="px-3 py-2 rounded-xl text-sm font-medium bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <!-- Levels 1-30 populated by JS -->
+        </select>
+
+        <button id="btn-hint" type="button" class="px-3 py-2 rounded-xl text-sm font-semibold bg-pink-50 dark:bg-pink-950/50 text-pink-600 dark:text-pink-300 border border-pink-200 dark:border-pink-800/60 hover:bg-pink-100 dark:hover:bg-pink-900/50 transition">
+          Hint
+        </button>
+
+        <button id="btn-new-game" type="button" class="px-3.5 py-2 rounded-xl text-sm font-semibold bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition">
+          Restart
+        </button>
+
+        <button id="btn-sound" type="button" aria-label="Toggle sound" class="hidden xl:inline-flex items-center justify-center px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 text-sm font-medium transition">
+          <span class="sound-icon mr-1.5">🔊</span><span class="sound-label">Sound</span>
+        </button>
+
+        <button id="btn-theme" type="button" aria-label="Toggle dark mode" class="hidden xl:inline-flex items-center justify-center px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 text-sm font-medium transition">
+          <span class="theme-icon mr-1.5">🌙</span><span class="theme-label">Dark</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Game Area -->
+    <main class="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-5 items-start">
+      <!-- Puzzle Grid Card -->
+      <section class="lg:col-span-7 xl:col-span-8 flex flex-col gap-4">
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-sm p-3 sm:p-5 flex flex-col items-center">
+          <!-- Level Progress & Live Selection Preview -->
+          <div class="w-full flex flex-wrap items-center justify-between gap-2 mb-3 min-h-[28px]">
+            <div class="flex items-center gap-2">
+              <span id="level-badge" class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/60">
+                Level 1 / 30
+              </span>
+              <div id="selection-preview" class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs sm:text-sm font-bold tracking-wider bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+                Select letters
+              </div>
+            </div>
+            <div id="status-toast" class="text-xs sm:text-sm font-medium text-emerald-600 dark:text-emerald-400 opacity-0 transition-opacity duration-200">
+              Found!
+            </div>
+          </div>
+
+          <!-- Grid Container -->
+          <div class="w-full max-w-[520px] aspect-square flex items-center justify-center">
+            <div id="grid-board" class="w-full h-full grid gap-1 sm:gap-1.5 p-1.5 sm:p-2 rounded-xl bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80">
+              <!-- Cells injected by JS -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Leaderboard Ad Slot (Maintains clean spacing & prevents layout shift) -->
+        <aside aria-label="Advertisement" class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-sm p-3 flex flex-col items-center justify-center min-h-[106px]">
+          <span class="text-[10px] uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-1">Advertisement</span>
+          <div class="w-full flex items-center justify-center min-h-[72px] rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-dashed border-slate-200 dark:border-slate-700/70 overflow-hidden">
+            <ins class="adsbygoogle block w-full text-center"
+                 style="display:block"
+                 data-ad-client="ca-pub-9351361840615541"
+                 data-ad-slot="auto"
+                 data-ad-format="horizontal"
+                 data-full-width-responsive="true"></ins>
+          </div>
+        </aside>
+      </section>
+
+      <!-- Sidebar: Stats + Word List + Ad Slot -->
+      <aside class="lg:col-span-5 xl:col-span-4 flex flex-col gap-4">
+        <!-- Stats Card -->
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-sm p-4 grid grid-cols-3 gap-2 text-center">
+          <div class="p-2 rounded-xl bg-blue-50/70 dark:bg-blue-950/30 border border-blue-100 dark:border-blue-900/40">
+            <div class="text-[11px] uppercase tracking-wider font-semibold text-blue-600 dark:text-blue-400">Found</div>
+            <div id="stat-found" class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white mt-0.5">0 / 0</div>
+          </div>
+          <div class="p-2 rounded-xl bg-emerald-50/70 dark:bg-emerald-950/30 border border-emerald-100 dark:border-emerald-900/40">
+            <div class="text-[11px] uppercase tracking-wider font-semibold text-emerald-600 dark:text-emerald-400">Time</div>
+            <div id="stat-time" class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white mt-0.5 tabular-nums">00:00</div>
+          </div>
+          <div class="p-2 rounded-xl bg-pink-50/70 dark:bg-pink-950/30 border border-pink-100 dark:border-pink-900/40">
+            <div class="text-[11px] uppercase tracking-wider font-semibold text-pink-600 dark:text-pink-400">Hints</div>
+            <div id="stat-hints" class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white mt-0.5">0</div>
+          </div>
+        </div>
+
+        <!-- Word List Card -->
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-sm p-4">
+          <div class="flex items-center justify-between mb-3">
+            <h2 class="text-sm font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">Words to Find</h2>
+            <span id="category-badge" class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+              Technology
+            </span>
+          </div>
+          <div id="word-list" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-2 gap-2">
+            <!-- Word items injected by JS -->
+          </div>
+        </div>
+
+        <!-- Sidebar Rectangle Ad Slot -->
+        <div aria-label="Advertisement" class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-sm p-3 flex flex-col items-center justify-center min-h-[270px]">
+          <span class="text-[10px] uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-1.5">Advertisement</span>
+          <div class="w-full flex-1 flex items-center justify-center min-h-[230px] rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-dashed border-slate-200 dark:border-slate-700/70 overflow-hidden">
+            <ins class="adsbygoogle block w-full text-center"
+                 style="display:block"
+                 data-ad-client="ca-pub-9351361840615541"
+                 data-ad-slot="auto"
+                 data-ad-format="rectangle"
+                 data-full-width-responsive="true"></ins>
+          </div>
+        </div>
+      </aside>
+    </main>
+
+    <!-- SEO Info & How to Play Section -->
+    <section class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-sm p-4 sm:p-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5 text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+        <div>
+          <h2 class="text-base font-bold text-slate-900 dark:text-white mb-2">About Word Search by Mahsua Apps</h2>
+          <p>
+            Word Search by <a href="https://apps.mahsua.com/" target="_blank" rel="noopener noreferrer" class="text-blue-600 dark:text-blue-400 font-semibold hover:underline">Mahsua Apps</a> is a free, lightweight browser puzzle game built for instant play on mobile, tablet, and desktop. Progress through 30 handcrafted levels in each difficulty—Easy (8×8), Medium (10×10), and Hard (12×12)—across Technology, Nature, Space, Food &amp; Drinks, and Everyday themes.
+          </p>
+        </div>
+        <div>
+          <h2 class="text-base font-bold text-slate-900 dark:text-white mb-2">How to Play</h2>
+          <p>
+            Find every hidden word from the list by dragging your finger or mouse across the letters in any straight line—horizontally, vertically, or diagonally. You can also tap the first letter and then tap the last letter. Stuck on a word? Use the <strong>Hint</strong> button to highlight its starting letter, and unlock all 30 levels in every mode.
+          </p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Branded Footer -->
+  <footer class="border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 mt-auto">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-500 dark:text-slate-400">
+      <div>
+        Made With ❤️ INDIA ~ Designed by <strong class="text-slate-700 dark:text-slate-200">SHIVAM KUSHWAHA</strong>
+      </div>
+      <div class="flex flex-wrap items-center gap-3">
+        <a href="https://apps.mahsua.com/" target="_blank" rel="noopener noreferrer" class="hover:text-blue-600 dark:hover:text-blue-400 font-medium transition">Mahsua Apps</a>
+        <span>•</span>
+        <a href="mailto:games@mahsua.com" class="hover:text-blue-600 dark:hover:text-blue-400 transition">games@mahsua.com</a>
+        <span>•</span>
+        <a href="https://api.whatsapp.com/send/?phone=919752107808" target="_blank" rel="noopener noreferrer" class="hover:text-emerald-600 dark:hover:text-emerald-400 transition">WhatsApp Support</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Victory Modal -->
+  <div id="victory-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-900/50 backdrop-blur-sm p-4">
+    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl max-w-sm w-full p-6 text-center">
+      <div class="w-14 h-14 mx-auto rounded-2xl bg-gradient-to-br from-emerald-400 to-blue-500 flex items-center justify-center text-white text-2xl font-bold shadow-md mb-4">
+        ✓
+      </div>
+      <h2 id="modal-title" class="text-2xl font-extrabold text-slate-900 dark:text-white">Level 1 Complete!</h2>
+      <p id="modal-subtitle" class="text-sm text-slate-500 dark:text-slate-400 mt-1">You found every word on the board.</p>
+
+      <div class="grid grid-cols-3 gap-2 my-5">
+        <div class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800">
+          <div class="text-[11px] font-semibold uppercase text-slate-400">Time</div>
+          <div id="modal-time" class="text-base font-bold text-slate-900 dark:text-white mt-0.5">00:00</div>
+        </div>
+        <div class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800">
+          <div class="text-[11px] font-semibold uppercase text-slate-400">Words</div>
+          <div id="modal-words" class="text-base font-bold text-slate-900 dark:text-white mt-0.5">0</div>
+        </div>
+        <div class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800">
+          <div class="text-[11px] font-semibold uppercase text-slate-400">Hints</div>
+          <div id="modal-hints" class="text-base font-bold text-slate-900 dark:text-white mt-0.5">0</div>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-2">
+        <button id="btn-next-level" type="button" class="w-full py-2.5 rounded-xl text-sm font-semibold bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm transition">
+          Next Level →
+        </button>
+        <div class="flex gap-2">
+          <button id="btn-modal-close" type="button" class="flex-1 py-2.5 rounded-xl text-sm font-semibold border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 transition">
+            View Board
+          </button>
+          <button id="btn-play-again" type="button" class="flex-1 py-2.5 rounded-xl text-sm font-semibold bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition">
+            Replay Level
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const MAX_LEVELS = 30;
+
+      const WORD_BANKS = {
+        technology: [
+          'BROWSER', 'NETWORK', 'SERVER', 'CODING', 'PYTHON', 'DATABASE',
+          'ROUTER', 'PIXEL', 'CLOUD', 'SCRIPT', 'BINARY', 'WIDGET',
+          'SYSTEM', 'MEMORY', 'KEYBOARD', 'SCREEN', 'DOMAIN', 'HOSTING',
+          'FIREWALL', 'SOCKET', 'SYNTAX', 'MODULE', 'RENDER', 'COOKIE',
+          'CACHE', 'MOBILE', 'TABLET', 'LAPTOP', 'SIGNAL', 'UPLOAD'
+        ],
+        nature: [
+          'FOREST', 'RIVER', 'MOUNTAIN', 'MEADOW', 'CANYON', 'VALLEY',
+          'GLACIER', 'OCEAN', 'BREEZE', 'FLOWER', 'DESERT', 'ISLAND',
+          'WATERFALL', 'SUNRISE', 'THUNDER', 'PEBBLE', 'RAINBOW', 'TIMBER',
+          'STREAM', 'SUMMIT', 'BLOSSOM', 'AUTUMN', 'SPRING', 'HORIZON',
+          'CLIFF', 'CORAL', 'JUNGLE', 'POND', 'SHADOW', 'WILLOW'
+        ],
+        space: [
+          'GALAXY', 'PLANET', 'NEBULA', 'COMET', 'ORBIT', 'METEOR',
+          'ECLIPSE', 'ROCKET', 'SATURN', 'PULSAR', 'COSMOS', 'QUASAR',
+          'CRATER', 'STARLIGHT', 'GRAVITY', 'ASTEROID', 'JUPITER', 'MERCURY',
+          'NEPTUNE', 'URANUS', 'SOLAR', 'LUNAR', 'PHOTON', 'ZENITH',
+          'CAPSULE', 'SHUTTLE', 'AURORA', 'VOID', 'NOVA', 'STELLAR'
+        ],
+        food: [
+          'MANGO', 'COFFEE', 'NOODLES', 'PASTA', 'BREAD', 'HONEY',
+          'ALMOND', 'PEPPER', 'CHEESE', 'LEMON', 'GINGER', 'COOKIE',
+          'MUFFIN', 'CARROT', 'ORANGE', 'TOMATO', 'BANANA', 'PAPAYA',
+          'CASHEW', 'PEANUT', 'YOGURT', 'BUTTER', 'WAFFLE', 'PANCAKE',
+          'GARLIC', 'ONION', 'SPINACH', 'MELON', 'BERRY', 'CHERRY'
+        ],
+        everyday: [
+          'NOTEBOOK', 'PENCIL', 'WALLET', 'UMBRELLA', 'WINDOW', 'CLOCK',
+          'CANDLE', 'MIRROR', 'LANTERN', 'BOTTLE', 'BASKET', 'JACKET',
+          'PILLOW', 'TICKET', 'CAMERA', 'JOURNAL', 'BACKPACK', 'KEYCHAIN',
+          'CHARGER', 'SCISSORS', 'BLANKET', 'CURTAIN', 'DRAWER', 'FOLDER',
+          'GLASSES', 'HAMMER', 'LADDER', 'RIBBON', 'STAPLE', 'TOWEL'
+        ]
+      };
+
+      const CATEGORY_LABELS = {
+        technology: 'Technology',
+        nature: 'Nature',
+        space: 'Space',
+        food: 'Food & Drinks',
+        everyday: 'Everyday'
+      };
+
+      const DIFFICULTY_CONFIG = {
+        easy: { label: 'Easy', size: 8, baseWords: 6, maxWords: 8, allowDiagonal: false, allowReverse: false },
+        medium: { label: 'Medium', size: 10, baseWords: 8, maxWords: 10, allowDiagonal: true, allowReverse: false },
+        hard: { label: 'Hard', size: 12, baseWords: 10, maxWords: 12, allowDiagonal: true, allowReverse: true }
+      };
+
+      const FOUND_PALETTE = [
+        { bg: 'bg-pink-500 text-white', pill: 'bg-pink-100 text-pink-800 border-pink-200 dark:bg-pink-900/50 dark:text-pink-200 dark:border-pink-800' },
+        { bg: 'bg-blue-500 text-white', pill: 'bg-blue-100 text-blue-800 border-blue-200 dark:bg-blue-900/50 dark:text-blue-200 dark:border-blue-800' },
+        { bg: 'bg-emerald-500 text-white', pill: 'bg-emerald-100 text-emerald-800 border-emerald-200 dark:bg-emerald-900/50 dark:text-emerald-200 dark:border-emerald-800' },
+        { bg: 'bg-amber-500 text-white', pill: 'bg-amber-100 text-amber-800 border-amber-200 dark:bg-amber-900/50 dark:text-amber-200 dark:border-amber-800' },
+        { bg: 'bg-violet-500 text-white', pill: 'bg-violet-100 text-violet-800 border-violet-200 dark:bg-violet-900/50 dark:text-violet-200 dark:border-violet-800' },
+        { bg: 'bg-cyan-500 text-white', pill: 'bg-cyan-100 text-cyan-800 border-cyan-200 dark:bg-cyan-900/50 dark:text-cyan-200 dark:border-cyan-800' }
+      ];
+
+      const state = {
+        category: 'technology',
+        difficulty: 'medium',
+        level: 1,
+        completedLevels: { easy: [], medium: [], hard: [] },
+        size: 10,
+        grid: [],
+        placedWords: [],
+        foundWords: new Set(),
+        isDragging: false,
+        startCell: null,
+        tapAnchor: null,
+        activeCells: [],
+        hintsUsed: 0,
+        seconds: 0,
+        timerId: null,
+        gameOver: false,
+        soundEnabled: true,
+        darkMode: false
+      };
+
+      let audioCtx = null;
+
+      function createSeededRng(seedStr) {
+        let h = 2166136261 >>> 0;
+        for (let i = 0; i < seedStr.length; i++) {
+          h ^= seedStr.charCodeAt(i);
+          h = Math.imul(h, 16777619);
+        }
+        return function () {
+          h += 0x6D2B79F5;
+          let t = Math.imul(h ^ (h >>> 15), 1 | h);
+          t ^= t + Math.imul(t ^ (t >>> 7), 61 | t);
+          return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+        };
+      }
+
+      function ensureAudio() {
+        if (!state.soundEnabled) return null;
+        if (!audioCtx) {
+          const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+          if (AudioContextClass) {
+            audioCtx = new AudioContextClass();
+          }
+        }
+        if (audioCtx && audioCtx.state === 'suspended') {
+          audioCtx.resume().catch(() => {});
+        }
+        return audioCtx;
+      }
+
+      function playTone(freq, duration, type = 'sine', gainVal = 0.06, delay = 0) {
+        const ctx = ensureAudio();
+        if (!ctx) return;
+        const now = ctx.currentTime + delay;
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, now);
+        gain.gain.setValueAtTime(gainVal, now);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(now);
+        osc.stop(now + duration);
+      }
+
+      function playSound(kind) {
+        if (!state.soundEnabled) return;
+        if (kind === 'tick') {
+          playTone(520, 0.04, 'triangle', 0.03);
+        } else if (kind === 'found') {
+          playTone(523.25, 0.12, 'sine', 0.07, 0);
+          playTone(659.25, 0.14, 'sine', 0.07, 0.07);
+          playTone(783.99, 0.18, 'sine', 0.07, 0.14);
+        } else if (kind === 'hint') {
+          playTone(660, 0.15, 'sine', 0.06, 0);
+          playTone(880, 0.18, 'sine', 0.05, 0.09);
+        } else if (kind === 'win') {
+          [523.25, 659.25, 783.99, 1046.5].forEach((f, idx) => {
+            playTone(f, 0.25, 'triangle', 0.08, idx * 0.09);
+          });
+        } else if (kind === 'miss') {
+          playTone(220, 0.1, 'sine', 0.03);
+        }
+      }
+
+      // DOM elements
+      const gridBoard = document.getElementById('grid-board');
+      const wordListEl = document.getElementById('word-list');
+      const selectCategory = document.getElementById('select-category');
+      const selectDifficulty = document.getElementById('select-difficulty');
+      const selectLevel = document.getElementById('select-level');
+      const levelBadge = document.getElementById('level-badge');
+      const btnHint = document.getElementById('btn-hint');
+      const btnNewGame = document.getElementById('btn-new-game');
+      const btnSound = document.getElementById('btn-sound');
+      const btnSoundMobile = document.getElementById('btn-sound-mobile');
+      const btnTheme = document.getElementById('btn-theme');
+      const btnThemeMobile = document.getElementById('btn-theme-mobile');
+      const selectionPreview = document.getElementById('selection-preview');
+      const statusToast = document.getElementById('status-toast');
+      const statFound = document.getElementById('stat-found');
+      const statTime = document.getElementById('stat-time');
+      const statHints = document.getElementById('stat-hints');
+      const categoryBadge = document.getElementById('category-badge');
+      const victoryModal = document.getElementById('victory-modal');
+      const modalTitle = document.getElementById('modal-title');
+      const modalSubtitle = document.getElementById('modal-subtitle');
+      const modalTime = document.getElementById('modal-time');
+      const modalWords = document.getElementById('modal-words');
+      const modalHints = document.getElementById('modal-hints');
+      const btnNextLevel = document.getElementById('btn-next-level');
+      const btnModalClose = document.getElementById('btn-modal-close');
+      const btnPlayAgain = document.getElementById('btn-play-again');
+
+      let toastTimeout = null;
+
+      function loadProgress() {
+        try {
+          const raw = localStorage.getItem('mahsua_wordsearch_progress');
+          if (raw) {
+            const parsed = JSON.parse(raw);
+            if (parsed && typeof parsed === 'object') {
+              ['easy', 'medium', 'hard'].forEach((diff) => {
+                if (Array.isArray(parsed[diff])) {
+                  state.completedLevels[diff] = parsed[diff];
+                }
+              });
+            }
+          }
+        } catch (_) {}
+      }
+
+      function saveProgress() {
+        try {
+          localStorage.setItem('mahsua_wordsearch_progress', JSON.stringify(state.completedLevels));
+        } catch (_) {}
+      }
+
+      function renderLevelOptions() {
+        const doneSet = new Set(state.completedLevels[state.difficulty] || []);
+        selectLevel.innerHTML = '';
+        for (let lvl = 1; lvl <= MAX_LEVELS; lvl++) {
+          const opt = document.createElement('option');
+          opt.value = String(lvl);
+          opt.textContent = doneSet.has(lvl) ? `Level ${lvl} ✓` : `Level ${lvl}`;
+          if (lvl === state.level) opt.selected = true;
+          selectLevel.appendChild(opt);
+        }
+        levelBadge.textContent = `Level ${state.level} / ${MAX_LEVELS}`;
+      }
+
+      function showToast(msg, isSuccess = true) {
+        statusToast.textContent = msg;
+        statusToast.className = `text-xs sm:text-sm font-semibold transition-opacity duration-200 ${
+          isSuccess ? 'text-emerald-600 dark:text-emerald-400' : 'text-pink-600 dark:text-pink-400'
+        } opacity-100`;
+        clearTimeout(toastTimeout);
+        toastTimeout = setTimeout(() => {
+          statusToast.classList.remove('opacity-100');
+          statusToast.classList.add('opacity-0');
+        }, 1200);
+      }
+
+      function formatTime(totalSeconds) {
+        const mins = String(Math.floor(totalSeconds / 60)).padStart(2, '0');
+        const secs = String(totalSeconds % 60).padStart(2, '0');
+        return `${mins}:${secs}`;
+      }
+
+      function startTimer() {
+        clearInterval(state.timerId);
+        state.seconds = 0;
+        statTime.textContent = '00:00';
+        state.timerId = setInterval(() => {
+          if (!state.gameOver) {
+            state.seconds += 1;
+            statTime.textContent = formatTime(state.seconds);
+          }
+        }, 1000);
+      }
+
+      function shuffleArray(arr, rng) {
+        const copy = arr.slice();
+        for (let i = copy.length - 1; i > 0; i--) {
+          const j = Math.floor(rng() * (i + 1));
+          [copy[i], copy[j]] = [copy[j], copy[i]];
+        }
+        return copy;
+      }
+
+      function getDirections(config) {
+        const dirs = [
+          [0, 1],
+          [1, 0]
+        ];
+        if (config.allowDiagonal) {
+          dirs.push([1, 1], [1, -1]);
+        }
+        if (config.allowReverse) {
+          dirs.push([0, -1], [-1, 0]);
+          if (config.allowDiagonal) {
+            dirs.push([-1, -1], [-1, 1]);
+          }
+        }
+        return dirs;
+      }
+
+      function buildPuzzle() {
+        const config = DIFFICULTY_CONFIG[state.difficulty];
+        const size = config.size;
+        state.size = size;
+
+        const rng = createSeededRng(`${state.difficulty}-${state.level}-${state.category}`);
+        const extraWords = state.level >= 20 ? 2 : state.level >= 10 ? 1 : 0;
+        const wordCount = Math.min(config.maxWords, config.baseWords + extraWords);
+
+        const candidates = shuffleArray(
+          WORD_BANKS[state.category].filter((w) => w.length <= size),
+          rng
+        );
+        const targetWords = candidates.slice(0, wordCount);
+        const dirs = getDirections(config);
+
+        const grid = Array.from({ length: size }, () => Array(size).fill(''));
+        const placedWords = [];
+
+        for (let wIdx = 0; wIdx < targetWords.length; wIdx++) {
+          const word = targetWords[wIdx];
+          let placed = false;
+
+          for (let attempt = 0; attempt < 160 && !placed; attempt++) {
+            const [dr, dc] = dirs[Math.floor(rng() * dirs.length)];
+            const startR = Math.floor(rng() * size);
+            const startC = Math.floor(rng() * size);
+            const endR = startR + dr * (word.length - 1);
+            const endC = startC + dc * (word.length - 1);
+
+            if (endR < 0 || endR >= size || endC < 0 || endC >= size) continue;
+
+            let canPlace = true;
+            const cells = [];
+            for (let i = 0; i < word.length; i++) {
+              const r = startR + dr * i;
+              const c = startC + dc * i;
+              const existing = grid[r][c];
+              if (existing !== '' && existing !== word[i]) {
+                canPlace = false;
+                break;
+              }
+              cells.push({ r, c });
+            }
+
+            if (canPlace) {
+              for (let i = 0; i < word.length; i++) {
+                grid[cells[i].r][cells[i].c] = word[i];
+              }
+              placedWords.push({
+                word,
+                cells,
+                found: false,
+                colorIdx: placedWords.length % FOUND_PALETTE.length
+              });
+              placed = true;
+            }
+          }
+        }
+
+        const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        for (let r = 0; r < size; r++) {
+          for (let c = 0; c < size; c++) {
+            if (grid[r][c] === '') {
+              grid[r][c] = alphabet[Math.floor(rng() * alphabet.length)];
+            }
+          }
+        }
+
+        state.grid = grid;
+        state.placedWords = placedWords;
+        state.foundWords = new Set();
+        state.isDragging = false;
+        state.startCell = null;
+        state.tapAnchor = null;
+        state.activeCells = [];
+        state.hintsUsed = 0;
+        state.gameOver = false;
+      }
+
+      function getCellFoundColor(r, c) {
+        for (const item of state.placedWords) {
+          if (item.found && item.cells.some((cell) => cell.r === r && cell.c === c)) {
+            return FOUND_PALETTE[item.colorIdx].bg;
+          }
+        }
+        return null;
+      }
+
+      function renderGrid() {
+        const size = state.size;
+        gridBoard.style.gridTemplateColumns = `repeat(${size}, minmax(0, 1fr))`;
+        gridBoard.innerHTML = '';
+
+        const fontSizeClass =
+          size <= 8 ? 'text-base sm:text-xl' :
+          size <= 10 ? 'text-sm sm:text-lg' :
+          'text-xs sm:text-base';
+
+        for (let r = 0; r < size; r++) {
+          for (let c = 0; c < size; c++) {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.dataset.r = String(r);
+            btn.dataset.c = String(c);
+            btn.textContent = state.grid[r][c];
+            btn.className = `grid-cell w-full h-full rounded-lg font-bold flex items-center justify-center ${fontSizeClass} bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100 border border-slate-200/80 dark:border-slate-700/70 shadow-xs cursor-pointer`;
+            gridBoard.appendChild(btn);
+          }
+        }
+        updateCellStyles();
+      }
+
+      function updateCellStyles() {
+        const activeSet = new Set(state.activeCells.map((cell) => `${cell.r},${cell.c}`));
+        const anchorKey = state.tapAnchor ? `${state.tapAnchor.r},${state.tapAnchor.c}` : null;
+
+        const cells = gridBoard.querySelectorAll('.grid-cell');
+        cells.forEach((el) => {
+          const r = Number(el.dataset.r);
+          const c = Number(el.dataset.c);
+          const key = `${r},${c}`;
+          const foundBg = getCellFoundColor(r, c);
+
+          el.classList.remove(
+            'bg-white', 'dark:bg-slate-900', 'text-slate-800', 'dark:text-slate-100',
+            'bg-blue-600', 'text-white', 'selecting', 'ring-2', 'ring-pink-500',
+            'bg-pink-500', 'bg-blue-500', 'bg-emerald-500', 'bg-amber-500', 'bg-violet-500', 'bg-cyan-500'
+          );
+
+          if (activeSet.has(key)) {
+            el.classList.add('bg-blue-600', 'text-white', 'selecting');
+          } else if (foundBg) {
+            foundBg.split(' ').forEach((cls) => el.classList.add(cls));
+          } else {
+            el.classList.add('bg-white', 'dark:bg-slate-900', 'text-slate-800', 'dark:text-slate-100');
+          }
+
+          if (anchorKey === key && !activeSet.has(key)) {
+            el.classList.add('ring-2', 'ring-pink-500');
+          }
+        });
+
+        if (state.activeCells.length > 0) {
+          selectionPreview.textContent = state.activeCells.map((cell) => state.grid[cell.r][cell.c]).join('');
+          selectionPreview.className = 'inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs sm:text-sm font-bold tracking-wider bg-blue-100 dark:bg-blue-900/60 text-blue-700 dark:text-blue-200';
+        } else {
+          selectionPreview.textContent = state.tapAnchor ? 'Tap end letter' : 'Select letters';
+          selectionPreview.className = 'inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs sm:text-sm font-bold tracking-wider bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300';
+        }
+      }
+
+      function renderWordList() {
+        categoryBadge.textContent = CATEGORY_LABELS[state.category];
+        wordListEl.innerHTML = '';
+
+        state.placedWords.forEach((item) => {
+          const pill = document.createElement('div');
+          pill.textContent = item.word;
+          if (item.found) {
+            pill.className = `px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold tracking-wide border line-through opacity-85 ${FOUND_PALETTE[item.colorIdx].pill}`;
+          } else {
+            pill.className = 'px-3 py-1.5 rounded-xl text-xs sm:text-sm font-semibold tracking-wide border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/70 text-slate-700 dark:text-slate-200';
+          }
+          wordListEl.appendChild(pill);
+        });
+
+        statFound.textContent = `${state.foundWords.size} / ${state.placedWords.length}`;
+        statHints.textContent = String(state.hintsUsed);
+      }
+
+      function getLineCells(start, end) {
+        const dr = end.r - start.r;
+        const dc = end.c - start.c;
+        const absR = Math.abs(dr);
+        const absC = Math.abs(dc);
+
+        if (dr !== 0 && dc !== 0 && absR !== absC) {
+          return null;
+        }
+
+        const steps = Math.max(absR, absC);
+        const stepR = dr === 0 ? 0 : dr / absR;
+        const stepC = dc === 0 ? 0 : dc / absC;
+
+        const cells = [];
+        for (let i = 0; i <= steps; i++) {
+          cells.push({
+            r: start.r + stepR * i,
+            c: start.c + stepC * i
+          });
+        }
+        return cells;
+      }
+
+      function handleLevelComplete() {
+        state.gameOver = true;
+        clearInterval(state.timerId);
+        playSound('win');
+
+        if (!state.completedLevels[state.difficulty].includes(state.level)) {
+          state.completedLevels[state.difficulty].push(state.level);
+          saveProgress();
+          renderLevelOptions();
+        }
+
+        const diffLabel = DIFFICULTY_CONFIG[state.difficulty].label;
+        modalTime.textContent = formatTime(state.seconds);
+        modalWords.textContent = String(state.placedWords.length);
+        modalHints.textContent = String(state.hintsUsed);
+
+        if (state.level < MAX_LEVELS) {
+          modalTitle.textContent = `Level ${state.level} Complete!`;
+          modalSubtitle.textContent = `${diffLabel} Mode • Ready for Level ${state.level + 1}?`;
+          btnNextLevel.textContent = `Next Level (${state.level + 1}) →`;
+        } else {
+          modalTitle.textContent = `${diffLabel} Mastered!`;
+          modalSubtitle.textContent = `You completed all ${MAX_LEVELS} levels in ${diffLabel} mode!`;
+          btnNextLevel.textContent = state.difficulty === 'hard' ? 'Back to Level 1' : 'Try Next Difficulty →';
+        }
+
+        setTimeout(() => {
+          victoryModal.classList.remove('hidden');
+          victoryModal.classList.add('flex');
+        }, 350);
+      }
+
+      function checkSelection(cells) {
+        if (!cells || cells.length < 2) return false;
+        const forward = cells.map((cell) => state.grid[cell.r][cell.c]).join('');
+        const backward = forward.split('').reverse().join('');
+
+        const match = state.placedWords.find(
+          (item) => !item.found && (item.word === forward || item.word === backward)
+        );
+
+        if (match) {
+          match.found = true;
+          state.foundWords.add(match.word);
+          playSound('found');
+          showToast(`Found ${match.word}!`, true);
+          renderWordList();
+
+          if (state.foundWords.size === state.placedWords.length) {
+            handleLevelComplete();
+          }
+          return true;
+        }
+        return false;
+      }
+
+      function getCellFromPoint(clientX, clientY) {
+        const el = document.elementFromPoint(clientX, clientY);
+        if (!el || !el.classList.contains('grid-cell')) return null;
+        return {
+          r: Number(el.dataset.r),
+          c: Number(el.dataset.c)
+        };
+      }
+
+      gridBoard.addEventListener('pointerdown', (e) => {
+        if (state.gameOver) return;
+        const cell = getCellFromPoint(e.clientX, e.clientY);
+        if (!cell) return;
+        e.preventDefault();
+        ensureAudio();
+
+        state.isDragging = true;
+        state.startCell = cell;
+        state.activeCells = [cell];
+        playSound('tick');
+        updateCellStyles();
+      });
+
+      window.addEventListener('pointermove', (e) => {
+        if (!state.isDragging || !state.startCell || state.gameOver) return;
+        const cell = getCellFromPoint(e.clientX, e.clientY);
+        if (!cell) return;
+
+        const line = getLineCells(state.startCell, cell);
+        if (line) {
+          const prevLen = state.activeCells.length;
+          state.activeCells = line;
+          if (line.length !== prevLen) {
+            playSound('tick');
+          }
+          updateCellStyles();
+        }
+      });
+
+      window.addEventListener('pointerup', () => {
+        if (!state.isDragging) return;
+        state.isDragging = false;
+
+        if (state.activeCells.length > 1) {
+          state.tapAnchor = null;
+          const found = checkSelection(state.activeCells);
+          if (!found) {
+            playSound('miss');
+          }
+        } else if (state.startCell) {
+          if (!state.tapAnchor) {
+            state.tapAnchor = state.startCell;
+          } else if (state.tapAnchor.r === state.startCell.r && state.tapAnchor.c === state.startCell.c) {
+            state.tapAnchor = null;
+          } else {
+            const line = getLineCells(state.tapAnchor, state.startCell);
+            state.tapAnchor = null;
+            if (line) {
+              const found = checkSelection(line);
+              if (!found) playSound('miss');
+            } else {
+              playSound('miss');
+              showToast('Straight lines only', false);
+            }
+          }
+        }
+
+        state.startCell = null;
+        state.activeCells = [];
+        updateCellStyles();
+      });
+
+      function useHint() {
+        if (state.gameOver) return;
+        const remaining = state.placedWords.filter((w) => !w.found);
+        if (remaining.length === 0) return;
+
+        const target = remaining[Math.floor(Math.random() * remaining.length)];
+        const firstCell = target.cells[0];
+        const el = gridBoard.querySelector(`[data-r="${firstCell.r}"][data-c="${firstCell.c}"]`);
+        if (el) {
+          el.classList.remove('hint-pulse');
+          void el.offsetWidth;
+          el.classList.add('hint-pulse', 'ring-2', 'ring-pink-500');
+          setTimeout(() => {
+            el.classList.remove('ring-2', 'ring-pink-500');
+          }, 2600);
+        }
+
+        state.hintsUsed += 1;
+        statHints.textContent = String(state.hintsUsed);
+        playSound('hint');
+        showToast(`Hint: starts with "${target.word[0]}"`, true);
+      }
+
+      function syncThemeUI() {
+        document.documentElement.classList.toggle('dark', state.darkMode);
+        document.querySelectorAll('.theme-icon').forEach((el) => {
+          el.textContent = state.darkMode ? '☀️' : '🌙';
+        });
+        document.querySelectorAll('.theme-label').forEach((el) => {
+          el.textContent = state.darkMode ? 'Light' : 'Dark';
+        });
+      }
+
+      function syncSoundUI() {
+        document.querySelectorAll('.sound-icon').forEach((el) => {
+          el.textContent = state.soundEnabled ? '🔊' : '🔇';
+        });
+        document.querySelectorAll('.sound-label').forEach((el) => {
+          el.textContent = state.soundEnabled ? 'Sound' : 'Muted';
+        });
+      }
+
+      function toggleTheme() {
+        state.darkMode = !state.darkMode;
+        syncThemeUI();
+        try {
+          localStorage.setItem('wordsearch_theme', state.darkMode ? 'dark' : 'light');
+        } catch (_) {}
+      }
+
+      function toggleSound() {
+        state.soundEnabled = !state.soundEnabled;
+        syncSoundUI();
+        if (state.soundEnabled) playSound('tick');
+      }
+
+      function startNewGame() {
+        victoryModal.classList.add('hidden');
+        victoryModal.classList.remove('flex');
+        renderLevelOptions();
+        buildPuzzle();
+        renderGrid();
+        renderWordList();
+        startTimer();
+      }
+
+      function goToNextLevel() {
+        if (state.level < MAX_LEVELS) {
+          state.level += 1;
+        } else if (state.difficulty === 'easy') {
+          state.difficulty = 'medium';
+          selectDifficulty.value = 'medium';
+          state.level = 1;
+        } else if (state.difficulty === 'medium') {
+          state.difficulty = 'hard';
+          selectDifficulty.value = 'hard';
+          state.level = 1;
+        } else {
+          state.level = 1;
+        }
+        startNewGame();
+      }
+
+      selectCategory.addEventListener('change', (e) => {
+        state.category = e.target.value;
+        startNewGame();
+      });
+
+      selectDifficulty.addEventListener('change', (e) => {
+        state.difficulty = e.target.value;
+        state.level = 1;
+        startNewGame();
+      });
+
+      selectLevel.addEventListener('change', (e) => {
+        state.level = Number(e.target.value) || 1;
+        startNewGame();
+      });
+
+      btnHint.addEventListener('click', useHint);
+      btnNewGame.addEventListener('click', startNewGame);
+      btnSound.addEventListener('click', toggleSound);
+      btnSoundMobile.addEventListener('click', toggleSound);
+      btnTheme.addEventListener('click', toggleTheme);
+      btnThemeMobile.addEventListener('click', toggleTheme);
+
+      btnNextLevel.addEventListener('click', goToNextLevel);
+      btnModalClose.addEventListener('click', () => {
+        victoryModal.classList.add('hidden');
+        victoryModal.classList.remove('flex');
+      });
+      btnPlayAgain.addEventListener('click', startNewGame);
+
+      window.onload = function () {
+        loadProgress();
+        try {
+          const savedTheme = localStorage.getItem('wordsearch_theme');
+          if (savedTheme === 'dark') state.darkMode = true;
+        } catch (_) {}
+        syncThemeUI();
+        syncSoundUI();
+        startNewGame();
+
+        try {
+          document.querySelectorAll('.adsbygoogle').forEach(() => {
+            (window.adsbygoogle = window.adsbygoogle || []).push({});
+          });
+        } catch (_) {}
+      };
+    })();
+  </script>
+</body>
+</html>

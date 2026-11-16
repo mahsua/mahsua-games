@@ -1,0 +1,1252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Crossword Puzzle by Mahsua Apps — Free Online Crossword Game</title>
+  <meta name="description" content="Play Crossword Puzzle by Mahsua Apps free online! Enjoy 30 levels each across Easy, Medium, and Hard modes with smart hints, on-screen keyboard, and dark mode." />
+  <meta name="keywords" content="Crossword Puzzle, Crossword by Mahsua Apps, Mahsua Apps, free online crossword, brain games, word puzzle" />
+  <meta name="author" content="Shivam Kushwaha - Mahsua Apps" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://apps.mahsua.com/" />
+  <link rel="icon" href="./favicon.png" type="image/svg+xml">
+
+  <!-- Open Graph / Social SEO -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Mahsua Apps" />
+  <meta property="og:title" content="Crossword Puzzle by Mahsua Apps — 90 Levels Free Online" />
+  <meta property="og:description" content="Solve 30 crossword levels each in Easy, Medium, and Hard difficulties. Play Crossword Puzzle by Mahsua Apps free in your browser." />
+  <meta property="og:url" content="https://apps.mahsua.com/" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Crossword Puzzle by Mahsua Apps" />
+  <meta name="twitter:description" content="Free online Crossword Puzzle game with 90 levels across Easy, Medium, and Hard modes." />
+
+  <!-- Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "VideoGame",
+    "name": "Crossword Puzzle by Mahsua Apps",
+    "url": "https://apps.mahsua.com/",
+    "description": "A free browser-based Crossword Puzzle game by Mahsua Apps featuring 30 levels each in Easy, Medium, and Hard difficulties.",
+    "genre": ["Puzzle", "Crossword", "Word Game"],
+    "gamePlatform": "Web Browser",
+    "applicationCategory": "GameApplication",
+    "operatingSystem": "Any",
+    "inLanguage": "en",
+    "author": {
+      "@type": "Organization",
+      "name": "Mahsua Apps",
+      "url": "https://apps.mahsua.com/"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+
+  <meta name="theme-color" content="#2563eb" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Is Crossword Puzzle by Mahsua Apps free to play?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, Crossword Puzzle by Mahsua Apps is 100% free to play in any modern web browser with no downloads or sign-up required."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How many levels are in Crossword Puzzle by Mahsua Apps?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "There are 90 total levels—30 levels each across Easy (8x8), Medium (10x10), and Hard (12x12) difficulties."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I play on mobile and tablet?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, the game is mobile-responsive and includes a built-in on-screen keyboard, tap-to-select clues, and Light/Dark mode."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9351361840615541" crossorigin="anonymous"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    }
+
+    .cw-cell {
+      user-select: none;
+      -webkit-user-select: none;
+      transition: background-color 0.12s ease, border-color 0.12s ease;
+    }
+
+    .clue-scroll {
+      max-height: 220px;
+      overflow-y: auto;
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 transition-colors duration-200 flex flex-col">
+  <div class="max-w-6xl w-full mx-auto px-3 sm:px-6 py-4 sm:py-6 flex flex-col gap-4 sm:gap-5 flex-1">
+    <!-- Top Header & Controls -->
+    <header class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-sm p-3.5 sm:p-4 flex flex-col xl:flex-row xl:items-center xl:justify-between gap-3">
+      <div class="flex items-center justify-between gap-3">
+        <div class="flex items-center gap-2.5">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-pink-500 via-blue-500 to-emerald-500 flex items-center justify-center text-white font-extrabold text-lg shadow-sm shrink-0">
+            C
+          </div>
+          <div>
+            <h1 class="text-base sm:text-xl font-bold tracking-tight text-slate-900 dark:text-white leading-tight">
+              Crossword Puzzle <span class="text-blue-600 dark:text-blue-400 font-semibold text-sm sm:text-base">by Mahsua Apps</span>
+            </h1>
+            <p class="text-xs text-slate-500 dark:text-slate-400">90 Levels • Tap any square or clue to type</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-1.5 xl:hidden">
+          <button id="btn-sound-mobile" type="button" aria-label="Toggle sound" class="p-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 transition">
+            <span class="sound-icon text-sm font-semibold">🔊</span>
+          </button>
+          <button id="btn-theme-mobile" type="button" aria-label="Toggle dark mode" class="p-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 transition">
+            <span class="theme-icon text-sm font-semibold">🌙</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-2">
+        <label class="sr-only" for="select-difficulty">Difficulty</label>
+        <select id="select-difficulty" class="px-3 py-2 rounded-xl text-sm font-medium bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <option value="easy">Easy (8×8)</option>
+          <option value="medium" selected>Medium (10×10)</option>
+          <option value="hard">Hard (12×12)</option>
+        </select>
+
+        <label class="sr-only" for="select-level">Level</label>
+        <select id="select-level" class="px-3 py-2 rounded-xl text-sm font-medium bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <!-- Levels 1-30 populated by JS -->
+        </select>
+
+        <button id="btn-hint" type="button" class="px-3 py-2 rounded-xl text-sm font-semibold bg-pink-50 dark:bg-pink-950/50 text-pink-600 dark:text-pink-300 border border-pink-200 dark:border-pink-800/60 hover:bg-pink-100 dark:hover:bg-pink-900/50 transition">
+          Hint
+        </button>
+
+        <button id="btn-check" type="button" class="px-3 py-2 rounded-xl text-sm font-semibold bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/60 hover:bg-emerald-100 dark:hover:bg-emerald-900/50 transition">
+          Check
+        </button>
+
+        <button id="btn-restart" type="button" class="px-3.5 py-2 rounded-xl text-sm font-semibold bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition">
+          Restart
+        </button>
+
+        <button id="btn-sound" type="button" aria-label="Toggle sound" class="hidden xl:inline-flex items-center justify-center px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 text-sm font-medium transition">
+          <span class="sound-icon mr-1.5">🔊</span><span class="sound-label">Sound</span>
+        </button>
+
+        <button id="btn-theme" type="button" aria-label="Toggle dark mode" class="hidden xl:inline-flex items-center justify-center px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 text-sm font-medium transition">
+          <span class="theme-icon mr-1.5">🌙</span><span class="theme-label">Dark</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Game Area -->
+    <main class="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-5 items-start">
+      <!-- Crossword Grid + Active Clue + On-Screen Keyboard -->
+      <section class="lg:col-span-7 xl:col-span-8 flex flex-col gap-4">
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-sm p-3 sm:p-5 flex flex-col items-center gap-3">
+          <!-- Active Clue Banner -->
+          <div class="w-full flex flex-wrap items-center justify-between gap-2">
+            <div class="flex items-center gap-2 min-w-0 flex-1">
+              <span id="level-badge" class="shrink-0 inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/60">
+                Level 1 / 30
+              </span>
+              <div id="active-clue-bar" class="truncate px-3 py-1.5 rounded-xl text-xs sm:text-sm font-semibold bg-blue-50 dark:bg-blue-950/50 text-blue-800 dark:text-blue-200 border border-blue-100 dark:border-blue-900/50 flex-1">
+                Select a square to begin
+              </div>
+            </div>
+            <div id="status-toast" class="text-xs sm:text-sm font-semibold text-emerald-600 dark:text-emerald-400 opacity-0 transition-opacity duration-200 shrink-0">
+              Checked!
+            </div>
+          </div>
+
+          <!-- Crossword Grid -->
+          <div class="w-full max-w-[520px] aspect-square flex items-center justify-center">
+            <div id="cw-grid" class="w-full h-full grid gap-0.5 sm:gap-1 p-1.5 sm:p-2 rounded-xl bg-slate-800 dark:bg-slate-950 border border-slate-700 shadow-inner">
+              <!-- Cells injected by JS -->
+            </div>
+          </div>
+
+          <!-- On-Screen Keyboard for Touch & Mobile Play -->
+          <div id="onscreen-kb" class="w-full max-w-[520px] flex flex-col gap-1.5 pt-1">
+            <!-- Keyboard rows injected by JS -->
+          </div>
+        </div>
+
+        <!-- Leaderboard Ad Slot -->
+        <aside aria-label="Advertisement" class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-sm p-3 flex flex-col items-center justify-center min-h-[106px]">
+          <span class="text-[10px] uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-1">Advertisement</span>
+          <div class="w-full flex items-center justify-center min-h-[72px] rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-dashed border-slate-200 dark:border-slate-700/70 overflow-hidden">
+            <ins class="adsbygoogle block w-full text-center"
+                 style="display:block"
+                 data-ad-client="ca-pub-9351361840615541"
+                 data-ad-slot="auto"
+                 data-ad-format="horizontal"
+                 data-full-width-responsive="true"></ins>
+          </div>
+        </aside>
+      </section>
+
+      <!-- Sidebar: Stats + Across/Down Clues + Ad Slot -->
+      <aside class="lg:col-span-5 xl:col-span-4 flex flex-col gap-4">
+        <!-- Stats Card -->
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-sm p-4 grid grid-cols-3 gap-2 text-center">
+          <div class="p-2 rounded-xl bg-blue-50/70 dark:bg-blue-950/30 border border-blue-100 dark:border-blue-900/40">
+            <div class="text-[11px] uppercase tracking-wider font-semibold text-blue-600 dark:text-blue-400">Words</div>
+            <div id="stat-words" class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white mt-0.5">0 / 0</div>
+          </div>
+          <div class="p-2 rounded-xl bg-emerald-50/70 dark:bg-emerald-950/30 border border-emerald-100 dark:border-emerald-900/40">
+            <div class="text-[11px] uppercase tracking-wider font-semibold text-emerald-600 dark:text-emerald-400">Time</div>
+            <div id="stat-time" class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white mt-0.5 tabular-nums">00:00</div>
+          </div>
+          <div class="p-2 rounded-xl bg-pink-50/70 dark:bg-pink-950/30 border border-pink-100 dark:border-pink-900/40">
+            <div class="text-[11px] uppercase tracking-wider font-semibold text-pink-600 dark:text-pink-400">Hints</div>
+            <div id="stat-hints" class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white mt-0.5">0</div>
+          </div>
+        </div>
+
+        <!-- Clues Card -->
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-sm p-4 flex flex-col gap-4">
+          <div>
+            <h2 class="text-xs font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400 mb-2">Across</h2>
+            <div id="clues-across" class="clue-scroll flex flex-col gap-1.5 pr-1">
+              <!-- Across clues -->
+            </div>
+          </div>
+          <div class="border-t border-slate-100 dark:border-slate-800 pt-3">
+            <h2 class="text-xs font-bold uppercase tracking-wider text-pink-600 dark:text-pink-400 mb-2">Down</h2>
+            <div id="clues-down" class="clue-scroll flex flex-col gap-1.5 pr-1">
+              <!-- Down clues -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Sidebar Rectangle Ad Slot -->
+        <div aria-label="Advertisement" class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-sm p-3 flex flex-col items-center justify-center min-h-[270px]">
+          <span class="text-[10px] uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-1.5">Advertisement</span>
+          <div class="w-full flex-1 flex items-center justify-center min-h-[230px] rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-dashed border-slate-200 dark:border-slate-700/70 overflow-hidden">
+            <ins class="adsbygoogle block w-full text-center"
+                 style="display:block"
+                 data-ad-client="ca-pub-9351361840615541"
+                 data-ad-slot="auto"
+                 data-ad-format="rectangle"
+                 data-full-width-responsive="true"></ins>
+          </div>
+        </div>
+      </aside>
+    </main>
+
+    <!-- SEO Info & How to Play -->
+    <section class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-sm p-4 sm:p-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5 text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+        <div>
+          <h2 class="text-base font-bold text-slate-900 dark:text-white mb-2">About Crossword Puzzle by Mahsua Apps</h2>
+          <p>
+            Crossword Puzzle by <a href="https://apps.mahsua.com/" target="_blank" rel="noopener noreferrer" class="text-blue-600 dark:text-blue-400 font-semibold hover:underline">Mahsua Apps</a> is a free, browser-friendly word puzzle built for instant play on any device. Sharpen your vocabulary across 30 levels each in Easy (8×8), Medium (10×10), and Hard (12×12) modes.
+          </p>
+        </div>
+        <div>
+          <h2 class="text-base font-bold text-slate-900 dark:text-white mb-2">How to Play</h2>
+          <p>
+            Tap any white square or click a clue from the Across or Down lists to highlight the word. Type letters using your physical keyboard or the built-in on-screen keyboard. Tap the same square again to switch between Across and Down, and use <strong>Hint</strong> or <strong>Check</strong> anytime.
+          </p>
+        </div>
+      </div>
+      <div class="mt-5 pt-4 border-t border-slate-100 dark:border-slate-800">
+        <h2 class="text-base font-bold text-slate-900 dark:text-white mb-2.5">Frequently Asked Questions</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs sm:text-sm text-slate-600 dark:text-slate-300">
+          <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/70 dark:border-slate-700/60">
+            <h3 class="font-semibold text-slate-900 dark:text-white mb-1">Is it 100% free?</h3>
+            <p>Yes—play all 90 crossword levels online at zero cost with no app installation.</p>
+          </div>
+          <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/70 dark:border-slate-700/60">
+            <h3 class="font-semibold text-slate-900 dark:text-white mb-1">How do levels work?</h3>
+            <p>Easy (8×8), Medium (10×10), and Hard (12×12) each include 30 unique puzzles with saved progress.</p>
+          </div>
+          <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/70 dark:border-slate-700/60">
+            <h3 class="font-semibold text-slate-900 dark:text-white mb-1">Works on mobile?</h3>
+            <p>Yes, it adapts to any screen size and includes a touch-friendly on-screen keyboard.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Branded Footer -->
+  <footer class="border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 mt-auto">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-500 dark:text-slate-400">
+      <div>
+        Made With ❤️ INDIA ~ Designed by <strong class="text-slate-700 dark:text-slate-200">SHIVAM KUSHWAHA</strong>
+      </div>
+      <div class="flex flex-wrap items-center gap-3">
+        <a href="https://apps.mahsua.com/" target="_blank" rel="noopener noreferrer" class="hover:text-blue-600 dark:hover:text-blue-400 font-medium transition">Mahsua Apps</a>
+        <span>•</span>
+        <a href="mailto:games@mahsua.com" class="hover:text-blue-600 dark:hover:text-blue-400 transition">games@mahsua.com</a>
+        <span>•</span>
+        <a href="https://api.whatsapp.com/send/?phone=919752107808" target="_blank" rel="noopener noreferrer" class="hover:text-emerald-600 dark:hover:text-emerald-400 transition">WhatsApp Support</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Victory Modal -->
+  <div id="victory-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-900/50 backdrop-blur-sm p-4">
+    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl max-w-sm w-full p-6 text-center">
+      <div class="w-14 h-14 mx-auto rounded-2xl bg-gradient-to-br from-emerald-400 to-blue-500 flex items-center justify-center text-white text-2xl font-bold shadow-md mb-4">
+        ✓
+      </div>
+      <h2 id="modal-title" class="text-2xl font-extrabold text-slate-900 dark:text-white">Level 1 Complete!</h2>
+      <p id="modal-subtitle" class="text-sm text-slate-500 dark:text-slate-400 mt-1">Every clue solved accurately.</p>
+
+      <div class="grid grid-cols-3 gap-2 my-5">
+        <div class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800">
+          <div class="text-[11px] font-semibold uppercase text-slate-400">Time</div>
+          <div id="modal-time" class="text-base font-bold text-slate-900 dark:text-white mt-0.5">00:00</div>
+        </div>
+        <div class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800">
+          <div class="text-[11px] font-semibold uppercase text-slate-400">Words</div>
+          <div id="modal-words" class="text-base font-bold text-slate-900 dark:text-white mt-0.5">0</div>
+        </div>
+        <div class="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800">
+          <div class="text-[11px] font-semibold uppercase text-slate-400">Hints</div>
+          <div id="modal-hints" class="text-base font-bold text-slate-900 dark:text-white mt-0.5">0</div>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-2">
+        <button id="btn-next-level" type="button" class="w-full py-2.5 rounded-xl text-sm font-semibold bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm transition">
+          Next Level →
+        </button>
+        <div class="flex gap-2">
+          <button id="btn-modal-close" type="button" class="flex-1 py-2.5 rounded-xl text-sm font-semibold border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 transition">
+            View Board
+          </button>
+          <button id="btn-play-again" type="button" class="flex-1 py-2.5 rounded-xl text-sm font-semibold bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition">
+            Replay Level
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const MAX_LEVELS = 30;
+
+      const CLUE_BANK = [
+        { word: 'APPLE', clue: 'Crisp red or green orchard fruit' },
+        { word: 'OCEAN', clue: 'Vast body of salt water' },
+        { word: 'CLOUD', clue: 'Floating water vapor or online storage' },
+        { word: 'PIXEL', clue: 'Smallest dot on a digital screen' },
+        { word: 'RIVER', clue: 'Flowing freshwater stream' },
+        { word: 'TIGER', clue: 'Striped big cat native to India' },
+        { word: 'SOLAR', clue: 'Relating to the sun' },
+        { word: 'BRAIN', clue: 'Organ of thought and memory' },
+        { word: 'MUSIC', clue: 'Art of arranged sound and rhythm' },
+        { word: 'LIGHT', clue: 'Opposite of dark' },
+        { word: 'EARTH', clue: 'Third planet from the sun' },
+        { word: 'STONE', clue: 'Hard mineral rock' },
+        { word: 'FLAME', clue: 'Glowing tongue of fire' },
+        { word: 'GHOST', clue: 'Spooky spirit in stories' },
+        { word: 'TRAIN', clue: 'Railroad passenger vehicle' },
+        { word: 'CLOCK', clue: 'Device that shows the time' },
+        { word: 'PLANT', clue: 'Living green organism with roots' },
+        { word: 'WATER', clue: 'Clear liquid essential for life' },
+        { word: 'BREAD', clue: 'Baked loaf made from flour' },
+        { word: 'SMILE', clue: 'Happy facial expression' },
+        { word: 'HOUSE', clue: 'Building where people live' },
+        { word: 'PAPER', clue: 'Thin sheet used for writing' },
+        { word: 'CHAIR', clue: 'Seat with a back for one person' },
+        { word: 'TABLE', clue: 'Flat-topped piece of furniture' },
+        { word: 'GLASS', clue: 'Transparent material for windows' },
+        { word: 'PHONE', clue: 'Pocket device for calls and apps' },
+        { word: 'MOUSE', clue: 'Hand-held pointer or small rodent' },
+        { word: 'EMAIL', clue: 'Electronic message sent online' },
+        { word: 'ROBOT', clue: 'Programmable mechanical machine' },
+        { word: 'LASER', clue: 'Focused beam of light' },
+        { word: 'ORBIT', clue: 'Curved path around a planet' },
+        { word: 'COMET', clue: 'Icy space rock with a bright tail' },
+        { word: 'LUNAR', clue: 'Relating to the moon' },
+        { word: 'STARS', clue: 'Bright points in the night sky' },
+        { word: 'SPACE', clue: 'Vast expanse beyond the sky' },
+        { word: 'MANGO', clue: 'Sweet tropical summer fruit' },
+        { word: 'LEMON', clue: 'Sour yellow citrus fruit' },
+        { word: 'HONEY', clue: 'Sweet golden nectar made by bees' },
+        { word: 'SPICE', clue: 'Flavoring like pepper or cumin' },
+        { word: 'SUGAR', clue: 'Sweet crystals used in tea' },
+        { word: 'GREEN', clue: 'Color of grass and leaves' },
+        { word: 'BLACK', clue: 'Darkest color of night' },
+        { word: 'WHITE', clue: 'Color of fresh snow' },
+        { word: 'ROUND', clue: 'Shaped like a circle' },
+        { word: 'QUICK', clue: 'Moving with fast speed' },
+        { word: 'SMART', clue: 'Clever and quick to learn' },
+        { word: 'PEACE', clue: 'Calm state without conflict' },
+        { word: 'DREAM', clue: 'Images seen while sleeping' },
+        { word: 'HEART', clue: 'Organ that pumps blood' },
+        { word: 'VOICE', clue: 'Sound made when speaking' },
+        { word: 'WORLD', clue: 'The entire planet and its people' },
+        { word: 'INDIA', clue: 'South Asian nation known for diversity' },
+        { word: 'DELHI', clue: 'Capital territory of India' },
+        { word: 'LOTUS', clue: 'Sacred pink flower in ponds' },
+        { word: 'EAGLE', clue: 'Large keen-eyed bird of prey' },
+        { word: 'WHALE', clue: 'Largest mammal in the sea' },
+        { word: 'HORSE', clue: 'Fast four-legged riding animal' },
+        { word: 'SNAKE', clue: 'Legless slithering reptile' },
+        { word: 'STORM', clue: 'Heavy rain with strong winds' },
+        { word: 'FROST', clue: 'Thin layer of morning ice' },
+        { word: 'BEACH', clue: 'Sandy shore beside the sea' },
+        { word: 'SHELL', clue: 'Hard outer cover of a sea creature' },
+        { word: 'PEARL', clue: 'Smooth gem formed inside an oyster' },
+        { word: 'CROWN', clue: 'Royal headpiece of gold' },
+        { word: 'SWORD', clue: 'Long metal blade weapon' },
+        { word: 'SHIELD', clue: 'Protective armor held in battle' },
+        { word: 'CASTLE', clue: 'Fortified stone palace' },
+        { word: 'BRIDGE', clue: 'Structure spanning a river' },
+        { word: 'FOREST', clue: 'Dense area filled with trees' },
+        { word: 'DESERT', clue: 'Dry sandy region with little rain' },
+        { word: 'ISLAND', clue: 'Land completely surrounded by water' },
+        { word: 'PLANET', clue: 'Large world orbiting a star' },
+        { word: 'GALAXY', clue: 'Massive system of billions of stars' },
+        { word: 'ROCKET', clue: 'Vehicle launched into outer space' },
+        { word: 'SERVER', clue: 'Computer that hosts websites' },
+        { word: 'CODING', clue: 'Writing instructions for software' },
+        { word: 'ROUTER', clue: 'Device that directs Wi-Fi traffic' },
+        { word: 'SCREEN', clue: 'Display surface of a monitor' },
+        { word: 'MEMORY', clue: 'Data storage inside a computer' },
+        { word: 'WINDOW', clue: 'Glass opening in a wall' },
+        { word: 'PENCIL', clue: 'Wooden tool for sketching' },
+        { word: 'CANDLE', clue: 'Wax stick with a burning wick' },
+        { word: 'CAMERA', clue: 'Device for taking photographs' },
+        { word: 'TICKET', clue: 'Pass needed to board a train' }
+      ];
+
+      const DIFFICULTY_CONFIG = {
+        easy: { label: 'Easy', size: 8, targetWords: 6 },
+        medium: { label: 'Medium', size: 10, targetWords: 9 },
+        hard: { label: 'Hard', size: 12, targetWords: 12 }
+      };
+
+      const state = {
+        difficulty: 'medium',
+        level: 1,
+        completedLevels: { easy: [], medium: [], hard: [] },
+        size: 10,
+        solution: [],   // 2D array of uppercase letters or null
+        userGrid: [],   // 2D array of entered letters or ''
+        cellNums: [],   // 2D array of clue numbers or 0
+        wrongCells: new Set(),
+        entries: [],    // { num, dir: 'across'|'down', r, c, word, clue }
+        selected: null, // { r, c }
+        dir: 'across',
+        hintsUsed: 0,
+        seconds: 0,
+        timerId: null,
+        gameOver: false,
+        soundEnabled: true,
+        darkMode: false
+      };
+
+      let audioCtx = null;
+
+      function createSeededRng(seedStr) {
+        let h = 2166136261 >>> 0;
+        for (let i = 0; i < seedStr.length; i++) {
+          h ^= seedStr.charCodeAt(i);
+          h = Math.imul(h, 16777619);
+        }
+        return function () {
+          h += 0x6D2B79F5;
+          let t = Math.imul(h ^ (h >>> 15), 1 | h);
+          t ^= t + Math.imul(t ^ (t >>> 7), 61 | t);
+          return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+        };
+      }
+
+      function shuffleArray(arr, rng) {
+        const copy = arr.slice();
+        for (let i = copy.length - 1; i > 0; i--) {
+          const j = Math.floor(rng() * (i + 1));
+          [copy[i], copy[j]] = [copy[j], copy[i]];
+        }
+        return copy;
+      }
+
+      function ensureAudio() {
+        if (!state.soundEnabled) return null;
+        if (!audioCtx) {
+          const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+          if (AudioContextClass) audioCtx = new AudioContextClass();
+        }
+        if (audioCtx && audioCtx.state === 'suspended') {
+          audioCtx.resume().catch(() => {});
+        }
+        return audioCtx;
+      }
+
+      function playTone(freq, duration, type = 'sine', gainVal = 0.05, delay = 0) {
+        const ctx = ensureAudio();
+        if (!ctx) return;
+        const now = ctx.currentTime + delay;
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, now);
+        gain.gain.setValueAtTime(gainVal, now);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(now);
+        osc.stop(now + duration);
+      }
+
+      function playSound(kind) {
+        if (!state.soundEnabled) return;
+        if (kind === 'type') playTone(560, 0.035, 'triangle', 0.025);
+        else if (kind === 'erase') playTone(320, 0.04, 'sine', 0.025);
+        else if (kind === 'hint') {
+          playTone(660, 0.14, 'sine', 0.05, 0);
+          playTone(880, 0.16, 'sine', 0.04, 0.08);
+        } else if (kind === 'win') {
+          [523.25, 659.25, 783.99, 1046.5].forEach((f, idx) => {
+            playTone(f, 0.25, 'triangle', 0.08, idx * 0.09);
+          });
+        } else if (kind === 'error') playTone(210, 0.12, 'sine', 0.04);
+      }
+
+      // DOM refs
+      const cwGrid = document.getElementById('cw-grid');
+      const cluesAcrossEl = document.getElementById('clues-across');
+      const cluesDownEl = document.getElementById('clues-down');
+      const activeClueBar = document.getElementById('active-clue-bar');
+      const onscreenKb = document.getElementById('onscreen-kb');
+      const selectDifficulty = document.getElementById('select-difficulty');
+      const selectLevel = document.getElementById('select-level');
+      const levelBadge = document.getElementById('level-badge');
+      const btnHint = document.getElementById('btn-hint');
+      const btnCheck = document.getElementById('btn-check');
+      const btnRestart = document.getElementById('btn-restart');
+      const btnSound = document.getElementById('btn-sound');
+      const btnSoundMobile = document.getElementById('btn-sound-mobile');
+      const btnTheme = document.getElementById('btn-theme');
+      const btnThemeMobile = document.getElementById('btn-theme-mobile');
+      const statusToast = document.getElementById('status-toast');
+      const statWords = document.getElementById('stat-words');
+      const statTime = document.getElementById('stat-time');
+      const statHints = document.getElementById('stat-hints');
+      const victoryModal = document.getElementById('victory-modal');
+      const modalTitle = document.getElementById('modal-title');
+      const modalSubtitle = document.getElementById('modal-subtitle');
+      const modalTime = document.getElementById('modal-time');
+      const modalWords = document.getElementById('modal-words');
+      const modalHints = document.getElementById('modal-hints');
+      const btnNextLevel = document.getElementById('btn-next-level');
+      const btnModalClose = document.getElementById('btn-modal-close');
+      const btnPlayAgain = document.getElementById('btn-play-again');
+
+      let toastTimer = null;
+
+      function showToast(msg, isGood = true) {
+        statusToast.textContent = msg;
+        statusToast.className = `text-xs sm:text-sm font-semibold transition-opacity duration-200 shrink-0 ${
+          isGood ? 'text-emerald-600 dark:text-emerald-400' : 'text-pink-600 dark:text-pink-400'
+        } opacity-100`;
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => {
+          statusToast.classList.remove('opacity-100');
+          statusToast.classList.add('opacity-0');
+        }, 1400);
+      }
+
+      function formatTime(sec) {
+        const m = String(Math.floor(sec / 60)).padStart(2, '0');
+        const s = String(sec % 60).padStart(2, '0');
+        return `${m}:${s}`;
+      }
+
+      function startTimer() {
+        clearInterval(state.timerId);
+        state.seconds = 0;
+        statTime.textContent = '00:00';
+        state.timerId = setInterval(() => {
+          if (!state.gameOver) {
+            state.seconds += 1;
+            statTime.textContent = formatTime(state.seconds);
+          }
+        }, 1000);
+      }
+
+      function loadProgress() {
+        try {
+          const raw = localStorage.getItem('mahsua_crossword_progress');
+          if (raw) {
+            const parsed = JSON.parse(raw);
+            if (parsed && typeof parsed === 'object') {
+              ['easy', 'medium', 'hard'].forEach((d) => {
+                if (Array.isArray(parsed[d])) state.completedLevels[d] = parsed[d];
+              });
+            }
+          }
+        } catch (_) {}
+      }
+
+      function saveProgress() {
+        try {
+          localStorage.setItem('mahsua_crossword_progress', JSON.stringify(state.completedLevels));
+        } catch (_) {}
+      }
+
+      function renderLevelOptions() {
+        const done = new Set(state.completedLevels[state.difficulty] || []);
+        selectLevel.innerHTML = '';
+        for (let i = 1; i <= MAX_LEVELS; i++) {
+          const opt = document.createElement('option');
+          opt.value = String(i);
+          opt.textContent = done.has(i) ? `Level ${i} ✓` : `Level ${i}`;
+          if (i === state.level) opt.selected = true;
+          selectLevel.appendChild(opt);
+        }
+        levelBadge.textContent = `Level ${state.level} / ${MAX_LEVELS}`;
+      }
+
+      function canPlaceWord(grid, size, word, r, c, dir) {
+        const dr = dir === 'down' ? 1 : 0;
+        const dc = dir === 'across' ? 1 : 0;
+
+        if (r < 0 || c < 0 || r + dr * (word.length - 1) >= size || c + dc * (word.length - 1) >= size) {
+          return { ok: false, intersections: 0 };
+        }
+
+        // Check cell immediately before start and after end
+        const beforeR = r - dr;
+        const beforeC = c - dc;
+        if (beforeR >= 0 && beforeC >= 0 && grid[beforeR][beforeC] !== null) {
+          return { ok: false, intersections: 0 };
+        }
+        const afterR = r + dr * word.length;
+        const afterC = c + dc * word.length;
+        if (afterR < size && afterC < size && grid[afterR][afterC] !== null) {
+          return { ok: false, intersections: 0 };
+        }
+
+        let intersections = 0;
+        for (let i = 0; i < word.length; i++) {
+          const cr = r + dr * i;
+          const cc = c + dc * i;
+          const cur = grid[cr][cc];
+
+          if (cur !== null) {
+            if (cur !== word[i]) return { ok: false, intersections: 0 };
+            intersections += 1;
+          } else {
+            // Avoid parallel touching words
+            const p1r = cr + (dir === 'across' ? -1 : 0);
+            const p1c = cc + (dir === 'across' ? 0 : -1);
+            const p2r = cr + (dir === 'across' ? 1 : 0);
+            const p2c = cc + (dir === 'across' ? 0 : 1);
+            if (p1r >= 0 && p1c >= 0 && grid[p1r][p1c] !== null) return { ok: false, intersections: 0 };
+            if (p2r < size && p2c < size && grid[p2r][p2c] !== null) return { ok: false, intersections: 0 };
+          }
+        }
+        return { ok: intersections > 0, intersections };
+      }
+
+      function buildCrossword() {
+        const cfg = DIFFICULTY_CONFIG[state.difficulty];
+        const size = cfg.size;
+        state.size = size;
+
+        const rng = createSeededRng(`cw-${state.difficulty}-${state.level}`);
+        const pool = shuffleArray(
+          CLUE_BANK.filter((item) => item.word.length <= size),
+          rng
+        );
+
+        const grid = Array.from({ length: size }, () => Array(size).fill(null));
+        const placed = [];
+
+        // Place first word near middle horizontally
+        const first = pool[0];
+        const startR = Math.floor(size / 2);
+        const startC = Math.max(0, Math.floor((size - first.word.length) / 2));
+        for (let i = 0; i < first.word.length; i++) {
+          grid[startR][startC + i] = first.word[i];
+        }
+        placed.push({ r: startR, c: startC, dir: 'across', word: first.word, clue: first.clue });
+
+        // Try placing remaining words via intersections
+        for (let idx = 1; idx < pool.length && placed.length < cfg.targetWords; idx++) {
+          const candidate = pool[idx];
+          const options = [];
+
+          for (const existing of placed) {
+            const tryDir = existing.dir === 'across' ? 'down' : 'across';
+            for (let ei = 0; ei < existing.word.length; ei++) {
+              const letter = existing.word[ei];
+              for (let wi = 0; wi < candidate.word.length; wi++) {
+                if (candidate.word[wi] !== letter) continue;
+                const interR = existing.r + (existing.dir === 'down' ? ei : 0);
+                const interC = existing.c + (existing.dir === 'across' ? ei : 0);
+                const candR = interR - (tryDir === 'down' ? wi : 0);
+                const candC = interC - (tryDir === 'across' ? wi : 0);
+
+                const check = canPlaceWord(grid, size, candidate.word, candR, candC, tryDir);
+                if (check.ok) {
+                  options.push({ r: candR, c: candC, dir: tryDir, intersections: check.intersections });
+                }
+              }
+            }
+          }
+
+          if (options.length > 0) {
+            options.sort((a, b) => b.intersections - a.intersections);
+            const pick = options[Math.floor(rng() * Math.min(3, options.length))];
+            const dr = pick.dir === 'down' ? 1 : 0;
+            const dc = pick.dir === 'across' ? 1 : 0;
+            for (let i = 0; i < candidate.word.length; i++) {
+              grid[pick.r + dr * i][pick.c + dc * i] = candidate.word[i];
+            }
+            placed.push({
+              r: pick.r,
+              c: pick.c,
+              dir: pick.dir,
+              word: candidate.word,
+              clue: candidate.clue
+            });
+          }
+        }
+
+        // Assign standard crossword clue numbers
+        const cellNums = Array.from({ length: size }, () => Array(size).fill(0));
+        let nextNum = 1;
+        for (let r = 0; r < size; r++) {
+          for (let c = 0; c < size; c++) {
+            if (grid[r][c] === null) continue;
+            const startsAcross = (c === 0 || grid[r][c - 1] === null) && (c + 1 < size && grid[r][c + 1] !== null);
+            const startsDown = (r === 0 || grid[r - 1][c] === null) && (r + 1 < size && grid[r + 1][c] !== null);
+            if (startsAcross || startsDown) {
+              cellNums[r][c] = nextNum++;
+            }
+          }
+        }
+
+        const entries = placed.map((p) => ({
+          ...p,
+          num: cellNums[p.r][p.c]
+        })).sort((a, b) => a.num - b.num);
+
+        state.solution = grid;
+        state.userGrid = Array.from({ length: size }, () => Array(size).fill(''));
+        state.cellNums = cellNums;
+        state.entries = entries;
+        state.wrongCells = new Set();
+        state.hintsUsed = 0;
+        state.gameOver = false;
+
+        if (entries.length > 0) {
+          state.selected = { r: entries[0].r, c: entries[0].c };
+          state.dir = entries[0].dir;
+        } else {
+          state.selected = null;
+        }
+      }
+
+      function getEntryAt(r, c, dir) {
+        return state.entries.find((e) => {
+          if (e.dir !== dir) return false;
+          if (dir === 'across') return e.r === r && c >= e.c && c < e.c + e.word.length;
+          return e.c === c && r >= e.r && r < e.r + e.word.length;
+        }) || null;
+      }
+
+      function isWordSolved(entry) {
+        for (let i = 0; i < entry.word.length; i++) {
+          const rr = entry.r + (entry.dir === 'down' ? i : 0);
+          const cc = entry.c + (entry.dir === 'across' ? i : 0);
+          if (state.userGrid[rr][cc] !== entry.word[i]) return false;
+        }
+        return true;
+      }
+
+      function renderGrid() {
+        const size = state.size;
+        cwGrid.style.gridTemplateColumns = `repeat(${size}, minmax(0, 1fr))`;
+        cwGrid.style.gridTemplateRows = `repeat(${size}, minmax(0, 1fr))`;
+        cwGrid.innerHTML = '';
+
+        for (let r = 0; r < size; r++) {
+          for (let c = 0; c < size; c++) {
+            const cell = document.createElement('button');
+            cell.type = 'button';
+            cell.dataset.r = String(r);
+            cell.dataset.c = String(c);
+
+            if (state.solution[r][c] === null) {
+              cell.disabled = true;
+              cell.className = 'cw-cell w-full h-full min-w-0 min-h-0 aspect-square overflow-hidden rounded-md bg-slate-900 dark:bg-black/90 cursor-default';
+            } else {
+              cell.className = 'cw-cell relative w-full h-full min-w-0 min-h-0 aspect-square overflow-hidden rounded-md bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 flex items-center justify-center font-bold text-slate-900 dark:text-white cursor-pointer focus:outline-none';
+              if (state.cellNums[r][c] > 0) {
+                const numSpan = document.createElement('span');
+                numSpan.className = 'absolute top-0.5 left-1 text-[8px] sm:text-[10px] font-bold text-slate-400 dark:text-slate-400 leading-none pointer-events-none';
+                numSpan.textContent = String(state.cellNums[r][c]);
+                cell.appendChild(numSpan);
+              }
+              const charSpan = document.createElement('span');
+              charSpan.className = `cell-char leading-none ${size >= 12 ? 'text-xs sm:text-base' : 'text-sm sm:text-lg'} font-extrabold pointer-events-none`;
+              cell.appendChild(charSpan);
+
+              cell.addEventListener('click', () => handleCellClick(r, c));
+            }
+            cwGrid.appendChild(cell);
+          }
+        }
+        updateUI();
+      }
+
+      function handleCellClick(r, c) {
+        if (state.gameOver) return;
+        ensureAudio();
+        if (state.selected && state.selected.r === r && state.selected.c === c) {
+          const altDir = state.dir === 'across' ? 'down' : 'across';
+          if (getEntryAt(r, c, altDir)) {
+            state.dir = altDir;
+          }
+        } else {
+          state.selected = { r, c };
+          if (!getEntryAt(r, c, state.dir)) {
+            const altDir = state.dir === 'across' ? 'down' : 'across';
+            if (getEntryAt(r, c, altDir)) state.dir = altDir;
+          }
+        }
+        updateUI();
+      }
+
+      function renderClues() {
+        cluesAcrossEl.innerHTML = '';
+        cluesDownEl.innerHTML = '';
+
+        const activeEntry = state.selected ? getEntryAt(state.selected.r, state.selected.c, state.dir) : null;
+
+        state.entries.forEach((entry) => {
+          const solved = isWordSolved(entry);
+          const isActive = activeEntry && activeEntry.num === entry.num && activeEntry.dir === entry.dir;
+
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = `w-full text-left px-2.5 py-1.5 rounded-xl text-xs sm:text-sm transition border ${
+            isActive
+              ? 'bg-blue-50 dark:bg-blue-950/60 border-blue-300 dark:border-blue-700 text-blue-900 dark:text-blue-100 font-semibold'
+              : solved
+                ? 'bg-emerald-50/70 dark:bg-emerald-950/30 border-emerald-200 dark:border-emerald-900/50 text-emerald-700 dark:text-emerald-300 line-through opacity-75'
+                : 'bg-slate-50 dark:bg-slate-800/60 border-slate-200/70 dark:border-slate-700/60 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800'
+          }`;
+          btn.innerHTML = `<span class="font-bold mr-1.5">${entry.num}.</span>${entry.clue}`;
+          btn.addEventListener('click', () => {
+            state.selected = { r: entry.r, c: entry.c };
+            state.dir = entry.dir;
+            updateUI();
+          });
+
+          if (entry.dir === 'across') cluesAcrossEl.appendChild(btn);
+          else cluesDownEl.appendChild(btn);
+        });
+      }
+
+      function updateUI() {
+        const activeEntry = state.selected ? getEntryAt(state.selected.r, state.selected.c, state.dir) : null;
+        const activeCells = new Set();
+        if (activeEntry) {
+          for (let i = 0; i < activeEntry.word.length; i++) {
+            const rr = activeEntry.r + (activeEntry.dir === 'down' ? i : 0);
+            const cc = activeEntry.c + (activeEntry.dir === 'across' ? i : 0);
+            activeCells.add(`${rr},${cc}`);
+          }
+          activeClueBar.textContent = `${activeEntry.num} ${activeEntry.dir.toUpperCase()}: ${activeEntry.clue}`;
+        } else {
+          activeClueBar.textContent = 'Select a square or clue';
+        }
+
+        const cells = cwGrid.querySelectorAll('.cw-cell');
+        cells.forEach((el) => {
+          const r = Number(el.dataset.r);
+          const c = Number(el.dataset.c);
+          if (state.solution[r][c] === null) return;
+
+          const charSpan = el.querySelector('.cell-char');
+          if (charSpan) charSpan.textContent = state.userGrid[r][c];
+
+          const key = `${r},${c}`;
+          const isSelected = state.selected && state.selected.r === r && state.selected.c === c;
+          const isWordCell = activeCells.has(key);
+          const isWrong = state.wrongCells.has(key);
+
+          el.classList.remove(
+            'bg-white', 'dark:bg-slate-800', 'bg-blue-100', 'dark:bg-blue-900/50',
+            'bg-blue-600', 'text-white', 'bg-pink-100', 'dark:bg-pink-950/70', 'text-pink-700', 'dark:text-pink-300',
+            'ring-2', 'ring-blue-500', 'ring-pink-500'
+          );
+
+          if (isSelected) {
+            el.classList.add('bg-blue-600', 'text-white', 'ring-2', 'ring-blue-500');
+          } else if (isWrong) {
+            el.classList.add('bg-pink-100', 'dark:bg-pink-950/70', 'text-pink-700', 'dark:text-pink-300', 'ring-2', 'ring-pink-500');
+          } else if (isWordCell) {
+            el.classList.add('bg-blue-100', 'dark:bg-blue-900/50');
+          } else {
+            el.classList.add('bg-white', 'dark:bg-slate-800');
+          }
+        });
+
+        const solvedCount = state.entries.filter(isWordSolved).length;
+        statWords.textContent = `${solvedCount} / ${state.entries.length}`;
+        statHints.textContent = String(state.hintsUsed);
+        renderClues();
+      }
+
+      function moveCursor(step) {
+        if (!state.selected) return;
+        const entry = getEntryAt(state.selected.r, state.selected.c, state.dir);
+        if (!entry) return;
+
+        const dr = entry.dir === 'down' ? 1 : 0;
+        const dc = entry.dir === 'across' ? 1 : 0;
+        const nr = state.selected.r + dr * step;
+        const nc = state.selected.c + dc * step;
+
+        if (
+          nr >= entry.r && nr < entry.r + (entry.dir === 'down' ? entry.word.length : 1) &&
+          nc >= entry.c && nc < entry.c + (entry.dir === 'across' ? entry.word.length : 1)
+        ) {
+          state.selected = { r: nr, c: nc };
+        }
+      }
+
+      function checkVictory() {
+        if (state.entries.length > 0 && state.entries.every(isWordSolved)) {
+          state.gameOver = true;
+          clearInterval(state.timerId);
+          playSound('win');
+
+          if (!state.completedLevels[state.difficulty].includes(state.level)) {
+            state.completedLevels[state.difficulty].push(state.level);
+            saveProgress();
+            renderLevelOptions();
+          }
+
+          const diffLabel = DIFFICULTY_CONFIG[state.difficulty].label;
+          modalTime.textContent = formatTime(state.seconds);
+          modalWords.textContent = String(state.entries.length);
+          modalHints.textContent = String(state.hintsUsed);
+
+          if (state.level < MAX_LEVELS) {
+            modalTitle.textContent = `Level ${state.level} Complete!`;
+            modalSubtitle.textContent = `${diffLabel} Mode • Ready for Level ${state.level + 1}?`;
+            btnNextLevel.textContent = `Next Level (${state.level + 1}) →`;
+          } else {
+            modalTitle.textContent = `${diffLabel} Mastered!`;
+            modalSubtitle.textContent = `You completed all ${MAX_LEVELS} levels in ${diffLabel} mode!`;
+            btnNextLevel.textContent = state.difficulty === 'hard' ? 'Back to Level 1' : 'Try Next Difficulty →';
+          }
+
+          setTimeout(() => {
+            victoryModal.classList.remove('hidden');
+            victoryModal.classList.add('flex');
+          }, 300);
+        }
+      }
+
+      function inputLetter(letter) {
+        if (state.gameOver || !state.selected) return;
+        const { r, c } = state.selected;
+        if (state.solution[r][c] === null) return;
+
+        ensureAudio();
+        state.userGrid[r][c] = letter;
+        state.wrongCells.delete(`${r},${c}`);
+        playSound('type');
+        moveCursor(1);
+        updateUI();
+        checkVictory();
+      }
+
+      function handleBackspace() {
+        if (state.gameOver || !state.selected) return;
+        const { r, c } = state.selected;
+        ensureAudio();
+        state.wrongCells.delete(`${r},${c}`);
+        if (state.userGrid[r][c] !== '') {
+          state.userGrid[r][c] = '';
+        } else {
+          moveCursor(-1);
+          const nr = state.selected.r;
+          const nc = state.selected.c;
+          state.userGrid[nr][nc] = '';
+          state.wrongCells.delete(`${nr},${nc}`);
+        }
+        playSound('erase');
+        updateUI();
+      }
+
+      function renderOnScreenKeyboard() {
+        const rows = [
+          ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
+          ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'],
+          ['Z', 'X', 'C', 'V', 'B', 'N', 'M', '⌫']
+        ];
+        onscreenKb.innerHTML = '';
+        rows.forEach((row) => {
+          const rowEl = document.createElement('div');
+          rowEl.className = 'flex justify-center gap-1';
+          row.forEach((key) => {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.textContent = key;
+            btn.className = `${
+              key === '⌫' ? 'px-3 sm:px-4 bg-pink-100 dark:bg-pink-950/60 text-pink-700 dark:text-pink-200' : 'flex-1 max-w-[40px] bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-100'
+            } py-2 rounded-lg text-xs sm:text-sm font-bold border border-slate-200 dark:border-slate-700 hover:bg-blue-100 dark:hover:bg-blue-900/50 active:scale-95 transition`;
+            btn.addEventListener('click', () => {
+              if (key === '⌫') handleBackspace();
+              else inputLetter(key);
+            });
+            rowEl.appendChild(btn);
+          });
+          onscreenKb.appendChild(rowEl);
+        });
+      }
+
+      function useHint() {
+        if (state.gameOver) return;
+        const candidates = [];
+        for (let r = 0; r < state.size; r++) {
+          for (let c = 0; c < state.size; c++) {
+            if (state.solution[r][c] !== null && state.userGrid[r][c] !== state.solution[r][c]) {
+              candidates.push({ r, c });
+            }
+          }
+        }
+        if (candidates.length === 0) return;
+
+        // Prefer selected cell if incomplete, else random incomplete cell
+        let target = candidates[0];
+        if (
+          state.selected &&
+          state.solution[state.selected.r][state.selected.c] !== null &&
+          state.userGrid[state.selected.r][state.selected.c] !== state.solution[state.selected.r][state.selected.c]
+        ) {
+          target = state.selected;
+        } else {
+          target = candidates[Math.floor(Math.random() * candidates.length)];
+        }
+
+        state.userGrid[target.r][target.c] = state.solution[target.r][target.c];
+        state.wrongCells.delete(`${target.r},${target.c}`);
+        state.selected = { r: target.r, c: target.c };
+        state.hintsUsed += 1;
+        playSound('hint');
+        showToast('Letter revealed!', true);
+        updateUI();
+        checkVictory();
+      }
+
+      function checkBoard() {
+        if (state.gameOver) return;
+        state.wrongCells.clear();
+        let wrongCount = 0;
+        for (let r = 0; r < state.size; r++) {
+          for (let c = 0; c < state.size; c++) {
+            if (state.solution[r][c] !== null && state.userGrid[r][c] !== '' && state.userGrid[r][c] !== state.solution[r][c]) {
+              state.wrongCells.add(`${r},${c}`);
+              wrongCount += 1;
+            }
+          }
+        }
+        updateUI();
+        if (wrongCount > 0) {
+          playSound('error');
+          showToast(`${wrongCount} letter${wrongCount > 1 ? 's' : ''} incorrect`, false);
+        } else {
+          playSound('hint');
+          showToast('Looking good!', true);
+        }
+      }
+
+      function syncThemeUI() {
+        document.documentElement.classList.toggle('dark', state.darkMode);
+        document.querySelectorAll('.theme-icon').forEach((el) => {
+          el.textContent = state.darkMode ? '☀️' : '🌙';
+        });
+        document.querySelectorAll('.theme-label').forEach((el) => {
+          el.textContent = state.darkMode ? 'Light' : 'Dark';
+        });
+      }
+
+      function syncSoundUI() {
+        document.querySelectorAll('.sound-icon').forEach((el) => {
+          el.textContent = state.soundEnabled ? '🔊' : '🔇';
+        });
+        document.querySelectorAll('.sound-label').forEach((el) => {
+          el.textContent = state.soundEnabled ? 'Sound' : 'Muted';
+        });
+      }
+
+      function toggleTheme() {
+        state.darkMode = !state.darkMode;
+        syncThemeUI();
+        try {
+          localStorage.setItem('mahsua_crossword_theme', state.darkMode ? 'dark' : 'light');
+        } catch (_) {}
+      }
+
+      function toggleSound() {
+        state.soundEnabled = !state.soundEnabled;
+        syncSoundUI();
+        if (state.soundEnabled) playSound('type');
+      }
+
+      function startNewGame() {
+        victoryModal.classList.add('hidden');
+        victoryModal.classList.remove('flex');
+        renderLevelOptions();
+        buildCrossword();
+        renderGrid();
+        startTimer();
+      }
+
+      function goToNextLevel() {
+        if (state.level < MAX_LEVELS) {
+          state.level += 1;
+        } else if (state.difficulty === 'easy') {
+          state.difficulty = 'medium';
+          selectDifficulty.value = 'medium';
+          state.level = 1;
+        } else if (state.difficulty === 'medium') {
+          state.difficulty = 'hard';
+          selectDifficulty.value = 'hard';
+          state.level = 1;
+        } else {
+          state.level = 1;
+        }
+        startNewGame();
+      }
+
+      // Keyboard events
+      window.addEventListener('keydown', (e) => {
+        if (state.gameOver) return;
+        if (e.target && (e.target.tagName === 'SELECT' || e.target.tagName === 'INPUT')) return;
+
+        if (/^[a-zA-Z]$/.test(e.key)) {
+          e.preventDefault();
+          inputLetter(e.key.toUpperCase());
+        } else if (e.key === 'Backspace') {
+          e.preventDefault();
+          handleBackspace();
+        } else if (e.key === 'ArrowRight') {
+          e.preventDefault();
+          state.dir = 'across';
+          moveCursor(1);
+          updateUI();
+        } else if (e.key === 'ArrowLeft') {
+          e.preventDefault();
+          state.dir = 'across';
+          moveCursor(-1);
+          updateUI();
+        } else if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          state.dir = 'down';
+          moveCursor(1);
+          updateUI();
+        } else if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          state.dir = 'down';
+          moveCursor(-1);
+          updateUI();
+        }
+      });
+
+      selectDifficulty.addEventListener('change', (e) => {
+        state.difficulty = e.target.value;
+        state.level = 1;
+        startNewGame();
+      });
+
+      selectLevel.addEventListener('change', (e) => {
+        state.level = Number(e.target.value) || 1;
+        startNewGame();
+      });
+
+      btnHint.addEventListener('click', useHint);
+      btnCheck.addEventListener('click', checkBoard);
+      btnRestart.addEventListener('click', startNewGame);
+      btnSound.addEventListener('click', toggleSound);
+      btnSoundMobile.addEventListener('click', toggleSound);
+      btnTheme.addEventListener('click', toggleTheme);
+      btnThemeMobile.addEventListener('click', toggleTheme);
+
+      btnNextLevel.addEventListener('click', goToNextLevel);
+      btnModalClose.addEventListener('click', () => {
+        victoryModal.classList.add('hidden');
+        victoryModal.classList.remove('flex');
+      });
+      btnPlayAgain.addEventListener('click', startNewGame);
+
+      window.onload = function () {
+        loadProgress();
+        try {
+          const savedTheme = localStorage.getItem('mahsua_crossword_theme');
+          if (savedTheme === 'dark') state.darkMode = true;
+        } catch (_) {}
+        syncThemeUI();
+        syncSoundUI();
+        renderOnScreenKeyboard();
+        startNewGame();
+
+        try {
+          document.querySelectorAll('.adsbygoogle').forEach(() => {
+            (window.adsbygoogle = window.adsbygoogle || []).push({});
+          });
+        } catch (_) {}
+      };
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Block Puzzle by Mahsua Apps — Free Swipe &amp; Keyboard Brick Game</title>
+  <meta name="description" content="Play Block Puzzle by Mahsua Apps free online! Enjoy smooth Play Store-style finger swipe controls on mobile, keyboard controls on desktop, brick-break animations, fullscreen mode, and dark mode." />
+  <meta name="keywords" content="Block Puzzle, Brick Puzzle, Block Puzzle by Mahsua Apps, Mahsua Apps, swipe block game, free online puzzle game" />
+  <meta name="author" content="Shivam Kushwaha - Mahsua Apps" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#2563eb" />
+  <link rel="canonical" href="https://apps.mahsua.com/" />
+  <link rel="icon" href="./favicon.png" type="image/svg+xml">
+
+  <!-- Open Graph / Social SEO -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Mahsua Apps" />
+  <meta property="og:title" content="Block Puzzle by Mahsua Apps — Free Online Brick Game" />
+  <meta property="og:description" content="Swipe to move, tap to rotate, and smash rows with particle animations. Play Block Puzzle by Mahsua Apps in fullscreen on mobile, tablet, or desktop." />
+  <meta property="og:url" content="https://apps.mahsua.com/" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Block Puzzle by Mahsua Apps" />
+  <meta name="twitter:description" content="Free online Block Puzzle game with swipe controls, brick-break animations, and fullscreen mode." />
+
+  <!-- Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "VideoGame",
+    "name": "Block Puzzle by Mahsua Apps",
+    "url": "https://apps.mahsua.com/",
+    "description": "A free browser-based Block Puzzle brick game by Mahsua Apps featuring finger swipe controls on mobile, keyboard controls on desktop, brick shatter animations, and fullscreen gameplay.",
+    "genre": ["Puzzle", "Arcade"],
+    "gamePlatform": "Web Browser",
+    "applicationCategory": "GameApplication",
+    "operatingSystem": "Any",
+    "inLanguage": "en",
+    "author": {
+      "@type": "Organization",
+      "name": "Mahsua Apps",
+      "url": "https://apps.mahsua.com/"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+
+  <!-- Google AdSense & Ad Placement API (Rewarded Ad ready) -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9351361840615541" crossorigin="anonymous"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    }
+
+    #game-canvas {
+      touch-action: none;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    .game-stage-fullscreen {
+      position: fixed !important;
+      inset: 0 !important;
+      z-index: 40 !important;
+      max-width: 100% !important;
+      width: 100vw !important;
+      height: 100dvh !important;
+      border-radius: 0 !important;
+      border: none !important;
+      margin: 0 !important;
+      padding: 12px 16px env(safe-area-inset-bottom, 14px) !important;
+      display: flex !important;
+      flex-direction: column !important;
+      justify-content: space-between !important;
+      align-items: center !important;
+      overflow: hidden !important;
+      background: radial-gradient(circle at 50% 25%, #eff6ff 0%, #e2e8f0 100%) !important;
+    }
+
+    html.dark .game-stage-fullscreen {
+      background: radial-gradient(circle at 50% 25%, #172554 0%, #020617 100%) !important;
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 transition-colors duration-200 flex flex-col">
+  <div class="max-w-5xl w-full mx-auto px-3 sm:px-6 py-3 sm:py-5 flex flex-col gap-4 flex-1">
+    <!-- Top Header -->
+    <header class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-sm p-3 sm:p-4 flex flex-wrap items-center justify-between gap-2.5">
+      <div class="flex items-center gap-2.5">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-pink-500 via-blue-500 to-emerald-500 flex items-center justify-center text-white font-extrabold text-lg shadow-sm shrink-0">
+          B
+        </div>
+        <div>
+          <h1 class="text-base sm:text-xl font-bold tracking-tight text-slate-900 dark:text-white leading-tight">
+            Block Puzzle <span class="text-blue-600 dark:text-blue-400 font-semibold text-xs sm:text-base">by Mahsua Apps</span>
+          </h1>
+          <p class="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400">Swipe &amp; tap on mobile • Arrow keys + Space on desktop</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-1.5 sm:gap-2">
+        <button id="btn-pause" type="button" class="px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 transition">
+          Pause
+        </button>
+        <button id="btn-restart" type="button" class="px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition">
+          New Game
+        </button>
+        <button id="btn-fullscreen" type="button" aria-label="Toggle fullscreen" title="Fullscreen Play" class="px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/60 hover:bg-emerald-100 dark:hover:bg-emerald-900/50 transition">
+          ⛶ Fullscreen
+        </button>
+        <button id="btn-sound" type="button" aria-label="Toggle sound" class="p-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 transition">
+          <span id="sound-icon" class="text-sm">🔊</span>
+        </button>
+        <button id="btn-theme" type="button" aria-label="Toggle dark mode" class="p-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 transition">
+          <span id="theme-icon" class="text-sm">🌙</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Game Stage (Supports Fullscreen) -->
+    <main id="game-stage" class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-sm p-3 sm:p-5 flex flex-col items-center gap-3">
+      <!-- Top HUD inside stage (also visible in fullscreen) -->
+      <div id="stage-hud" class="w-full max-w-[760px] flex items-center justify-between gap-2 shrink-0">
+        <div class="grid grid-cols-4 gap-1.5 sm:gap-2.5 flex-1 text-center">
+          <div class="px-2 py-1.5 rounded-xl bg-blue-50/80 dark:bg-blue-950/40 border border-blue-100 dark:border-blue-900/40">
+            <div class="text-[10px] uppercase font-semibold text-blue-600 dark:text-blue-400">Score</div>
+            <div id="hud-score" class="text-sm sm:text-lg font-extrabold text-slate-900 dark:text-white tabular-nums">0</div>
+          </div>
+          <div class="px-2 py-1.5 rounded-xl bg-pink-50/80 dark:bg-pink-950/40 border border-pink-100 dark:border-pink-900/40">
+            <div class="text-[10px] uppercase font-semibold text-pink-600 dark:text-pink-400">Best</div>
+            <div id="hud-best" class="text-sm sm:text-lg font-extrabold text-slate-900 dark:text-white tabular-nums">0</div>
+          </div>
+          <div class="px-2 py-1.5 rounded-xl bg-emerald-50/80 dark:bg-emerald-950/40 border border-emerald-100 dark:border-emerald-900/40">
+            <div class="text-[10px] uppercase font-semibold text-emerald-600 dark:text-emerald-400">Lines</div>
+            <div id="hud-lines" class="text-sm sm:text-lg font-extrabold text-slate-900 dark:text-white tabular-nums">0</div>
+          </div>
+          <div class="px-2 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+            <div class="text-[10px] uppercase font-semibold text-slate-500 dark:text-slate-400">Level</div>
+            <div id="hud-level" class="text-sm sm:text-lg font-extrabold text-slate-900 dark:text-white tabular-nums">1</div>
+          </div>
+        </div>
+        <button id="btn-exit-fs" type="button" class="hidden px-3 py-2 rounded-xl text-xs font-semibold bg-white/90 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 shadow-xs">
+          Exit ✕
+        </button>
+      </div>
+
+      <!-- Board + Side Previews (No On-Screen Buttons!) -->
+      <div id="play-area" class="w-full max-w-[760px] flex-1 min-h-0 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-5">
+        <!-- Main Playfield Canvas (Height & width dynamically balanced by JS) -->
+        <div id="canvas-wrap" class="relative rounded-2xl overflow-hidden border-2 border-slate-300/90 dark:border-slate-700 bg-slate-900 dark:bg-slate-950 shadow-xl shrink-0" style="width: 320px; height: 640px;">
+          <canvas id="game-canvas" class="w-full h-full block"></canvas>
+
+          <!-- Pause Overlay -->
+          <div id="pause-overlay" class="hidden absolute inset-0 bg-slate-900/60 backdrop-blur-xs flex-col items-center justify-center text-white p-4 text-center">
+            <div class="text-2xl font-extrabold mb-2">Paused</div>
+            <p class="text-xs text-slate-200 mb-4">Tap Resume or press P to continue</p>
+            <button id="btn-resume" type="button" class="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm shadow-md transition">
+              Resume Game
+            </button>
+          </div>
+
+          <!-- Game Over / Rewarded Ad Revive Overlay -->
+          <div id="gameover-overlay" class="hidden absolute inset-0 bg-slate-900/75 backdrop-blur-sm flex-col items-center justify-center text-white p-5 text-center">
+            <div class="text-2xl font-extrabold mb-1">Game Over</div>
+            <p class="text-xs text-slate-300 mb-4">Final Score: <span id="final-score" class="font-bold text-white">0</span></p>
+
+            <button id="btn-reward-revive" type="button" class="w-full max-w-[230px] py-2.5 px-4 rounded-xl bg-gradient-to-r from-pink-500 to-blue-600 hover:opacity-95 text-white font-bold text-sm shadow-md mb-2.5 transition">
+              ▶ Watch Ad to Clear 3 Rows
+            </button>
+
+            <button id="btn-play-again" type="button" class="w-full max-w-[230px] py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm shadow-sm transition">
+              Play Again
+            </button>
+          </div>
+        </div>
+
+        <!-- Next & Hold Previews + Gesture Guide -->
+        <div id="side-panels" class="w-full max-w-[360px] sm:w-44 flex sm:flex-col gap-2.5 sm:gap-3 justify-center shrink-0">
+          <div class="flex-1 sm:flex-none bg-white/90 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-2xl p-2.5 sm:p-3 flex flex-col items-center shadow-xs">
+            <span class="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Next</span>
+            <canvas id="next-canvas" width="96" height="68" class="block"></canvas>
+          </div>
+
+          <div id="hold-panel" title="Tap or press C to Hold Piece" class="flex-1 sm:flex-none bg-white/90 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-2xl p-2.5 sm:p-3 flex flex-col items-center shadow-xs cursor-pointer">
+            <span class="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Hold</span>
+            <canvas id="hold-canvas" width="96" height="68" class="block"></canvas>
+          </div>
+
+          <div class="hidden sm:flex flex-col gap-1.5 bg-white/90 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-2xl p-3 text-xs text-slate-600 dark:text-slate-300 shadow-xs">
+            <div class="font-bold text-slate-800 dark:text-white mb-0.5">Controls</div>
+            <div><span class="font-semibold">Tap / ↑:</span> Rotate</div>
+            <div><span class="font-semibold">Swipe / ← →:</span> Move</div>
+            <div><span class="font-semibold">Flick ↓ / Space:</span> Drop</div>
+            <div><span class="font-semibold">Swipe ↑ / C:</span> Hold</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Compact Mobile Touch Hint -->
+      <div id="touch-legend" class="sm:hidden w-full max-w-[440px] text-center text-[11px] text-slate-600 dark:text-slate-300 bg-white/85 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-1.5 shrink-0">
+        <strong>Touch:</strong> Tap = Rotate • Swipe ◀▶ = Move • Flick ▼ = Slam • Swipe ▲ = Hold
+      </div>
+    </main>
+
+    <!-- Single Non-Intrusive Bottom Ad Slot (Hidden during Fullscreen) -->
+    <aside id="ad-container" aria-label="Advertisement" class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-sm p-3 flex flex-col items-center justify-center min-h-[100px]">
+      <span class="text-[10px] uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-1">Advertisement</span>
+      <div class="w-full flex items-center justify-center min-h-[68px] rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-dashed border-slate-200 dark:border-slate-700/70 overflow-hidden">
+        <ins class="adsbygoogle block w-full text-center"
+             style="display:block"
+             data-ad-client="ca-pub-9351361840615541"
+             data-ad-slot="auto"
+             data-ad-format="horizontal"
+             data-full-width-responsive="true"></ins>
+      </div>
+    </aside>
+
+    <!-- SEO Info Section -->
+    <section class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-sm p-4 sm:p-5 text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+      <h2 class="text-base font-bold text-slate-900 dark:text-white mb-1.5">About Block Puzzle by Mahsua Apps</h2>
+      <p>
+        Block Puzzle by <a href="https://apps.mahsua.com/" target="_blank" rel="noopener noreferrer" class="text-blue-600 dark:text-blue-400 font-semibold hover:underline">Mahsua Apps</a> delivers a smooth Play Store-style brick puzzle experience right in your browser. Use natural finger swipes on mobile—no cluttered on-screen buttons—or arrow keys and Spacebar on desktop. Switch to <strong>Fullscreen</strong> anytime for distraction-free gameplay.
+      </p>
+    </section>
+  </div>
+
+  <!-- Branded Footer -->
+  <footer class="border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 mt-auto">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-500 dark:text-slate-400">
+      <div>
+        Made With ❤️ INDIA ~ Designed by <strong class="text-slate-700 dark:text-slate-200">SHIVAM KUSHWAHA</strong>
+      </div>
+      <div class="flex flex-wrap items-center gap-3">
+        <a href="https://apps.mahsua.com/" target="_blank" rel="noopener noreferrer" class="hover:text-blue-600 dark:hover:text-blue-400 font-medium transition">Mahsua Apps</a>
+        <span>•</span>
+        <a href="mailto:games@mahsua.com" class="hover:text-blue-600 dark:hover:text-blue-400 transition">games@mahsua.com</a>
+        <span>•</span>
+        <a href="https://api.whatsapp.com/send/?phone=919752107808" target="_blank" rel="noopener noreferrer" class="hover:text-emerald-600 dark:hover:text-emerald-400 transition">WhatsApp Support</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Rewarded Ad Simulation / Placement Modal -->
+  <div id="reward-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-900/75 backdrop-blur-sm p-4">
+    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl max-w-sm w-full p-6 text-center">
+      <div class="text-xs font-bold uppercase tracking-wider text-pink-600 dark:text-pink-400 mb-1">Rewarded Sponsor</div>
+      <h2 class="text-lg font-extrabold text-slate-900 dark:text-white">Revive &amp; Clear 3 Bottom Rows</h2>
+      <p id="reward-status" class="text-sm text-slate-500 dark:text-slate-400 mt-2">
+        Reward ready in <span id="reward-countdown" class="font-bold text-blue-600 dark:text-blue-400">5</span>s...
+      </p>
+      <div class="w-full h-2 rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden my-4">
+        <div id="reward-bar" class="h-full bg-gradient-to-r from-pink-500 via-blue-500 to-emerald-500 transition-all duration-1000" style="width: 0%"></div>
+      </div>
+      <div class="flex gap-2">
+        <button id="btn-reward-cancel" type="button" class="flex-1 py-2 rounded-xl text-sm font-semibold border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300">
+          Cancel
+        </button>
+        <button id="btn-reward-claim" type="button" disabled class="flex-1 py-2 rounded-xl text-sm font-semibold bg-emerald-600 disabled:opacity-40 text-white transition">
+          Claim Revive
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const COLS = 10;
+      const ROWS = 20;
+
+      const SHAPES = {
+        I: [[0,0,0,0],[1,1,1,1],[0,0,0,0],[0,0,0,0]],
+        O: [[1,1],[1,1]],
+        T: [[0,1,0],[1,1,1],[0,0,0]],
+        S: [[0,1,1],[1,1,0],[0,0,0]],
+        Z: [[1,1,0],[0,1,1],[0,0,0]],
+        J: [[1,0,0],[1,1,1],[0,0,0]],
+        L: [[0,0,1],[1,1,1],[0,0,0]]
+      };
+
+      const COLORS = {
+        I: '#06b6d4', // cyan
+        O: '#f59e0b', // amber
+        T: '#ec4899', // pink
+        S: '#10b981', // emerald
+        Z: '#ef4444', // red
+        J: '#3b82f6', // blue
+        L: '#8b5cf6'  // violet
+      };
+
+      const canvas = document.getElementById('game-canvas');
+      const ctx = canvas.getContext('2d');
+      const nextCanvas = document.getElementById('next-canvas');
+      const nextCtx = nextCanvas.getContext('2d');
+      const holdCanvas = document.getElementById('hold-canvas');
+      const holdCtx = holdCanvas.getContext('2d');
+      const canvasWrap = document.getElementById('canvas-wrap');
+      const gameStage = document.getElementById('game-stage');
+
+      const hudScore = document.getElementById('hud-score');
+      const hudBest = document.getElementById('hud-best');
+      const hudLines = document.getElementById('hud-lines');
+      const hudLevel = document.getElementById('hud-level');
+      const pauseOverlay = document.getElementById('pause-overlay');
+      const gameoverOverlay = document.getElementById('gameover-overlay');
+      const finalScoreEl = document.getElementById('final-score');
+
+      const btnPause = document.getElementById('btn-pause');
+      const btnResume = document.getElementById('btn-resume');
+      const btnRestart = document.getElementById('btn-restart');
+      const btnFullscreen = document.getElementById('btn-fullscreen');
+      const btnExitFs = document.getElementById('btn-exit-fs');
+      const btnSound = document.getElementById('btn-sound');
+      const btnTheme = document.getElementById('btn-theme');
+      const btnPlayAgain = document.getElementById('btn-play-again');
+      const btnRewardRevive = document.getElementById('btn-reward-revive');
+
+      const rewardModal = document.getElementById('reward-modal');
+      const rewardCountdown = document.getElementById('reward-countdown');
+      const rewardBar = document.getElementById('reward-bar');
+      const btnRewardCancel = document.getElementById('btn-reward-cancel');
+      const btnRewardClaim = document.getElementById('btn-reward-claim');
+
+      const state = {
+        board: [],
+        current: null,
+        nextType: null,
+        holdType: null,
+        canHold: true,
+        score: 0,
+        bestScore: 0,
+        lines: 0,
+        level: 1,
+        combo: 0,
+        paused: false,
+        gameOver: false,
+        revivedOnce: false,
+        soundEnabled: true,
+        darkMode: false,
+        cssFullscreen: false,
+        lastTime: 0,
+        dropCounter: 0,
+        animId: null,
+        particles: [],
+        flashRows: [], // { y, timer }
+        popups: [],    // { text, x, y, life, color }
+        shakeTime: 0,
+        cellSize: 32
+      };
+
+      let audioCtx = null;
+
+      function ensureAudio() {
+        if (!state.soundEnabled) return null;
+        if (!audioCtx) {
+          const AC = window.AudioContext || window.webkitAudioContext;
+          if (AC) audioCtx = new AC();
+        }
+        if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume().catch(() => {});
+        return audioCtx;
+      }
+
+      function playTone(freq, dur, type = 'sine', vol = 0.05, delay = 0) {
+        const ac = ensureAudio();
+        if (!ac) return;
+        const now = ac.currentTime + delay;
+        const osc = ac.createOscillator();
+        const g = ac.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, now);
+        g.gain.setValueAtTime(vol, now);
+        g.gain.exponentialRampToValueAtTime(0.0001, now + dur);
+        osc.connect(g);
+        g.connect(ac.destination);
+        osc.start(now);
+        osc.stop(now + dur);
+      }
+
+      function playSound(kind) {
+        if (!state.soundEnabled) return;
+        if (kind === 'move') playTone(380, 0.03, 'triangle', 0.025);
+        else if (kind === 'rotate') playTone(540, 0.05, 'sine', 0.035);
+        else if (kind === 'drop') playTone(160, 0.09, 'triangle', 0.06);
+        else if (kind === 'clear') {
+          playTone(523.25, 0.11, 'sine', 0.07, 0);
+          playTone(659.25, 0.12, 'sine', 0.07, 0.06);
+          playTone(783.99, 0.16, 'sine', 0.08, 0.12);
+          playTone(1046.5, 0.2, 'triangle', 0.07, 0.18);
+        } else if (kind === 'gameover') {
+          playTone(300, 0.15, 'sawtooth', 0.04, 0);
+          playTone(220, 0.25, 'sawtooth', 0.04, 0.14);
+        }
+      }
+
+      function randomPieceType() {
+        const keys = Object.keys(SHAPES);
+        return keys[Math.floor(Math.random() * keys.length)];
+      }
+
+      function createPiece(type) {
+        const matrix = SHAPES[type].map((row) => row.slice());
+        return {
+          type,
+          matrix,
+          x: Math.floor((COLS - matrix[0].length) / 2),
+          y: 0
+        };
+      }
+
+      function resizeCanvas() {
+        const isFs = Boolean(document.fullscreenElement || state.cssFullscreen);
+        const isTabletOrDesktop = window.innerWidth >= 640;
+
+        // Calculate exact available height & width so the 1:2 board fills tablets/phones/desktops cleanly
+        const reservedH = isFs
+          ? (isTabletOrDesktop ? 105 : 215)
+          : (isTabletOrDesktop ? 220 : 320);
+        const reservedW = isTabletOrDesktop ? 235 : 36;
+
+        const availH = Math.max(320, window.innerHeight - reservedH);
+        const availW = Math.max(200, Math.min(window.innerWidth - reservedW, isFs ? 520 : 440));
+
+        const cellByH = Math.floor(availH / ROWS);
+        const cellByW = Math.floor(availW / COLS);
+        const cell = Math.max(18, Math.min(cellByH, cellByW, isFs ? 46 : 38));
+
+        const boardW = cell * COLS;
+        const boardH = cell * ROWS;
+
+        canvasWrap.style.width = `${boardW}px`;
+        canvasWrap.style.height = `${boardH}px`;
+
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        canvas.width = Math.floor(boardW * dpr);
+        canvas.height = Math.floor(boardH * dpr);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        state.cellSize = cell;
+
+        if (state.board.length === ROWS) {
+          draw();
+        }
+      }
+
+      function collide(board, piece) {
+        const m = piece.matrix;
+        for (let r = 0; r < m.length; r++) {
+          for (let c = 0; c < m[r].length; c++) {
+            if (!m[r][c]) continue;
+            const nx = piece.x + c;
+            const ny = piece.y + r;
+            if (nx < 0 || nx >= COLS || ny >= ROWS) return true;
+            if (ny >= 0 && board[ny][nx] !== null) return true;
+          }
+        }
+        return false;
+      }
+
+      function merge(board, piece) {
+        piece.matrix.forEach((row, r) => {
+          row.forEach((val, c) => {
+            if (val && piece.y + r >= 0) {
+              board[piece.y + r][piece.x + c] = piece.type;
+            }
+          });
+        });
+      }
+
+      function rotateMatrix(matrix) {
+        const N = matrix.length;
+        const res = Array.from({ length: N }, () => Array(N).fill(0));
+        for (let r = 0; r < N; r++) {
+          for (let c = 0; c < N; c++) {
+            res[c][N - 1 - r] = matrix[r][c];
+          }
+        }
+        return res;
+      }
+
+      function rotatePiece() {
+        if (state.paused || state.gameOver || !state.current) return;
+        const prev = state.current.matrix;
+        const prevX = state.current.x;
+        state.current.matrix = rotateMatrix(prev);
+        const kicks = [0, -1, 1, -2, 2];
+        let valid = false;
+        for (const k of kicks) {
+          state.current.x = prevX + k;
+          if (!collide(state.board, state.current)) {
+            valid = true;
+            break;
+          }
+        }
+        if (!valid) {
+          state.current.matrix = prev;
+          state.current.x = prevX;
+        } else {
+          playSound('rotate');
+        }
+      }
+
+      function movePiece(dx) {
+        if (state.paused || state.gameOver || !state.current) return false;
+        state.current.x += dx;
+        if (collide(state.board, state.current)) {
+          state.current.x -= dx;
+          return false;
+        }
+        playSound('move');
+        return true;
+      }
+
+      function spawnParticlesForRow(rowIdx, rowData) {
+        const cs = state.cellSize;
+        for (let c = 0; c < COLS; c++) {
+          const color = COLORS[rowData[c]] || '#3b82f6';
+          const cx = (c + 0.5) * cs;
+          const cy = (rowIdx + 0.5) * cs;
+          for (let i = 0; i < 6; i++) {
+            const angle = Math.random() * Math.PI * 2;
+            const speed = 1.5 + Math.random() * 4.5;
+            state.particles.push({
+              x: cx,
+              y: cy,
+              vx: Math.cos(angle) * speed,
+              vy: Math.sin(angle) * speed - 1.5,
+              size: 3 + Math.random() * 4,
+              color,
+              life: 1.0
+            });
+          }
+        }
+      }
+
+      function sweepLines() {
+        let cleared = 0;
+        const clearedIndices = [];
+        for (let r = ROWS - 1; r >= 0; r--) {
+          if (state.board[r].every((cell) => cell !== null)) {
+            clearedIndices.push(r);
+            spawnParticlesForRow(r, state.board[r]);
+            state.flashRows.push({ y: r, timer: 0.22 });
+            state.board.splice(r, 1);
+            state.board.unshift(Array(COLS).fill(null));
+            cleared += 1;
+            r += 1;
+          }
+        }
+
+        if (cleared > 0) {
+          state.combo += 1;
+          const basePoints = [0, 100, 300, 500, 800][cleared] || 800;
+          const gained = basePoints * state.level * (state.combo > 1 ? state.combo : 1);
+          state.score += gained;
+          state.lines += cleared;
+          state.level = Math.floor(state.lines / 10) + 1;
+          state.shakeTime = cleared >= 2 ? 0.22 : 0.12;
+
+          const label = cleared === 4 ? 'TETRIS!' : cleared === 3 ? 'TRIPLE!' : cleared === 2 ? 'DOUBLE!' : 'NICE!';
+          const comboText = state.combo > 1 ? ` x${state.combo}` : '';
+          state.popups.push({
+            text: `${label}${comboText} +${gained}`,
+            x: (COLS * state.cellSize) / 2,
+            y: clearedIndices[0] * state.cellSize,
+            life: 1.0,
+            color: cleared >= 3 ? '#ec4899' : '#10b981'
+          });
+
+          playSound('clear');
+          updateHUD();
+        } else {
+          state.combo = 0;
+        }
+      }
+
+      function lockAndSpawn() {
+        merge(state.board, state.current);
+        sweepLines();
+        state.canHold = true;
+        state.current = createPiece(state.nextType);
+        state.nextType = randomPieceType();
+        drawMiniPreview(nextCtx, nextCanvas, state.nextType);
+
+        if (collide(state.board, state.current)) {
+          triggerGameOver();
+        }
+      }
+
+      function dropSoft() {
+        if (state.paused || state.gameOver || !state.current) return;
+        state.current.y += 1;
+        if (collide(state.board, state.current)) {
+          state.current.y -= 1;
+          playSound('drop');
+          lockAndSpawn();
+        }
+        state.dropCounter = 0;
+      }
+
+      function hardDrop() {
+        if (state.paused || state.gameOver || !state.current) return;
+        let dropped = 0;
+        while (!collide(state.board, state.current)) {
+          state.current.y += 1;
+          dropped += 1;
+        }
+        state.current.y -= 1;
+        if (dropped > 1) {
+          state.score += dropped * 2;
+          state.shakeTime = 0.08;
+          updateHUD();
+        }
+        playSound('drop');
+        lockAndSpawn();
+        state.dropCounter = 0;
+      }
+
+      function holdCurrentPiece() {
+        if (state.paused || state.gameOver || !state.canHold || !state.current) return;
+        const curType = state.current.type;
+        if (state.holdType === null) {
+          state.holdType = curType;
+          state.current = createPiece(state.nextType);
+          state.nextType = randomPieceType();
+          drawMiniPreview(nextCtx, nextCanvas, state.nextType);
+        } else {
+          const temp = state.holdType;
+          state.holdType = curType;
+          state.current = createPiece(temp);
+        }
+        state.canHold = false;
+        playSound('rotate');
+        drawMiniPreview(holdCtx, holdCanvas, state.holdType);
+      }
+
+      function triggerGameOver() {
+        state.gameOver = true;
+        playSound('gameover');
+        finalScoreEl.textContent = String(state.score);
+        btnRewardRevive.classList.toggle('hidden', state.revivedOnce);
+        gameoverOverlay.classList.remove('hidden');
+        gameoverOverlay.classList.add('flex');
+      }
+
+      function updateHUD() {
+        hudScore.textContent = String(state.score);
+        if (state.score > state.bestScore) {
+          state.bestScore = state.score;
+          try {
+            localStorage.setItem('mahsua_block_best', String(state.bestScore));
+          } catch (_) {}
+        }
+        hudBest.textContent = String(state.bestScore);
+        hudLines.textContent = String(state.lines);
+        hudLevel.textContent = String(state.level);
+      }
+
+      function drawCell(context, x, y, size, color, alpha = 1) {
+        context.save();
+        context.globalAlpha = alpha;
+        const pad = 1.5;
+        const r = Math.max(3, size * 0.16);
+        const bx = x * size + pad;
+        const by = y * size + pad;
+        const bw = size - pad * 2;
+        const bh = size - pad * 2;
+
+        context.fillStyle = color;
+        context.beginPath();
+        context.roundRect(bx, by, bw, bh, r);
+        context.fill();
+
+        context.fillStyle = 'rgba(255,255,255,0.28)';
+        context.beginPath();
+        context.roundRect(bx + 2, by + 2, bw - 4, Math.max(3, bh * 0.28), r * 0.6);
+        context.fill();
+        context.restore();
+      }
+
+      function drawMiniPreview(mCtx, mCanvas, type) {
+        mCtx.clearRect(0, 0, mCanvas.width, mCanvas.height);
+        if (!type) return;
+        const matrix = SHAPES[type];
+        const size = 16;
+        const rows = matrix.length;
+        const cols = matrix[0].length;
+        const offsetX = (mCanvas.width - cols * size) / 2;
+        const offsetY = (mCanvas.height - rows * size) / 2;
+
+        for (let r = 0; r < rows; r++) {
+          for (let c = 0; c < cols; c++) {
+            if (matrix[r][c]) {
+              mCtx.save();
+              mCtx.translate(offsetX, offsetY);
+              drawCell(mCtx, c, r, size, COLORS[type], 1);
+              mCtx.restore();
+            }
+          }
+        }
+      }
+
+      function getGhostY() {
+        const ghost = { ...state.current, matrix: state.current.matrix };
+        while (!collide(state.board, ghost)) {
+          ghost.y += 1;
+        }
+        return ghost.y - 1;
+      }
+
+      function draw() {
+        const w = COLS * state.cellSize;
+        const h = ROWS * state.cellSize;
+        ctx.clearRect(0, 0, w, h);
+
+        ctx.save();
+        if (state.shakeTime > 0) {
+          const mag = 3.5;
+          ctx.translate((Math.random() - 0.5) * mag * 2, (Math.random() - 0.5) * mag * 2);
+        }
+
+        // Subtle grid lines
+        ctx.strokeStyle = 'rgba(148, 163, 184, 0.09)';
+        ctx.lineWidth = 1;
+        for (let c = 1; c < COLS; c++) {
+          ctx.beginPath();
+          ctx.moveTo(c * state.cellSize, 0);
+          ctx.lineTo(c * state.cellSize, h);
+          ctx.stroke();
+        }
+        for (let r = 1; r < ROWS; r++) {
+          ctx.beginPath();
+          ctx.moveTo(0, r * state.cellSize);
+          ctx.lineTo(w, r * state.cellSize);
+          ctx.stroke();
+        }
+
+        // Placed blocks
+        if (state.board.length === ROWS) {
+          for (let r = 0; r < ROWS; r++) {
+            for (let c = 0; c < COLS; c++) {
+              if (state.board[r] && state.board[r][c]) {
+                drawCell(ctx, c, r, state.cellSize, COLORS[state.board[r][c]], 1);
+              }
+            }
+          }
+        }
+
+        // Ghost & current piece
+        if (state.current && !state.gameOver && state.board.length === ROWS) {
+          const ghostY = getGhostY();
+          state.current.matrix.forEach((row, r) => {
+            row.forEach((val, c) => {
+              if (val) {
+                drawCell(ctx, state.current.x + c, ghostY + r, state.cellSize, COLORS[state.current.type], 0.22);
+                drawCell(ctx, state.current.x + c, state.current.y + r, state.cellSize, COLORS[state.current.type], 1);
+              }
+            });
+          });
+        }
+
+        // Line flash sweep
+        state.flashRows.forEach((fr) => {
+          ctx.fillStyle = `rgba(255, 255, 255, ${Math.min(1, fr.timer * 4)})`;
+          ctx.fillRect(0, fr.y * state.cellSize, w, state.cellSize);
+        });
+
+        // Brick break particles
+        state.particles.forEach((p) => {
+          ctx.save();
+          ctx.globalAlpha = Math.max(0, p.life);
+          ctx.fillStyle = p.color;
+          ctx.fillRect(p.x - p.size / 2, p.y - p.size / 2, p.size, p.size);
+          ctx.restore();
+        });
+
+        // Floating score popups
+        state.popups.forEach((pop) => {
+          ctx.save();
+          ctx.globalAlpha = Math.max(0, pop.life);
+          ctx.font = '800 16px Inter, sans-serif';
+          ctx.textAlign = 'center';
+          ctx.fillStyle = pop.color;
+          ctx.fillText(pop.text, pop.x, pop.y);
+          ctx.restore();
+        });
+
+        ctx.restore();
+      }
+
+      function update(time = 0) {
+        const dt = Math.min(0.05, (time - state.lastTime) / 1000 || 0);
+        state.lastTime = time;
+
+        if (!state.paused && !state.gameOver) {
+          const dropInterval = Math.max(0.12, 0.78 - (state.level - 1) * 0.06);
+          state.dropCounter += dt;
+          if (state.dropCounter >= dropInterval) {
+            dropSoft();
+          }
+        }
+
+        if (state.shakeTime > 0) state.shakeTime = Math.max(0, state.shakeTime - dt);
+        state.flashRows = state.flashRows.filter((fr) => {
+          fr.timer -= dt;
+          return fr.timer > 0;
+        });
+        state.particles = state.particles.filter((p) => {
+          p.x += p.vx;
+          p.y += p.vy;
+          p.vy += 0.18;
+          p.life -= dt * 1.9;
+          return p.life > 0;
+        });
+        state.popups = state.popups.filter((pop) => {
+          pop.y -= 28 * dt;
+          pop.life -= dt * 1.25;
+          return pop.life > 0;
+        });
+
+        draw();
+        state.animId = requestAnimationFrame(update);
+      }
+
+      function startNewGame() {
+        if (state.animId) cancelAnimationFrame(state.animId);
+        state.board = Array.from({ length: ROWS }, () => Array(COLS).fill(null));
+        state.score = 0;
+        state.lines = 0;
+        state.level = 1;
+        state.combo = 0;
+        state.paused = false;
+        state.gameOver = false;
+        state.revivedOnce = false;
+        state.holdType = null;
+        state.canHold = true;
+        state.particles = [];
+        state.flashRows = [];
+        state.popups = [];
+        state.current = createPiece(randomPieceType());
+        state.nextType = randomPieceType();
+
+        pauseOverlay.classList.add('hidden');
+        pauseOverlay.classList.remove('flex');
+        gameoverOverlay.classList.add('hidden');
+        gameoverOverlay.classList.remove('flex');
+        btnPause.textContent = 'Pause';
+
+        updateHUD();
+        drawMiniPreview(nextCtx, nextCanvas, state.nextType);
+        drawMiniPreview(holdCtx, holdCanvas, null);
+        state.lastTime = performance.now();
+        state.animId = requestAnimationFrame(update);
+      }
+
+      function togglePause() {
+        if (state.gameOver) return;
+        state.paused = !state.paused;
+        btnPause.textContent = state.paused ? 'Resume' : 'Pause';
+        pauseOverlay.classList.toggle('hidden', !state.paused);
+        pauseOverlay.classList.toggle('flex', state.paused);
+      }
+
+      // Finger Swipe & Tap Controls
+      let touchStart = null;
+      let lastMoveX = 0;
+      let movedHorizontally = false;
+
+      canvas.addEventListener('pointerdown', (e) => {
+        if (state.paused || state.gameOver) return;
+        e.preventDefault();
+        ensureAudio();
+        touchStart = { x: e.clientX, y: e.clientY, time: performance.now() };
+        lastMoveX = e.clientX;
+        movedHorizontally = false;
+      });
+
+      canvas.addEventListener('pointermove', (e) => {
+        if (!touchStart || state.paused || state.gameOver) return;
+        const dx = e.clientX - lastMoveX;
+        const stepPx = Math.max(22, state.cellSize * 0.85);
+        if (Math.abs(dx) >= stepPx) {
+          const dir = dx > 0 ? 1 : -1;
+          movePiece(dir);
+          lastMoveX = e.clientX;
+          movedHorizontally = true;
+        }
+      });
+
+      canvas.addEventListener('pointerup', (e) => {
+        if (!touchStart || state.paused || state.gameOver) {
+          touchStart = null;
+          return;
+        }
+        const totalDx = e.clientX - touchStart.x;
+        const totalDy = e.clientY - touchStart.y;
+        const elapsed = performance.now() - touchStart.time;
+
+        if (!movedHorizontally && Math.abs(totalDx) < 14 && Math.abs(totalDy) < 14) {
+          rotatePiece();
+        } else if (totalDy > 45 && Math.abs(totalDy) > Math.abs(totalDx)) {
+          if (elapsed < 260 || totalDy > 90) hardDrop();
+          else dropSoft();
+        } else if (totalDy < -45 && Math.abs(totalDy) > Math.abs(totalDx)) {
+          holdCurrentPiece();
+        }
+        touchStart = null;
+      });
+
+      // Desktop Keyboard Controls
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'p' || e.key === 'P') {
+          togglePause();
+          return;
+        }
+        if (state.paused || state.gameOver) return;
+        ensureAudio();
+
+        if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') {
+          e.preventDefault();
+          movePiece(-1);
+        } else if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') {
+          e.preventDefault();
+          movePiece(1);
+        } else if (e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') {
+          e.preventDefault();
+          rotatePiece();
+        } else if (e.key === 'ArrowDown' || e.key === 's' || e.key === 'S') {
+          e.preventDefault();
+          dropSoft();
+        } else if (e.key === ' ') {
+          e.preventDefault();
+          hardDrop();
+        } else if (e.key === 'c' || e.key === 'C' || e.key === 'Shift') {
+          e.preventDefault();
+          holdCurrentPiece();
+        }
+      });
+
+      // Fullscreen toggle (Native API with CSS fallback)
+      function syncFullscreenUI(isFs) {
+        btnExitFs.classList.toggle('hidden', !isFs);
+        btnFullscreen.textContent = isFs ? 'Exit ✕' : '⛶ Fullscreen';
+        setTimeout(resizeCanvas, 60);
+      }
+
+      btnFullscreen.addEventListener('click', () => {
+        if (!document.fullscreenElement && !state.cssFullscreen) {
+          if (gameStage.requestFullscreen) {
+            gameStage.requestFullscreen().then(() => {
+              syncFullscreenUI(true);
+            }).catch(() => {
+              state.cssFullscreen = true;
+              gameStage.classList.add('game-stage-fullscreen');
+              syncFullscreenUI(true);
+            });
+          } else {
+            state.cssFullscreen = true;
+            gameStage.classList.add('game-stage-fullscreen');
+            syncFullscreenUI(true);
+          }
+        } else {
+          exitFullscreenMode();
+        }
+      });
+
+      function exitFullscreenMode() {
+        if (document.fullscreenElement && document.exitFullscreen) {
+          document.exitFullscreen().catch(() => {});
+        }
+        state.cssFullscreen = false;
+        gameStage.classList.remove('game-stage-fullscreen');
+        syncFullscreenUI(false);
+      }
+
+      btnExitFs.addEventListener('click', exitFullscreenMode);
+      document.addEventListener('fullscreenchange', () => {
+        if (!document.fullscreenElement && !state.cssFullscreen) {
+          syncFullscreenUI(false);
+        }
+      });
+
+      // Rewarded Ad Revive Flow
+      let rewardTimer = null;
+      btnRewardRevive.addEventListener('click', () => {
+        rewardModal.classList.remove('hidden');
+        rewardModal.classList.add('flex');
+        btnRewardClaim.disabled = true;
+        let left = 5;
+        rewardCountdown.textContent = String(left);
+        rewardBar.style.width = '0%';
+
+        clearInterval(rewardTimer);
+        rewardTimer = setInterval(() => {
+          left -= 1;
+          rewardCountdown.textContent = String(Math.max(0, left));
+          rewardBar.style.width = `${((5 - left) / 5) * 100}%`;
+          if (left <= 0) {
+            clearInterval(rewardTimer);
+            btnRewardClaim.disabled = false;
+          }
+        }, 1000);
+      });
+
+      btnRewardCancel.addEventListener('click', () => {
+        clearInterval(rewardTimer);
+        rewardModal.classList.add('hidden');
+        rewardModal.classList.remove('flex');
+      });
+
+      btnRewardClaim.addEventListener('click', () => {
+        clearInterval(rewardTimer);
+        rewardModal.classList.add('hidden');
+        rewardModal.classList.remove('flex');
+
+        for (let i = 0; i < 3; i++) {
+          spawnParticlesForRow(ROWS - 1, state.board[ROWS - 1]);
+          state.board.pop();
+          state.board.unshift(Array(COLS).fill(null));
+        }
+        state.revivedOnce = true;
+        state.gameOver = false;
+        state.current = createPiece(randomPieceType());
+        gameoverOverlay.classList.add('hidden');
+        gameoverOverlay.classList.remove('flex');
+        playSound('clear');
+      });
+
+      function syncThemeUI() {
+        document.documentElement.classList.toggle('dark', state.darkMode);
+        document.getElementById('theme-icon').textContent = state.darkMode ? '☀️' : '🌙';
+      }
+
+      btnTheme.addEventListener('click', () => {
+        state.darkMode = !state.darkMode;
+        syncThemeUI();
+        try {
+          localStorage.setItem('mahsua_block_theme', state.darkMode ? 'dark' : 'light');
+        } catch (_) {}
+      });
+
+      btnSound.addEventListener('click', () => {
+        state.soundEnabled = !state.soundEnabled;
+        document.getElementById('sound-icon').textContent = state.soundEnabled ? '🔊' : '🔇';
+        if (state.soundEnabled) playSound('move');
+      });
+
+      btnPause.addEventListener('click', togglePause);
+      btnResume.addEventListener('click', togglePause);
+      btnRestart.addEventListener('click', startNewGame);
+      btnPlayAgain.addEventListener('click', startNewGame);
+      document.getElementById('hold-panel').addEventListener('click', holdCurrentPiece);
+
+      window.addEventListener('resize', resizeCanvas);
+
+      window.onload = function () {
+        try {
+          if (localStorage.getItem('mahsua_block_theme') === 'dark') state.darkMode = true;
+          const savedBest = Number(localStorage.getItem('mahsua_block_best'));
+          if (!Number.isNaN(savedBest)) state.bestScore = savedBest;
+        } catch (_) {}
+        syncThemeUI();
+        startNewGame();
+        resizeCanvas();
+
+        try {
+          document.querySelectorAll('.adsbygoogle').forEach(() => {
+            (window.adsbygoogle = window.adsbygoogle || []).push({});
+          });
+        } catch (_) {}
+      };
+    })();
+  </script>
+</body>
+</html>

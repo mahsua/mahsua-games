@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Meta tags for SEO and social sharing -->
+    <meta name="description" content="Play the classic Guess the Number game! Test your luck and logic to guess the secret number in as few tries as possible.">
+    <meta name="keywords" content="guess the number, number game, guessing game, javascript game, html, css">
+    <meta property="og:title" content="Guess the Number Game">
+    <meta property="og:description" content="Can you guess the secret number? Play now!">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.example.com/games/number_guesser">
+    <title>Guess the Number Game | ❤️ mahsua.com</title>
+    <link rel="icon" href="./favicon.png" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+:root {
+    --bg-color: #f0f2f5;
+    --primary-color: #ffffff;
+    --accent-color: #6a1b9a;
+    --gradient-1: #9b51e0;
+    --gradient-2: #4a2c7a;
+    --text-color: #1c1f30;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--bg-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    color: var(--text-color);
+    overflow: hidden;
+}
+
+.container {
+    background-color: var(--primary-color);
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px var(--shadow-color);
+    text-align: center;
+    width: 90%;
+    max-width: 450px;
+    margin: 50px auto 80px;
+}
+
+h1 {
+    font-size: 2em;
+    font-weight: 700;
+    margin: 0 0 10px;
+    color: var(--accent-color);
+}
+
+p {
+    margin: 0 0 20px;
+    line-height: 1.5;
+}
+
+.game-area {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+#guess-input {
+    flex-grow: 1;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    font-size: 1em;
+    text-align: center;
+}
+
+.button {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 50px;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 10px var(--shadow-color);
+    color: var(--primary-color);
+    background-image: linear-gradient(45deg, var(--gradient-1), var(--gradient-2));
+}
+
+.button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+#restart-button {
+    margin-top: 25px;
+}
+
+.results {
+    min-height: 60px;
+}
+
+.message {
+    font-size: 1.2em;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.guess-count {
+    font-size: 0.9em;
+    color: #555;
+}
+
+footer {
+    background-color: var(--bg-color);
+    text-align: center;
+    margin-top: auto;
+    width: 100%;
+    box-sizing: border-box;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 0;
+}
+
+.footer-links {
+    color: #555;
+    font-size: 0.8em;
+    margin-bottom: 10px;
+    display: flex;
+    gap: 20px;
+}
+
+.footer-links a {
+    color: #555;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: var(--accent-color);
+}
+
+.footer-copyright {
+    color: #777;
+    font-size: 0.7em;
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 20px;
+    }
+}
+
+</style>
+        <!-- Google Ads -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9351361840615541" crossorigin="anonymous"></script>
+    <meta name="google-adsense-account" content="ca-pub-9351361840615541">
+        <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-095F8QMZ5S"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-095F8QMZ5S');
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Guess the Number!</h1>
+        <p>I have picked a number between 1 and 100. Can you guess it?</p>
+
+        <div class="game-area">
+            <input type="number" id="guess-input" placeholder="Enter your guess...">
+            <button class="button" id="guess-button">Guess</button>
+        </div>
+
+        <div class="results">
+            <p id="message" class="message"></p>
+            <p id="guess-count" class="guess-count"></p>
+        </div>
+
+        <button class="button" id="restart-button" style="display: none;">Play Again</button>
+    </div>
+
+    <footer>
+        <div class="footer-links">
+            <a href="./index.html">Games</a>
+            <a href="#">About</a>
+            <a href="#">Contact</a>
+        </div>
+        <div class="footer-copyright">
+            <p>© 2024 Mahsua Games. Play instantly, no downloads required!</p>
+        </div>
+    </footer>
+
+    <script>
+document.addEventListener('DOMContentLoaded', () => {
+    const guessInput = document.getElementById('guess-input');
+    const guessButton = document.getElementById('guess-button');
+    const restartButton = document.getElementById('restart-button');
+    const message = document.getElementById('message');
+    const guessCountDisplay = document.getElementById('guess-count');
+
+    let randomNumber;
+    let guesses = 0;
+
+    const startNewGame = () => {
+        randomNumber = Math.floor(Math.random() * 100) + 1;
+        guesses = 0;
+        message.textContent = '';
+        guessCountDisplay.textContent = '';
+        guessInput.value = '';
+        guessInput.disabled = false;
+        guessButton.disabled = false;
+        restartButton.style.display = 'none';
+        guessInput.focus();
+    };
+
+    const checkGuess = () => {
+        const userGuess = parseInt(guessInput.value);
+
+        if (isNaN(userGuess) || userGuess < 1 || userGuess > 100) {
+            message.textContent = 'Please enter a valid number between 1 and 100.';
+            message.style.color = '#e74c3c';
+            return;
+        }
+
+        guesses++;
+
+        if (userGuess === randomNumber) {
+            message.textContent = `Congratulations! You guessed the number in ${guesses} attempts!`;
+            message.style.color = '#2ecc71';
+            guessInput.disabled = true;
+            guessButton.disabled = true;
+            restartButton.style.display = 'block';
+        } else if (userGuess < randomNumber) {
+            message.textContent = 'Too low! Try again.';
+            message.style.color = '#3498db';
+        } else {
+            message.textContent = 'Too high! Try again.';
+            message.style.color = '#e67e22';
+        }
+
+        guessCountDisplay.textContent = `Guesses: ${guesses}`;
+    };
+
+    guessButton.addEventListener('click', checkGuess);
+    restartButton.addEventListener('click', startNewGame);
+
+    guessInput.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+            checkGuess();
+        }
+    });
+
+    startNewGame();
+});
+
+</script>
+</body>
+</html>

@@ -467,6 +467,30 @@
                 grid-template-columns: 1fr;
             }
         }
+    
+        .game-card.coming-soon {
+            position: relative;
+            opacity: 0.72;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+        .game-card.coming-soon:hover {
+            transform: none;
+            box-shadow: none;
+            border-color: var(--card-border);
+        }
+        .coming-soon-badge {
+            display: inline-block;
+            margin-top: 0.75rem;
+            padding: 0.25rem 0.7rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            border-radius: 999px;
+            background: rgba(236, 72, 153, 0.14);
+            color: #db2777;
+            border: 1px solid rgba(236, 72, 153, 0.35);
+        }
+
     </style>
 </head>
 <body data-theme="light">
@@ -490,7 +514,7 @@
     <div class="hero-section">
         <h1>Mahsua Games</h1>
         <p>Mahsua Games is a collection of classic, single-file games designed to be lightweight and playable directly in a web browser. The project focuses on timeless games like Snake, Tetris, and Tic-Tac-Toe, providing a fun and simple experience for players of all ages.</p>
-        <a href="games/snake-game/index.html" class="play-button">
+        <a href="snake-game.html" class="play-button">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
                 <path d="M8 5v14l11-7z" />
             </svg>
@@ -501,7 +525,7 @@
     <main class="featured-games">
         <h2>Featured Games</h2>
         <div class="game-grid">
-            <a class="game-card" href="games/snake-game/index.html">
+            <a class="game-card" href="snake-game.html">
                 <div class="game-icon">🐍</div>
                 <h3>Snake Classic</h3>
                 <p>The timeless classic! Eat food, grow longer, avoid walls and yourself.</p>
@@ -511,7 +535,7 @@
                 </div>
             </a>
             
-            <a class="game-card" href="games/tetris-game/index.html">
+            <a class="game-card" href="block-puzzle.html">
                 <div class="game-icon">🧱</div>
                 <h3>Tetris Blocks</h3>
                 <p>Arrange falling blocks to clear lines. A puzzle game that never gets old!</p>
@@ -521,7 +545,7 @@
                 </div>
             </a>
             
-            <a class="game-card" href="games/memory-match/index.html">
+            <a class="game-card" href="memory-match.html">
                 <div class="game-icon">🧠</div>
                 <h3>Memory Match</h3>
                 <p>Test your memory by matching pairs of cards. Great for brain training!</p>
@@ -530,8 +554,28 @@
                     <div class="rating">★★★★★</div>
                 </div>
             </a>
+
+            <a class="game-card" href="word-search.html">
+                <div class="game-icon">🧠</div>
+                <h3>Word Search</h3>
+                <p>Find hidden words in a grid of letters. A classic puzzle game!</p>
+                <div class="game-meta">
+                    <span class="difficulty">Easy</span>
+                    <div class="rating">★★★★★</div>
+                </div>
+            </a>
+
+            <a class="game-card" href="crossword-puzzle.html">
+                <div class="game-icon">🧠</div>
+                <h3>Crossword Puzzle</h3>
+                <p>Solve clues to fill the grid with words. A classic brain teaser!</p>
+                <div class="game-meta">
+                    <span class="difficulty">Medium</span>
+                    <div class="rating">★★★★☆</div>
+                </div>
+            </a>
             
-            <a class="game-card" href="games/pong/index.html">
+            <div class="game-card coming-soon" aria-disabled="true">
                 <div class="game-icon">🏓</div>
                 <h3>Pong Classic</h3>
                 <p>The original arcade game! Control your paddle and beat the AI opponent.</p>
@@ -539,9 +583,10 @@
                     <span class="difficulty">Easy</span>
                     <div class="rating">★★★★★</div>
                 </div>
-            </a>
+                <span class="coming-soon-badge">Coming Soon</span>
+            </div>
             
-            <a class="game-card" href="games/2048-game/index.html">
+            <div class="game-card coming-soon" aria-disabled="true">
                 <div class="game-icon">🔢</div>
                 <h3>2048 Puzzle</h3>
                 <p>Slide tiles to combine numbers and reach 2048. Addictive math puzzle!</p>
@@ -549,9 +594,10 @@
                     <span class="difficulty">Hard</span>
                     <div class="rating">★★★★★</div>
                 </div>
-            </a>
+                <span class="coming-soon-badge">Coming Soon</span>
+            </div>
             
-            <a class="game-card" href="games/breakout/index.html">
+            <div class="game-card coming-soon" aria-disabled="true">
                 <div class="game-icon">🎯</div>
                 <h3>Breakout Bricks</h3>
                 <p>Bounce the ball to break all bricks. Classic arcade action!</p>
@@ -559,9 +605,10 @@
                     <span class="difficulty">Medium</span>
                     <div class="rating">★★★★☆</div>
                 </div>
-            </a>
+                <span class="coming-soon-badge">Coming Soon</span>
+            </div>
 
-            <a class="game-card" href="games/math-quiz/index.html">
+            <a class="game-card" href="math-quiz.html">
                 <div class="game-icon">➗</div>
                 <h3>Math Quiz</h3>
                 <p>Test your math skills with addition, subtraction, multiplication, and division problems.</p>
@@ -571,7 +618,7 @@
                 </div>
             </a>
 
-            <a class="game-card" href="games/coin-flip/index.html">
+            <a class="game-card" href="coin-flip.html">
                 <div class="game-icon">🪙</div>
                 <h3>Virtual Coin Flip</h3>
                 <p>Flip a virtual coin to get a random result: Heads or Tails.</p>
@@ -581,7 +628,7 @@
                 </div>
             </a>
 
-            <a class="game-card" href="games/car-racing/index.html">
+            <a class="game-card" href="car-racing.html">
                 <div class="game-icon">🚗</div>
                 <h3>Car Racing Game</h3>
                 <p>Race your car to victory in this fast-paced racing game.</p>
@@ -591,7 +638,7 @@
                 </div>
             </a>
 
-            <a class="game-card" href="games/dice-flipper/index.html">
+            <a class="game-card" href="dice-flipper.html">
                 <div class="game-icon">🎲</div>
                 <h3>Virtual 3D Dice Flipper</h3>
                 <p>Roll up to four virtual 3D dice to get a random number.</p>
@@ -601,7 +648,7 @@
                 </div>
             </a>
 
-            <a class="game-card" href="games/rock-paper-scissors/index.html">
+            <a class="game-card" href="rock-paper-scissors.html">
                 <div class="game-icon">✂️</div>
                 <h3>Rock Paper Scissors</h3>
                 <p>Challenge the computer in a classic game of rock, paper, scissors.</p>
@@ -611,7 +658,7 @@
                 </div>
             </a>
 
-            <a class="game-card" href="games/tic-tac-toe/index.html">
+            <a class="game-card" href="tic-tac-toe.html">
                 <div class="game-icon">❌</div>
                 <h3>Tic-Tac-Toe</h3>
                 <p>Play against a friend or an intelligent computer in this classic game.</p>
@@ -621,7 +668,7 @@
                 </div>
             </a>
 
-            <a class="game-card" href="games/wall-dodge/index.html">
+            <a class="game-card" href="wall-dodge.html">
                 <div class="game-icon">🚧</div>
                 <h3>Wall Dodge Challenge</h3>
                 <p>Dodge moving walls and survive as long as you can in this endless runner.</p>
@@ -631,7 +678,7 @@
                 </div>
             </a>
 
-            <a class="game-card" href="games/pac-man/index.html">
+            <div class="game-card coming-soon" aria-disabled="true">
                 <div class="game-icon">🕹️</div>
                 <h3>PAC-MAN</h3>
                 <p>Eat all the dots and avoid ghosts in this classic arcade game.</p>
@@ -639,9 +686,10 @@
                     <span class="difficulty">Medium</span>
                     <div class="rating">★★★★☆</div>
                 </div>
-            </a>
+                <span class="coming-soon-badge">Coming Soon</span>
+            </div>
 
-            <a class="game-card" href="games/solitaire/index.html">
+            <div class="game-card coming-soon" aria-disabled="true">
                 <div class="game-icon">🃏</div>
                 <h3>Solitaire</h3>
                 <p>Relax and play a classic game of Solitaire.</p>
@@ -649,9 +697,10 @@
                     <span class="difficulty">Easy</span>
                     <div class="rating">★★★★★</div>
                 </div>
-            </a>
+                <span class="coming-soon-badge">Coming Soon</span>
+            </div>
 
-            <a class="game-card" href="games/fruit-ninja/index.html">
+            <div class="game-card coming-soon" aria-disabled="true">
                 <div class="game-icon">🍉</div>
                 <h3>Fruit Ninja</h3>
                 <p>Slice as many fruits as you can while avoiding bombs.</p>
@@ -659,9 +708,10 @@
                     <span class="difficulty">Medium</span>
                     <div class="rating">★★★★☆</div>
                 </div>
-            </a>
+                <span class="coming-soon-badge">Coming Soon</span>
+            </div>
 
-            <a class="game-card" href="games/bubble-shooter/index.html">
+            <a class="game-card" href="bubble-shooter.html">
                 <div class="game-icon">🫧</div>
                 <h3>Bubble Shooter</h3>
                 <p>Match and pop colorful bubbles to clear the board.</p>
@@ -671,7 +721,7 @@
                 </div>
             </a>
 
-            <a class="game-card" href="games/karate-fight/index.html">
+            <div class="game-card coming-soon" aria-disabled="true">
                 <div class="game-icon">🥋</div>
                 <h3>Karate Fight</h3>
                 <p>Engage in an intense one-on-one karate fight.</p>
@@ -679,9 +729,10 @@
                     <span class="difficulty">Hard</span>
                     <div class="rating">★★★☆☆</div>
                 </div>
-            </a>
+                <span class="coming-soon-badge">Coming Soon</span>
+            </div>
 
-            <a class="game-card" href="games/tennis-game/index.html">
+            <div class="game-card coming-soon" aria-disabled="true">
                 <div class="game-icon">🎾</div>
                 <h3>Tennis Game</h3>
                 <p>Serve and volley to win the match against your opponent.</p>
@@ -689,9 +740,10 @@
                     <span class="difficulty">Medium</span>
                     <div class="rating">★★★★☆</div>
                 </div>
-            </a>
+                <span class="coming-soon-badge">Coming Soon</span>
+            </div>
 
-            <a class="game-card" href="games/ludo/index.html">
+            <a class="game-card" href="ludo.html">
                 <div class="game-icon">♟️</div>
                 <h3>Ludo</h3>
                 <p>Roll the dice and race your pawns to the finish line.</p>
@@ -701,7 +753,7 @@
                 </div>
             </a>
 
-            <a class="game-card" href="games/guess-the-number/index.html">
+            <a class="game-card" href="guess-the-number.html">
                 <div class="game-icon">1️⃣</div>
                 <h3>Guess the Number game</h3>
                 <p>Test your luck and logic to guess the secret number in as few tries as possible.</p>
@@ -711,7 +763,7 @@
                 </div>
             </a>
 
-            <a class="game-card" href="games/picture-puzzle/index.html">
+            <a class="game-card" href="picture-puzzle.html">
                 <div class="game-icon">🖼️</div>
                 <h3>Picture Puzzle</h3>
                 <p>Rearrange the pieces to complete the picture puzzle.</p>
