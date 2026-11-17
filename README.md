@@ -1,9 +1,9 @@
 # 🎮 Mahsua Games
 
 Welcome to **Mahsua Games** ([games.mahsua.com](https://games.mahsua.com/))!
-A collection of **27 free, mobile-friendly browser games** built with HTML, CSS, and JavaScript.
+A collection of **29 free, mobile-friendly browser games** built with HTML, CSS, and JavaScript.
 
-## ✅ Playable Games (27)
+## ✅ Playable Games (29)
 
 | # | Game | Description | Play |
 | :--- | :--- | :--- | :--- |
@@ -16,7 +16,8 @@ A collection of **27 free, mobile-friendly browser games** built with HTML, CSS,
 | 7 | **Coin Flip** | Flip a virtual coin for instant heads or tails. | [Play Now](https://games.mahsua.com/coin-flip.html) |
 | 8 | **Crossword Puzzle** | Solve 90 levels of fun crossword clues. | [Play Now](https://games.mahsua.com/crossword-puzzle.html) |
 | 9 | **Dice Flipper** | Roll 3D virtual dice with sound effects. | [Play Now](https://games.mahsua.com/dice-flipper.html) |
-| 10 | **Free the Key** | Slide blocks to free the key from the board. | [Play Now](https://games.mahsua.com/free-the-key.html) |
+| 10 | **Flappy Bird** | Tap to fly through pipes and beat your high score. | [Play Now](https://games.mahsua.com/flappy-bird.html) |
+| 11 | **Free the Key** | Slide blocks to free the key from the board. | [Play Now](https://games.mahsua.com/free-the-key.html) |
 | 11 | **Fruit Ninja** | Swipe to slice flying fruits and avoid bombs. | [Play Now](https://games.mahsua.com/fruit-ninja.html) |
 | 12 | **Guess the Number** | Guess the secret number in as few tries as possible. | [Play Now](https://games.mahsua.com/guess-the-number.html) |
 | 13 | **Karate Fight** | Punch, kick, and block to defeat your dojo rival. | [Play Now](https://games.mahsua.com/karate-fight.html) |

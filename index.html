@@ -12,6 +12,16 @@
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
         gtag('config', 'G-095F8QMZ5S');
+
+        const liveDateTime = document.getElementById('liveDateTime');
+        function updateClock() {
+            const now = new Date();
+            const d = now.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' });
+            const t = now.toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' });
+            liveDateTime.textContent = d + ' • ' + t;
+        }
+        updateClock();
+        setInterval(updateClock, 15000);
     </script>
 
     <meta charset="UTF-8">
@@ -124,6 +134,23 @@
             color: var(--text-muted);
         }
 
+
+        .top-right {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .datetime-pill {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(18px);
+            color: var(--text-color);
+            border-radius: 999px;
+            padding: 0.45rem 0.85rem;
+            font-size: 0.82rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
         .theme-btn {
             background: var(--glass-bg);
             border: 1px solid var(--glass-border);
@@ -340,7 +367,10 @@
             <span>🔍</span>
             <input type="search" id="searchInput" placeholder="Search Games..." aria-label="Search Games">
         </div>
-        <button class="theme-btn" id="themeToggle" type="button">🌙 Dark</button>
+        <div class="top-right">
+            <span class="datetime-pill" id="liveDateTime"></span>
+            <button class="theme-btn" id="themeToggle" type="button">🌙 Dark</button>
+        </div>
     </header>
 
     <main class="launcher-wrap">
@@ -452,6 +482,14 @@
             <a class="app-item" href="word-search.html" data-name="word search">
                 <div class="app-icon" style="background: linear-gradient(135deg, #3b82f6, #10b981);"><span>🔤</span></div>
                 <span class="app-label">Word Search</span>
+            </a>
+            <a class="app-item" href="flappy-bird.html" data-name="flappy bird">
+                <div class="app-icon" style="background: linear-gradient(135deg, #0ea5e9, #10b981);"><span>🐦</span></div>
+                <span class="app-label">Flappy Bird</span>
+            </a>
+            <a class="app-item" href="stack-tower.html" data-name="stack tower">
+                <div class="app-icon" style="background: linear-gradient(135deg, #ec4899, #8b5cf6);"><span>🗼</span></div>
+                <span class="app-label">Stack Tower</span>
             </a>
         </div>
         <p class="empty-msg" id="emptyMsg">No matching games found.</p>
