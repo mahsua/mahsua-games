@@ -19,7 +19,7 @@
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://games.mahsua.com/car-racing.html</loc>
+    <loc>https://games.mahsua.com/3d-car-racing.html</loc>
     <lastmod>2026-11-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
@@ -109,31 +109,31 @@
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://games.mahsua.com/2048-game.html</loc>
+    <loc>https://games.mahsua.com/2048-puzzle.html</loc>
     <lastmod>2026-11-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://games.mahsua.com/pong.html</loc>
+    <loc>https://games.mahsua.com/paddle-rally.html</loc>
     <lastmod>2026-11-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://games.mahsua.com/breakout.html</loc>
+    <loc>https://games.mahsua.com/brick-breaker.html</loc>
     <lastmod>2026-11-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://games.mahsua.com/pac-man.html</loc>
+    <loc>https://games.mahsua.com/maze-chaser.html</loc>
     <lastmod>2026-11-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://games.mahsua.com/fruit-ninja.html</loc>
+    <loc>https://games.mahsua.com/fruit-slicer.html</loc>
     <lastmod>2026-11-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
@@ -163,13 +163,13 @@
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://games.mahsua.com/sniper-gun.html</loc>
+    <loc>https://games.mahsua.com/sniper-target.html</loc>
     <lastmod>2026-11-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://games.mahsua.com/flappy-bird.html</loc>
+    <loc>https://games.mahsua.com/flappy-wing.html</loc>
     <lastmod>2026-11-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>

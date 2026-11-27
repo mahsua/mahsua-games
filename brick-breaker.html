@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Play Brick Breaker Online Free – Instant Browser Game | Mahsua Games</title>
+    <link rel="icon" href="./favicon.png" type="image/png">
+    <meta name="description" content="Play Brick Breaker online free with no download! Bounce the ball off your paddle to smash colorful bricks instantly on mobile or desktop.">
+    <meta name="keywords" content="brick breaker game, brick breaker, arcade game, mahsua games, free browser game">
+    <meta name="author" content="Mahsua Games">
+    <meta name="robots" content="index, follow">
+
+    <!-- Google Ads -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9351361840615541" crossorigin="anonymous"></script>
+    <meta name="google-adsense-account" content="ca-pub-9351361840615541">
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-095F8QMZ5S"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-095F8QMZ5S');
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-gradient: linear-gradient(135deg, #ffe6f0 0%, #e0f3ff 50%, #e6ffe6 100%);
+            --card-bg: rgba(255, 255, 255, 0.94);
+            --card-border: rgba(236, 72, 153, 0.2);
+            --text-color: #1e293b;
+            --text-secondary: #64748b;
+            --canvas-bg: #f8fafc;
+            --accent-pink: #ec4899;
+            --accent-blue: #3b82f6;
+            --accent-green: #10b981;
+            --shadow: 0 12px 32px rgba(15, 23, 42, 0.08);
+        }
+
+        body.dark {
+            --bg-gradient: linear-gradient(135deg, #1f1024 0%, #0f172a 50%, #0b221a 100%);
+            --card-bg: rgba(30, 41, 59, 0.92);
+            --card-border: rgba(236, 72, 153, 0.3);
+            --text-color: #f8fafc;
+            --text-secondary: #94a3b8;
+            --canvas-bg: #0f172a;
+            --shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 660px;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 1.25rem;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(16px);
+        }
+
+        .top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.9rem;
+            gap: 0.5rem;
+        }
+
+        .back-link {
+            text-decoration: none;
+            color: var(--accent-blue);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .top-actions {
+            display: flex;
+            gap: 0.45rem;
+        }
+
+        .pill-btn {
+            background: rgba(59, 130, 246, 0.12);
+            color: var(--text-color);
+            border: 1px solid var(--card-border);
+            border-radius: 999px;
+            padding: 0.35rem 0.75rem;
+            font-family: inherit;
+            font-size: 0.82rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-bottom: 0.9rem;
+        }
+
+        h1 {
+            font-size: 1.85rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent-pink), var(--accent-blue), var(--accent-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stats {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-box {
+            background: linear-gradient(135deg, rgba(236, 72, 153, 0.12), rgba(59, 130, 246, 0.12));
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 0.35rem 0.7rem;
+            text-align: center;
+            min-width: 64px;
+        }
+
+        .stat-label {
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+        }
+
+        .stat-value {
+            font-size: 1.05rem;
+            font-weight: 800;
+        }
+
+        .controls-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 0.9rem;
+        }
+
+        .subtitle {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 0.45rem;
+        }
+
+        .btn {
+            border: none;
+            border-radius: 12px;
+            padding: 0.5rem 0.9rem;
+            font-family: inherit;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-pink), var(--accent-blue));
+            color: #fff;
+        }
+
+        .btn-secondary {
+            background: rgba(16, 185, 129, 0.15);
+            color: #059669;
+            border: 1px solid rgba(16, 185, 129, 0.35);
+        }
+
+        body.dark .btn-secondary {
+            color: #34d399;
+        }
+
+        .canvas-wrap {
+            position: relative;
+            width: 100%;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 2px solid var(--card-border);
+            background: var(--canvas-bg);
+            touch-action: none;
+        }
+
+        canvas {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        .overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.72);
+            backdrop-filter: blur(4px);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            color: #fff;
+            text-align: center;
+            padding: 1.5rem;
+        }
+
+        .overlay.active {
+            display: flex;
+        }
+
+        .overlay h2 {
+            font-size: 1.75rem;
+            font-weight: 800;
+        }
+
+        .touch-controls {
+            display: none;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 0.85rem;
+        }
+
+        .touch-btn {
+            flex: 1;
+            max-width: 160px;
+            padding: 0.7rem;
+            border-radius: 14px;
+            border: 1px solid var(--card-border);
+            background: rgba(59, 130, 246, 0.14);
+            color: var(--text-color);
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        @media (max-width: 768px) {
+            .touch-controls {
+                display: flex;
+            }
+        }
+
+        .hint {
+            margin-top: 0.8rem;
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="top-bar">
+            <a href="https://games.mahsua.com/" class="back-link">🏠 Home</a>
+            <div class="top-actions">
+                <button class="pill-btn mahsua-fs-inline" type="button">⛶ Fullscreen</button>
+                <button class="pill-btn" id="soundToggle" type="button">🔊 Sound</button>
+                <button class="pill-btn" id="themeToggle" type="button">🌙 Dark</button>
+            </div>
+        </div>
+
+        <div class="header">
+            <h1>🧱 Brick Breaker</h1>
+            <div class="stats">
+                <div class="stat-box">
+                    <div class="stat-label">Score</div>
+                    <div class="stat-value" id="score">0</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">Best</div>
+                    <div class="stat-value" id="bestScore">0</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">Level</div>
+                    <div class="stat-value" id="level">1</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">Lives</div>
+                    <div class="stat-value" id="lives">❤️❤️❤️</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="controls-row">
+            <span class="subtitle">Clear all bricks to level up!</span>
+            <div class="btn-group">
+                <button class="btn btn-secondary" id="pauseBtn" type="button">Pause</button>
+                <button class="btn btn-primary" id="restartBtn" type="button">New Game</button>
+            </div>
+        </div>
+
+        <div class="canvas-wrap">
+            <canvas id="breakoutCanvas" width="600" height="420"></canvas>
+            <div class="overlay active" id="overlay">
+                <h2 id="overlayTitle">Brick Breaker</h2>
+                <p id="overlayMsg">Bounce the ball and smash every brick!</p>
+                <button class="btn btn-primary" id="startBtn" type="button">Start Game</button>
+            </div>
+        </div>
+
+        <div class="touch-controls">
+            <button class="touch-btn" id="leftBtn" type="button">◀ Left</button>
+            <button class="touch-btn" id="rightBtn" type="button">Right ▶</button>
+        </div>
+
+        <p class="hint">Keep the energy ball in play to shatter every brick and advance through challenging levels. Drag on the board, tap Left/Right on mobile, or use Arrow keys and A/D on desktop.</p>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('breakoutCanvas');
+        const ctx = canvas.getContext('2d');
+        const scoreEl = document.getElementById('score');
+        const bestScoreEl = document.getElementById('bestScore');
+        const levelEl = document.getElementById('level');
+        const livesEl = document.getElementById('lives');
+        const pauseBtn = document.getElementById('pauseBtn');
+        const restartBtn = document.getElementById('restartBtn');
+        const overlay = document.getElementById('overlay');
+        const overlayTitle = document.getElementById('overlayTitle');
+        const overlayMsg = document.getElementById('overlayMsg');
+        const startBtn = document.getElementById('startBtn');
+        const soundToggle = document.getElementById('soundToggle');
+        const themeToggle = document.getElementById('themeToggle');
+        const leftBtn = document.getElementById('leftBtn');
+        const rightBtn = document.getElementById('rightBtn');
+
+        let score = 0;
+        let bestScore = parseInt(localStorage.getItem('mahsua_breakout_best') || '0', 10);
+        let level = 1;
+        let lives = 3;
+        let running = false;
+        let paused = false;
+        let soundOn = true;
+
+        bestScoreEl.textContent = bestScore;
+
+        const paddle = { w: 96, h: 14, x: canvas.width / 2 - 48, y: canvas.height - 28, speed: 7 };
+        const ball = { x: canvas.width / 2, y: canvas.height - 44, r: 8, vx: 4, vy: -4 };
+        const keys = { left: false, right: false };
+
+        const BRICK_ROWS = 5;
+        const BRICK_COLS = 8;
+        const BRICK_PAD = 8;
+        const BRICK_TOP = 36;
+        const BRICK_LEFT = 22;
+        const BRICK_W = (canvas.width - BRICK_LEFT * 2 - BRICK_PAD * (BRICK_COLS - 1)) / BRICK_COLS;
+        const BRICK_H = 22;
+        const ROW_COLORS = ['#ec4899', '#f472b6', '#3b82f6', '#60a5fa', '#10b981'];
+
+        let bricks = [];
+
+        let audioCtx = null;
+        function beep(freq, dur = 0.06) {
+            if (!soundOn) return;
+            try {
+                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'triangle';
+                osc.frequency.value = freq;
+                gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + dur);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + dur);
+            } catch (_) {}
+        }
+
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark');
+            themeToggle.textContent = document.body.classList.contains('dark') ? '☀️ Light' : '🌙 Dark';
+        });
+
+        soundToggle.addEventListener('click', () => {
+            soundOn = !soundOn;
+            soundToggle.textContent = soundOn ? '🔊 Sound' : '🔇 Muted';
+        });
+
+        function buildBricks() {
+            bricks = [];
+            for (let r = 0; r < BRICK_ROWS; r++) {
+                for (let c = 0; c < BRICK_COLS; c++) {
+                    bricks.push({
+                        x: BRICK_LEFT + c * (BRICK_W + BRICK_PAD),
+                        y: BRICK_TOP + r * (BRICK_H + BRICK_PAD),
+                        w: BRICK_W,
+                        h: BRICK_H,
+                        color: ROW_COLORS[r % ROW_COLORS.length],
+                        alive: true
+                    });
+                }
+            }
+        }
+
+        function resetBallAndPaddle() {
+            paddle.x = canvas.width / 2 - paddle.w / 2;
+            const speed = Math.min(7.5, 4.2 + (level - 1) * 0.55);
+            const dir = Math.random() < 0.5 ? 1 : -1;
+            ball.x = canvas.width / 2;
+            ball.y = paddle.y - ball.r - 2;
+            ball.vx = dir * speed * 0.75;
+            ball.vy = -speed;
+        }
+
+        function updateHUD() {
+            scoreEl.textContent = score;
+            levelEl.textContent = level;
+            livesEl.textContent = '❤️'.repeat(Math.max(0, lives)) || '💔';
+            if (score > bestScore) {
+                bestScore = score;
+                localStorage.setItem('mahsua_breakout_best', String(bestScore));
+                bestScoreEl.textContent = bestScore;
+            }
+        }
+
+        function startNewGame() {
+            score = 0;
+            level = 1;
+            lives = 3;
+            buildBricks();
+            resetBallAndPaddle();
+            updateHUD();
+            running = true;
+            paused = false;
+            pauseBtn.textContent = 'Pause';
+            overlay.classList.remove('active');
+        }
+
+        pauseBtn.addEventListener('click', () => {
+            if (!running) return;
+            paused = !paused;
+            pauseBtn.textContent = paused ? 'Resume' : 'Pause';
+        });
+
+        restartBtn.addEventListener('click', startNewGame);
+        startBtn.addEventListener('click', startNewGame);
+
+        function movePaddleTo(clientX) {
+            const rect = canvas.getBoundingClientRect();
+            const scaleX = canvas.width / rect.width;
+            const x = (clientX - rect.left) * scaleX - paddle.w / 2;
+            paddle.x = Math.max(0, Math.min(canvas.width - paddle.w, x));
+        }
+
+        canvas.addEventListener('mousemove', (e) => {
+            if (running && !paused) movePaddleTo(e.clientX);
+        });
+
+        canvas.addEventListener('touchmove', (e) => {
+            if (running && !paused && e.touches[0]) {
+                movePaddleTo(e.touches[0].clientX);
+            }
+        }, { passive: true });
+
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') { e.preventDefault(); keys.left = true; }
+            if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') { e.preventDefault(); keys.right = true; }
+        });
+
+        window.addEventListener('keyup', (e) => {
+            if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') keys.left = false;
+            if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') keys.right = false;
+        });
+
+        leftBtn.addEventListener('touchstart', () => keys.left = true, { passive: true });
+        leftBtn.addEventListener('touchend', () => keys.left = false, { passive: true });
+        rightBtn.addEventListener('touchstart', () => keys.right = true, { passive: true });
+        rightBtn.addEventListener('touchend', () => keys.right = false, { passive: true });
+        leftBtn.addEventListener('mousedown', () => keys.left = true);
+        leftBtn.addEventListener('mouseup', () => keys.left = false);
+        rightBtn.addEventListener('mousedown', () => keys.right = true);
+        rightBtn.addEventListener('mouseup', () => keys.right = false);
+
+        function update() {
+            if (!running || paused) return;
+
+            if (keys.left) paddle.x -= paddle.speed;
+            if (keys.right) paddle.x += paddle.speed;
+            paddle.x = Math.max(0, Math.min(canvas.width - paddle.w, paddle.x));
+
+            ball.x += ball.vx;
+            ball.y += ball.vy;
+
+            if (ball.x - ball.r < 0) { ball.x = ball.r; ball.vx *= -1; beep(340); }
+            if (ball.x + ball.r > canvas.width) { ball.x = canvas.width - ball.r; ball.vx *= -1; beep(340); }
+            if (ball.y - ball.r < 0) { ball.y = ball.r; ball.vy *= -1; beep(340); }
+
+            // Paddle collision
+            if (ball.vy > 0 &&
+                ball.y + ball.r >= paddle.y &&
+                ball.y - ball.r <= paddle.y + paddle.h &&
+                ball.x + ball.r >= paddle.x &&
+                ball.x - ball.r <= paddle.x + paddle.w) {
+                const hit = (ball.x - (paddle.x + paddle.w / 2)) / (paddle.w / 2);
+                const speed = Math.hypot(ball.vx, ball.vy);
+                const angle = hit * (Math.PI / 3);
+                ball.vx = speed * Math.sin(angle);
+                ball.vy = -Math.abs(speed * Math.cos(angle));
+                ball.y = paddle.y - ball.r;
+                beep(520);
+            }
+
+            // Brick collision
+            for (const b of bricks) {
+                if (!b.alive) continue;
+                if (ball.x + ball.r > b.x &&
+                    ball.x - ball.r < b.x + b.w &&
+                    ball.y + ball.r > b.y &&
+                    ball.y - ball.r < b.y + b.h) {
+                    b.alive = false;
+                    ball.vy *= -1;
+                    score += 10 * level;
+                    updateHUD();
+                    beep(640);
+                    break;
+                }
+            }
+
+            // Level complete
+            if (bricks.every(b => !b.alive)) {
+                level++;
+                buildBricks();
+                resetBallAndPaddle();
+                updateHUD();
+                beep(780, 0.14);
+            }
+
+            // Missed ball
+            if (ball.y - ball.r > canvas.height) {
+                lives--;
+                updateHUD();
+                beep(200, 0.16);
+                if (lives <= 0) {
+                    running = false;
+                    overlayTitle.textContent = 'Game Over!';
+                    overlayMsg.textContent = 'Final Score: ' + score;
+                    startBtn.textContent = 'Play Again';
+                    overlay.classList.add('active');
+                } else {
+                    resetBallAndPaddle();
+                }
+            }
+        }
+
+        function draw() {
+            const isDark = document.body.classList.contains('dark');
+            ctx.fillStyle = isDark ? '#0f172a' : '#f8fafc';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Bricks
+            for (const b of bricks) {
+                if (!b.alive) continue;
+                ctx.fillStyle = b.color;
+                ctx.beginPath();
+                ctx.roundRect(b.x, b.y, b.w, b.h, 6);
+                ctx.fill();
+            }
+
+            // Paddle
+            const grad = ctx.createLinearGradient(paddle.x, 0, paddle.x + paddle.w, 0);
+            grad.addColorStop(0, '#ec4899');
+            grad.addColorStop(1, '#3b82f6');
+            ctx.fillStyle = grad;
+            ctx.beginPath();
+            ctx.roundRect(paddle.x, paddle.y, paddle.w, paddle.h, 7);
+            ctx.fill();
+
+            // Ball
+            ctx.fillStyle = '#10b981';
+            ctx.beginPath();
+            ctx.arc(ball.x, ball.y, ball.r, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        function loop() {
+            update();
+            draw();
+            requestAnimationFrame(loop);
+        }
+
+        buildBricks();
+        loop();
+    </script>
+
+<!-- Landscape Orientation Prompt (Landscape Games Only) -->
+<style>
+  #mahsua-rotate-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 100000;
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.96), rgba(30, 41, 59, 0.98));
+    color: #f8fafc;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem;
+    gap: 1rem;
+    font-family: 'Outfit', system-ui, -apple-system, sans-serif;
+  }
+  .mahsua-rotate-icon {
+    font-size: 3.5rem;
+    animation: mahsuaTilt 1.6s ease-in-out infinite;
+  }
+  @keyframes mahsuaTilt {
+    0%, 100% { transform: rotate(0deg); }
+    50% { transform: rotate(-90deg); }
+  }
+  #mahsua-rotate-overlay h2 {
+    font-size: 1.45rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #ec4899, #3b82f6, #10b981);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  #mahsua-rotate-overlay p {
+    font-size: 0.95rem;
+    color: #cbd5e1;
+    max-width: 300px;
+  }
+  .mahsua-rotate-home {
+    margin-top: 0.5rem;
+    padding: 0.6rem 1.2rem;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #ec4899, #3b82f6);
+    color: #fff;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.9rem;
+  }
+  @media (max-width: 900px) and (orientation: portrait) {
+    #mahsua-rotate-overlay {
+      display: flex;
+    }
+  }
+</style>
+<div id="mahsua-rotate-overlay" role="dialog" aria-live="polite">
+  <div class="mahsua-rotate-icon">📱</div>
+  <h2>Rotate Your Device</h2>
+  <p>This game works best in <strong>Landscape</strong> mode. Please turn your phone sideways to play.</p>
+  <a href="https://games.mahsua.com/" class="mahsua-rotate-home">🏠 Back to Home</a>
+</div>
+
+
+<!-- Mahsua Fullscreen Stage Styles & Exit Button -->
+<style>
+  .mahsua-fs-inline {
+    background: rgba(16, 185, 129, 0.14) !important;
+    color: #059669 !important;
+    border: 1px solid rgba(16, 185, 129, 0.35) !important;
+    border-radius: 999px;
+    padding: 0.35rem 0.75rem;
+    font-family: inherit;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  body.dark .mahsua-fs-inline {
+    color: #34d399 !important;
+  }
+  #mahsua-exit-fs {
+    display: none;
+    position: fixed;
+    top: 12px;
+    right: 12px;
+    z-index: 99999;
+    padding: 7px 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(16, 185, 129, 0.4);
+    background: rgba(15, 23, 42, 0.85);
+    color: #fff;
+    font-family: 'Outfit', system-ui, sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+  }
+  body.mahsua-fullscreen #mahsua-exit-fs {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+  body.mahsua-fullscreen {
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+  }
+  body.mahsua-fullscreen > header,
+  body.mahsua-fullscreen > footer,
+  body.mahsua-fullscreen .top-bar,
+  body.mahsua-fullscreen .hint,
+  body.mahsua-fullscreen .back-link {
+    display: none !important;
+  }
+  body.mahsua-fullscreen .container,
+  body.mahsua-fullscreen .game-container,
+  body.mahsua-fullscreen .game-wrapper,
+  body.mahsua-fullscreen .ludo-container,
+  body.mahsua-fullscreen > main,
+  body.mahsua-fullscreen > .bg-card {
+    position: fixed !important;
+    inset: 0 !important;
+    width: 100vw !important;
+    height: 100dvh !important;
+    max-width: 100vw !important;
+    max-height: 100dvh !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    border: none !important;
+    padding: 56px 12px 16px !important;
+    z-index: 9998 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    overflow-y: auto !important;
+  }
+  body.mahsua-fullscreen .canvas-wrap {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+  body.mahsua-fullscreen canvas {
+    max-height: calc(100dvh - 195px) !important;
+    width: auto !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    object-fit: contain !important;
+  }
+  @media (max-height: 540px) and (orientation: landscape) {
+    body { padding: 0.35rem !important; }
+    .container, .game-container { padding: 0.6rem 0.9rem !important; }
+    .top-bar, .hint { display: none !important; }
+    .header { margin-bottom: 0.35rem !important; }
+    .header h1 { font-size: 1.25rem !important; }
+    .controls-row { margin-bottom: 0.35rem !important; }
+    canvas { max-height: calc(100dvh - 125px) !important; width: auto !important; max-width: 100% !important; margin: 0 auto !important; }
+  }
+</style>
+<button type="button" id="mahsua-exit-fs">✕ Exit Fullscreen</button>
+<script>
+  (function() {
+    var fsBtns = document.querySelectorAll('.mahsua-fs-inline, #mahsuaFsBtn');
+    var exitBtn = document.getElementById('mahsua-exit-fs');
+    function isNativeFull() {
+      return !!(document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement);
+    }
+    function enterFull() {
+      document.body.classList.add('mahsua-fullscreen');
+      var el = document.documentElement;
+      if (el.requestFullscreen) el.requestFullscreen().catch(function(){});
+      else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+      else if (el.msRequestFullscreen) el.msRequestFullscreen();
+    }
+    function exitFull() {
+      document.body.classList.remove('mahsua-fullscreen');
+      if (isNativeFull()) {
+        if (document.exitFullscreen) document.exitFullscreen().catch(function(){});
+        else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+        else if (document.msExitFullscreen) document.msExitFullscreen();
+      }
+    }
+    fsBtns.forEach(function(b) {
+      b.addEventListener('click', function() {
+        if (document.body.classList.contains('mahsua-fullscreen') || isNativeFull()) exitFull();
+        else enterFull();
+      });
+    });
+    if (exitBtn) exitBtn.addEventListener('click', exitFull);
+    function onNativeChange() {
+      if (!isNativeFull()) document.body.classList.remove('mahsua-fullscreen');
+    }
+    document.addEventListener('fullscreenchange', onNativeChange);
+    document.addEventListener('webkitfullscreenchange', onNativeChange);
+  })();
+</script>
+</body>
+</html>

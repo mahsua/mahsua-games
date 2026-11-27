@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Play Flappy Wing Online Free – Instant Browser Game | Mahsua Games</title>
+    <link rel="icon" href="./favicon.png" type="image/png">
+    <meta name="description" content="Play Flappy Wing online free with no download! Tap to flap through endless green pipes and beat your high score on mobile or desktop.">
+    <meta name="keywords" content="flappy wing, flappy sky, arcade game, mahsua games, free browser game">
+    <meta name="author" content="Mahsua Games">
+    <meta name="robots" content="index, follow">
+
+    <!-- Google Ads -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9351361840615541" crossorigin="anonymous"></script>
+    <meta name="google-adsense-account" content="ca-pub-9351361840615541">
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-095F8QMZ5S"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-095F8QMZ5S');
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        :root {
+            --bg-gradient: linear-gradient(135deg, #ffe6f0 0%, #e0f3ff 50%, #e6ffe6 100%);
+            --card-bg: rgba(255, 255, 255, 0.94);
+            --card-border: rgba(236, 72, 153, 0.22);
+            --text-color: #1e293b;
+            --text-secondary: #64748b;
+            --accent-pink: #ec4899;
+            --accent-blue: #3b82f6;
+            --accent-green: #10b981;
+            --shadow: 0 12px 32px rgba(15, 23, 42, 0.08);
+        }
+        body.dark {
+            --bg-gradient: linear-gradient(135deg, #1f1024 0%, #0f172a 50%, #0b221a 100%);
+            --card-bg: rgba(30, 41, 59, 0.92);
+            --card-border: rgba(236, 72, 153, 0.3);
+            --text-color: #f8fafc;
+            --text-secondary: #94a3b8;
+            --shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+        }
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 0.9rem;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+        .container {
+            width: 100%;
+            max-width: 460px;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 1.1rem;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(16px);
+        }
+        .top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+            gap: 0.5rem;
+        }
+        .back-link {
+            text-decoration: none;
+            color: var(--accent-blue);
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+        .top-actions { display: flex; gap: 0.4rem; }
+        .pill-btn {
+            background: rgba(59, 130, 246, 0.12);
+            color: var(--text-color);
+            border: 1px solid var(--card-border);
+            border-radius: 999px;
+            padding: 0.34rem 0.72rem;
+            font-family: inherit;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .mahsua-fs-inline {
+            background: rgba(16, 185, 129, 0.14) !important;
+            color: #059669 !important;
+            border: 1px solid rgba(16, 185, 129, 0.35) !important;
+            font-weight: 700 !important;
+        }
+        body.dark .mahsua-fs-inline { color: #34d399 !important; }
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+        h1 {
+            font-size: 1.7rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent-pink), var(--accent-blue), var(--accent-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .scores { display: flex; gap: 0.45rem; }
+        .score-box {
+            background: linear-gradient(135deg, rgba(236, 72, 153, 0.12), rgba(59, 130, 246, 0.12));
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 0.3rem 0.7rem;
+            text-align: center;
+            min-width: 64px;
+        }
+        .score-label { font-size: 0.62rem; font-weight: 700; text-transform: uppercase; color: var(--text-secondary); }
+        .score-value { font-size: 1.05rem; font-weight: 800; }
+        .canvas-wrap {
+            position: relative;
+            width: 100%;
+            border-radius: 18px;
+            overflow: hidden;
+            border: 2px solid var(--card-border);
+            touch-action: none;
+            user-select: none;
+        }
+        canvas {
+            display: block;
+            width: 100%;
+            height: auto;
+            cursor: pointer;
+        }
+        .overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.72);
+            backdrop-filter: blur(4px);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.7rem;
+            color: #fff;
+            text-align: center;
+            padding: 1.5rem;
+        }
+        .overlay.active { display: flex; }
+        .overlay h2 { font-size: 1.75rem; font-weight: 800; }
+        .btn-primary {
+            border: none;
+            border-radius: 12px;
+            padding: 0.55rem 1.2rem;
+            font-family: inherit;
+            font-size: 0.92rem;
+            font-weight: 700;
+            cursor: pointer;
+            background: linear-gradient(135deg, var(--accent-pink), var(--accent-blue));
+            color: #fff;
+        }
+        .hint {
+            margin-top: 0.7rem;
+            text-align: center;
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+        }
+        #mahsua-exit-fs {
+            display: none;
+            position: fixed;
+            top: 12px;
+            right: 12px;
+            z-index: 99999;
+            padding: 7px 14px;
+            border-radius: 999px;
+            border: 1px solid rgba(16, 185, 129, 0.4);
+            background: rgba(15, 23, 42, 0.85);
+            color: #fff;
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+        }
+        body.mahsua-fullscreen #mahsua-exit-fs { display: inline-flex; align-items: center; gap: 5px; }
+        body.mahsua-fullscreen { padding: 0 !important; margin: 0 !important; overflow: hidden !important; }
+        body.mahsua-fullscreen .top-bar, body.mahsua-fullscreen .hint { display: none !important; }
+        body.mahsua-fullscreen .container {
+            position: fixed !important; inset: 0 !important;
+            width: 100vw !important; height: 100dvh !important;
+            max-width: 100vw !important; max-height: 100dvh !important;
+            margin: 0 !important; border-radius: 0 !important; border: none !important;
+            padding: 56px 12px 16px !important; z-index: 9998 !important;
+            display: flex !important; flex-direction: column !important; justify-content: center !important;
+        }
+        body.mahsua-fullscreen .canvas-wrap {
+            flex: 1 1 auto !important; min-height: 0 !important;
+            display: flex !important; align-items: center !important; justify-content: center !important;
+        }
+        body.mahsua-fullscreen canvas {
+            max-height: calc(100dvh - 150px) !important;
+            width: auto !important; max-width: 100% !important; margin: 0 auto !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="top-bar">
+            <a href="https://games.mahsua.com/" class="back-link">🏠 Home</a>
+            <div class="top-actions">
+                <button class="pill-btn mahsua-fs-inline" type="button">⛶ Fullscreen</button>
+                <button class="pill-btn" id="soundToggle" type="button">🔊 Sound</button>
+                <button class="pill-btn" id="themeToggle" type="button">🌙 Dark</button>
+            </div>
+        </div>
+
+        <div class="header">
+            <h1>🐦 Flappy Wing</h1>
+            <div class="scores">
+                <div class="score-box">
+                    <div class="score-label">Score</div>
+                    <div class="score-value" id="score">0</div>
+                </div>
+                <div class="score-box">
+                    <div class="score-label">Best</div>
+                    <div class="score-value" id="bestScore">0</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="canvas-wrap">
+            <canvas id="flappyCanvas" width="380" height="520"></canvas>
+            <div class="overlay active" id="overlay">
+                <h2 id="overlayTitle">Flappy Wing</h2>
+                <p id="overlayMsg">Tap anywhere or press Space to fly through the pipes!</p>
+                <button class="btn-primary" id="startBtn" type="button">Start Flying</button>
+            </div>
+        </div>
+
+        <p class="hint">Guide the bird safely through narrow pipe gaps without touching the ground or obstacles. Tap anywhere on mobile or click and press Space or Up Arrow on desktop to flap.</p>
+    </div>
+
+    <button type="button" id="mahsua-exit-fs">✕ Exit Fullscreen</button>
+
+    <script>
+        const canvas = document.getElementById('flappyCanvas');
+        const ctx = canvas.getContext('2d');
+        const scoreEl = document.getElementById('score');
+        const bestEl = document.getElementById('bestScore');
+        const overlay = document.getElementById('overlay');
+        const overlayTitle = document.getElementById('overlayTitle');
+        const overlayMsg = document.getElementById('overlayMsg');
+        const startBtn = document.getElementById('startBtn');
+        const soundToggle = document.getElementById('soundToggle');
+        const themeToggle = document.getElementById('themeToggle');
+
+        const GRAVITY = 0.42;
+        const FLAP_FORCE = -7.2;
+        const PIPE_WIDTH = 56;
+        const PIPE_GAP = 142;
+        const PIPE_SPEED = 2.6;
+        const GROUND_H = 54;
+
+        let bird = { x: 92, y: 240, r: 16, vy: 0 };
+        let pipes = [];
+        let clouds = [
+            { x: 60, y: 80, w: 62 },
+            { x: 210, y: 120, w: 78 },
+            { x: 330, y: 65, w: 54 }
+        ];
+        let score = 0;
+        let best = parseInt(localStorage.getItem('mahsua_flappy_best') || '0', 10);
+        let state = 'ready'; // ready | playing | over
+        let frame = 0;
+        let groundOffset = 0;
+        let soundOn = true;
+
+        bestEl.textContent = best;
+
+        let audioCtx = null;
+        function beep(freq, dur = 0.05, type = 'sine') {
+            if (!soundOn) return;
+            try {
+                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const o = audioCtx.createOscillator();
+                const g = audioCtx.createGain();
+                o.type = type;
+                o.frequency.value = freq;
+                g.gain.setValueAtTime(0.07, audioCtx.currentTime);
+                g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + dur);
+                o.connect(g); g.connect(audioCtx.destination);
+                o.start(); o.stop(audioCtx.currentTime + dur);
+            } catch (_) {}
+        }
+
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark');
+            themeToggle.textContent = document.body.classList.contains('dark') ? '☀️ Light' : '🌙 Dark';
+        });
+
+        soundToggle.addEventListener('click', () => {
+            soundOn = !soundOn;
+            soundToggle.textContent = soundOn ? '🔊 Sound' : '🔇 Muted';
+        });
+
+        function resetGame() {
+            bird = { x: 92, y: 240, r: 16, vy: 0 };
+            pipes = [];
+            score = 0;
+            frame = 0;
+            scoreEl.textContent = '0';
+            state = 'playing';
+            overlay.classList.remove('active');
+            flap();
+        }
+
+        function flap() {
+            if (state === 'ready') {
+                resetGame();
+                return;
+            }
+            if (state !== 'playing') return;
+            bird.vy = FLAP_FORCE;
+            beep(460, 0.045, 'triangle');
+        }
+
+        function gameOver() {
+            if (state === 'over') return;
+            state = 'over';
+            beep(160, 0.22, 'sawtooth');
+            if (score > best) {
+                best = score;
+                localStorage.setItem('mahsua_flappy_best', String(best));
+                bestEl.textContent = best;
+            }
+            const medal = score >= 50 ? '🥇 Gold' : score >= 25 ? '🥈 Silver' : score >= 10 ? '🥉 Bronze' : '';
+            overlayTitle.textContent = 'Game Over!';
+            overlayMsg.textContent = (medal ? medal + ' • ' : '') + 'Score: ' + score + ' | Best: ' + best;
+            startBtn.textContent = 'Fly Again';
+            overlay.classList.add('active');
+        }
+
+        startBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            resetGame();
+        });
+        canvas.addEventListener('mousedown', flap);
+        canvas.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            flap();
+        }, { passive: false });
+        window.addEventListener('keydown', (e) => {
+            if (e.key === ' ' || e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W') {
+                e.preventDefault();
+                if (state === 'over') resetGame();
+                else flap();
+            }
+        });
+
+        function update() {
+            if (state !== 'playing') return;
+            frame++;
+            groundOffset = (groundOffset + PIPE_SPEED) % 24;
+
+            bird.vy += GRAVITY;
+            bird.y += bird.vy;
+
+            if (bird.y - bird.r < 0) {
+                bird.y = bird.r;
+                bird.vy = 0;
+            }
+            if (bird.y + bird.r >= canvas.height - GROUND_H) {
+                bird.y = canvas.height - GROUND_H - bird.r;
+                gameOver();
+                return;
+            }
+
+            if (frame % 95 === 0) {
+                const minTop = 55;
+                const maxTop = canvas.height - GROUND_H - PIPE_GAP - 55;
+                const topH = minTop + Math.random() * (maxTop - minTop);
+                pipes.push({ x: canvas.width + 10, topH, passed: false });
+            }
+
+            for (const p of pipes) {
+                p.x -= PIPE_SPEED;
+
+                // Score check
+                if (!p.passed && p.x + PIPE_WIDTH < bird.x) {
+                    p.passed = true;
+                    score++;
+                    scoreEl.textContent = score;
+                    beep(740, 0.06);
+                }
+
+                // Collision check
+                const inX = bird.x + bird.r - 3 > p.x && bird.x - bird.r + 3 < p.x + PIPE_WIDTH;
+                if (inX) {
+                    if (bird.y - bird.r + 3 < p.topH || bird.y + bird.r - 3 > p.topH + PIPE_GAP) {
+                        gameOver();
+                        return;
+                    }
+                }
+            }
+            pipes = pipes.filter(p => p.x + PIPE_WIDTH > -10);
+
+            for (const c of clouds) {
+                c.x -= 0.4;
+                if (c.x + c.w < 0) c.x = canvas.width + 20;
+            }
+        }
+
+        function draw() {
+            const isDark = document.body.classList.contains('dark');
+            const skyGrad = ctx.createLinearGradient(0, 0, 0, canvas.height);
+            if (isDark) {
+                skyGrad.addColorStop(0, '#0f172a');
+                skyGrad.addColorStop(1, '#1e293b');
+            } else {
+                skyGrad.addColorStop(0, '#bae6fd');
+                skyGrad.addColorStop(1, '#e0f2fe');
+            }
+            ctx.fillStyle = skyGrad;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Clouds
+            ctx.fillStyle = isDark ? 'rgba(255,255,255,0.08)' : 'rgba(255,255,255,0.75)';
+            for (const c of clouds) {
+                ctx.beginPath();
+                ctx.arc(c.x, c.y, 16, 0, Math.PI * 2);
+                ctx.arc(c.x + 18, c.y - 6, 20, 0, Math.PI * 2);
+                ctx.arc(c.x + 36, c.y, 15, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            // Pipes
+            for (const p of pipes) {
+                const pipeGrad = ctx.createLinearGradient(p.x, 0, p.x + PIPE_WIDTH, 0);
+                pipeGrad.addColorStop(0, '#10b981');
+                pipeGrad.addColorStop(0.5, '#34d399');
+                pipeGrad.addColorStop(1, '#059669');
+                ctx.fillStyle = pipeGrad;
+
+                // Top pipe
+                ctx.fillRect(p.x, 0, PIPE_WIDTH, p.topH);
+                ctx.fillRect(p.x - 4, p.topH - 18, PIPE_WIDTH + 8, 18);
+
+                // Bottom pipe
+                const botY = p.topH + PIPE_GAP;
+                const botH = canvas.height - GROUND_H - botY;
+                ctx.fillRect(p.x, botY, PIPE_WIDTH, botH);
+                ctx.fillRect(p.x - 4, botY, PIPE_WIDTH + 8, 18);
+            }
+
+            // Ground
+            ctx.fillStyle = '#ec4899';
+            ctx.fillRect(0, canvas.height - GROUND_H, canvas.width, 6);
+            ctx.fillStyle = isDark ? '#064e3b' : '#bbf7d0';
+            ctx.fillRect(0, canvas.height - GROUND_H + 6, canvas.width, GROUND_H - 6);
+            ctx.fillStyle = isDark ? '#047857' : '#86efac';
+            for (let gx = -groundOffset; gx < canvas.width; gx += 24) {
+                ctx.fillRect(gx, canvas.height - GROUND_H + 6, 12, 10);
+            }
+
+            // Bird
+            ctx.save();
+            ctx.translate(bird.x, bird.y);
+            const angle = Math.max(-0.5, Math.min(0.9, bird.vy * 0.06));
+            ctx.rotate(angle);
+
+            // Body
+            ctx.fillStyle = '#ec4899';
+            ctx.beginPath();
+            ctx.arc(0, 0, bird.r, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Wing
+            ctx.fillStyle = '#fbcfe8';
+            ctx.beginPath();
+            ctx.ellipse(-4, 2 + Math.sin(frame * 0.35) * 3, 9, 5, -0.2, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Eye
+            ctx.fillStyle = '#fff';
+            ctx.beginPath();
+            ctx.arc(6, -5, 5, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#0f172a';
+            ctx.beginPath();
+            ctx.arc(7.5, -5, 2.3, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Beak
+            ctx.fillStyle = '#f59e0b';
+            ctx.beginPath();
+            ctx.moveTo(12, -1);
+            ctx.lineTo(22, 3);
+            ctx.lineTo(12, 7);
+            ctx.closePath();
+            ctx.fill();
+
+            ctx.restore();
+        }
+
+        function loop() {
+            update();
+            draw();
+            requestAnimationFrame(loop);
+        }
+        loop();
+
+        // Fullscreen handler
+        (function() {
+            const fsBtn = document.querySelector('.mahsua-fs-inline');
+            const exitBtn = document.getElementById('mahsua-exit-fs');
+            function isNativeFull() {
+                return !!(document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement);
+            }
+            function enterFull() {
+                document.body.classList.add('mahsua-fullscreen');
+                const el = document.documentElement;
+                if (el.requestFullscreen) el.requestFullscreen().catch(() => {});
+                else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+            }
+            function exitFull() {
+                document.body.classList.remove('mahsua-fullscreen');
+                if (isNativeFull()) {
+                    if (document.exitFullscreen) document.exitFullscreen().catch(() => {});
+                    else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+                }
+            }
+            if (fsBtn) fsBtn.addEventListener('click', () => {
+                if (document.body.classList.contains('mahsua-fullscreen') || isNativeFull()) exitFull();
+                else enterFull();
+            });
+            if (exitBtn) exitBtn.addEventListener('click', exitFull);
+            document.addEventListener('fullscreenchange', () => {
+                if (!isNativeFull()) document.body.classList.remove('mahsua-fullscreen');
+            });
+        })();
+    </script>
+</body>
+</html>
